@@ -3,6 +3,7 @@ build/
 docs/
 log/
 src/main/resources/static/docs/
+src/main/resources/security/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
