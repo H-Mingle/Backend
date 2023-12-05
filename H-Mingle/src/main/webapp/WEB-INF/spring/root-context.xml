@@ -25,4 +25,13 @@
 		p:dataSource-ref="dataSource" />
 
 	<mybatis-spring:scan base-package="com.hyundai.hmingle"/>
+
+	<!-- properties -->
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:/application-oauth.properties</value>
+			</list>
+		</property>
+	</bean>
 </beans>
