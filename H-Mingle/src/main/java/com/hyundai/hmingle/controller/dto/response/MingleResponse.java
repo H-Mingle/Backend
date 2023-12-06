@@ -1,5 +1,7 @@
 package com.hyundai.hmingle.controller.dto.response;
 
+import java.util.List;
+
 import lombok.Getter;
 
 @Getter
@@ -16,10 +18,13 @@ public class MingleResponse<T> {
 	}
 
 	public static <T> MingleResponse<T> success(String message, T data) {
-		return new MingleResponse<>(true, message, data);
+		return new MingleResponse<T>(true, message, data);
 	}
 
 	public static <T> MingleResponse<T> fail(String message) {
-		return new MingleResponse<>(false, message, null);
+		return new MingleResponse<T>(false, message, null);
 	}
+
+
+
 }
