@@ -41,7 +41,16 @@ public class OauthService {
 		String refreshToken = jwtTokenProvider.createRefreshToken(String.valueOf(memberId));
 
 		Member member = Member.saved(memberId, "email", "nickname", "introduction");
-		tokenMapper.save(new Token(member, accessToken, refreshToken));
+		saveToken(member, accessToken, refreshToken, memberId);
 		return new OauthLoginResponse(accessToken, refreshToken);
+	}
+
+	private void saveToken(Member member, String accessToken, String refreshToken, Long memberId) {
+		Token token = new Token(member, accessToken, refreshToken);
+		tokenMapper.findByMemberId(memberId)
+			.ifPresentOrElse(
+				value -> tokenMapper.save(token),
+				() -> tokenMapper.update(token)
+			);
 	}
 }
