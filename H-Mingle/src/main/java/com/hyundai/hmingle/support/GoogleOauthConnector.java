@@ -23,28 +23,28 @@ public class GoogleOauthConnector implements OauthConnector {
 	@Override
 	public GoogleUserResponse requestUserInfo(String redirectUrl, String authorizationCode) {
 		String accessToken = requestAccessToken(redirectUrl, authorizationCode);
-
-		HttpEntity<Void> entity = entityGenerator.createForUserInfo(accessToken);
-		ResponseEntity<GoogleUserResponse> response = ApiConnector.get(provider.getUserInfoUrl(), entity, GoogleUserResponse.class);
-
-		validateResponseStatusIsOk(response.getStatusCode());
-		return Optional.ofNullable(response.getBody())
-			.orElseThrow(() -> new RuntimeException("oauth 사용자 정보를 조회하는데 실패하였습니다."));
+		return requestUserInfo(accessToken);
 	}
 
 	private String requestAccessToken(String redirectUrl, String authorizationCode) {
 		HttpEntity<MultiValueMap<String, String>> entity = entityGenerator.createForAccessToken(redirectUrl, authorizationCode);
 		ResponseEntity<GoogleTokenResponse> response = ApiConnector.post(provider.getAccessTokenUrl(), entity, GoogleTokenResponse.class);
-		return extractAccessToken(response);
+
+		validateResponseStatusIsOk(response.getStatusCode());
+
+		return Optional.ofNullable(response.getBody())
+			.orElseThrow(() -> new RuntimeException("Oauth 로그인에 실패하였습니다."))
+			.getAccessToken();
 	}
 
-	private String extractAccessToken(ResponseEntity<GoogleTokenResponse> responseEntity) {
-		validateResponseStatusIsOk(responseEntity.getStatusCode());
+	private GoogleUserResponse requestUserInfo(String accessToken) {
+		HttpEntity<Void> entity = entityGenerator.createForUserInfo(accessToken);
+		ResponseEntity<GoogleUserResponse> response = ApiConnector.get(provider.getUserInfoUrl(), entity, GoogleUserResponse.class);
 
-		GoogleTokenResponse response = Optional.ofNullable(responseEntity.getBody())
-			.orElseThrow(() -> new RuntimeException("Oauth 로그인에 실패하였습니다."));
+		validateResponseStatusIsOk(response.getStatusCode());
 
-		return response.getAccessToken();
+		return Optional.ofNullable(response.getBody())
+			.orElseThrow(() -> new RuntimeException("oauth 사용자 정보를 조회하는데 실패하였습니다."));
 	}
 
 	private void validateResponseStatusIsOk(HttpStatus status) {
