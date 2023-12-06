@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyundai.hmingle.mapper.ChannelMapper">
+
+	<resultMap id = "channelList" type="com.hyundai.hmingle.controller.dto.response.ChannelGetResponse">
+		<id property="name" column="name"/>
+		<id property="location" column="location"/>
+		<id property="description" column="description"/>
+		<id property="businessHours" column="business_hours"/>
+		<id property="phoneNumber" column="phone_number"/>
+		<id property="count" column="read_count"/>
+		<id property="recent" column="modified_date"/>
+	</resultMap>
+	
+	<select id="getList" resultMap="channelList">
+		SELECT
+   			 name,
+   			 location,
+   			 description,
+   			 business_hours,
+   			 phone_number,
+   			 read_count,
+   			 modified_date
+		FROM (
+   			 SELECT
+   			 	c.name,
+   			 	c.location,
+   			 	c.description,
+   			 	c.business_hours,
+   			 	c.phone_number,
+   			 	p.read_count,
+   			 	p.modified_date,
+   			 	ROW_NUMBER() OVER (PARTITION BY c.id ORDER BY p.modified_date DESC) AS rn
+   			 FROM
+   			 	channel c
+   			 LEFT OUTER JOIN
+   			 	post p ON c.id = p.channel_id
+		)
+		WHERE
+   			rn = 1
+	</select>
+</mapper>

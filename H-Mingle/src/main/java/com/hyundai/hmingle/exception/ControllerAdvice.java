@@ -10,7 +10,7 @@ import com.hyundai.hmingle.controller.dto.response.MingleResponse;
 public class ControllerAdvice {
 
 	@ExceptionHandler(Exception.class)
-	public ResponseEntity<MingleResponse<Void>> serverError(Exception e) {
+	public ResponseEntity<MingleResponse<Object>> serverError(Exception e) {
 		return ResponseEntity.status(500).body(MingleResponse.fail(e.getMessage()));
 	}
 }

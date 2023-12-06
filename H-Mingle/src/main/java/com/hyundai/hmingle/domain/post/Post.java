@@ -10,7 +10,7 @@ public class Post extends Base {
 
 	private String title;
 	private String content;
-	private int readCount;
+	private Integer readCount;
 	private Member member;
 	private Channel channel;
 }
