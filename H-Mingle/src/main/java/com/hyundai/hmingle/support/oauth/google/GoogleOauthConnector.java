@@ -1,4 +1,4 @@
-package com.hyundai.hmingle.support;
+package com.hyundai.hmingle.support.oauth.google;
 
 import java.util.Optional;
 
@@ -8,8 +8,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
 
+import com.hyundai.hmingle.support.ApiConnector;
 import com.hyundai.hmingle.support.dto.response.GoogleTokenResponse;
 import com.hyundai.hmingle.support.dto.response.GoogleUserResponse;
+import com.hyundai.hmingle.support.oauth.OauthConnector;
 
 import lombok.RequiredArgsConstructor;
 

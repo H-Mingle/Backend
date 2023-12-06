@@ -1,4 +1,4 @@
-package com.hyundai.hmingle.support;
+package com.hyundai.hmingle.support.oauth;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.util.MultiValueMap;

@@ -1,4 +1,4 @@
-package com.hyundai.hmingle.support;
+package com.hyundai.hmingle.support.oauth.google;
 
 import java.util.Collections;
 
@@ -8,6 +8,8 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+
+import com.hyundai.hmingle.support.oauth.OauthEntityGenerator;
 
 import lombok.RequiredArgsConstructor;
 

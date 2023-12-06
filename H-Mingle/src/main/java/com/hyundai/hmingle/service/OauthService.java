@@ -10,8 +10,8 @@ import com.hyundai.hmingle.domain.member.Token;
 import com.hyundai.hmingle.mapper.MemberMapper;
 import com.hyundai.hmingle.mapper.TokenMapper;
 import com.hyundai.hmingle.support.JwtTokenProvider;
-import com.hyundai.hmingle.support.OauthConnector;
-import com.hyundai.hmingle.support.OauthProvider;
+import com.hyundai.hmingle.support.oauth.OauthConnector;
+import com.hyundai.hmingle.support.oauth.OauthProvider;
 import com.hyundai.hmingle.support.dto.response.GoogleUserResponse;
 
 import lombok.AccessLevel;

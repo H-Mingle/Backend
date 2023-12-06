@@ -1,4 +1,4 @@
-package com.hyundai.hmingle.support;
+package com.hyundai.hmingle.support.oauth.google;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
+import com.hyundai.hmingle.support.oauth.OauthProvider;
 
 import lombok.Getter;
 
