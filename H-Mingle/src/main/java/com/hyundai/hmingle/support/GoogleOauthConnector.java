@@ -26,14 +26,18 @@ public class GoogleOauthConnector implements OauthConnector {
 	private final GoogleOauthProvider provider;
 
 	@Override
-	public ResponseEntity<GoogleUserResponse> requestUserInfo(String redirectUrl, String authorizationCode) {
+	public GoogleUserResponse requestUserInfo(String redirectUrl, String authorizationCode) {
 		String accessToken = requestAccessToken(redirectUrl, authorizationCode);
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Authorization", String.join(" ", BEARER_TYPE, accessToken));
 		HttpEntity<Void> entity = new HttpEntity<>(headers);
 
-		return ApiConnector.get(provider.getUserInfoUrl(), entity, GoogleUserResponse.class);
+		ResponseEntity<GoogleUserResponse> response = ApiConnector.get(provider.getUserInfoUrl(), entity, GoogleUserResponse.class);
+		validateResponseStatusIsOk(response.getStatusCode());
+
+		return Optional.ofNullable(response.getBody())
+			.orElseThrow(() -> new RuntimeException("oauth 사용자 정보를 조회하는데 실패하였습니다."));
 	}
 
 	private String requestAccessToken(String redirectUrl, String authorizationCode) {

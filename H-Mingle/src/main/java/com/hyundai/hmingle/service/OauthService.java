@@ -1,9 +1,5 @@
 package com.hyundai.hmingle.service;
 
-import java.util.Optional;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,7 +35,7 @@ public class OauthService {
 	}
 
 	public OauthLoginResponse login(String redirectUrl, String authorizationCode) {
-		GoogleUserResponse response = requestUserInfo(redirectUrl, authorizationCode);
+		GoogleUserResponse response = googleOauthConnector.requestUserInfo(redirectUrl, authorizationCode);
 		Member member = saveMember(response);
 
 		String accessToken = jwtTokenProvider.createAccessToken(String.valueOf(member.getId()));
@@ -47,20 +43,6 @@ public class OauthService {
 
 		saveToken(member, accessToken, refreshToken, member.getId());
 		return new OauthLoginResponse(accessToken, refreshToken);
-	}
-
-	private GoogleUserResponse requestUserInfo(String redirectUrl, String authorizationCode) {
-		ResponseEntity<GoogleUserResponse> responseEntity = googleOauthConnector.requestUserInfo(redirectUrl, authorizationCode);
-		validateResponseStatusIsOk(responseEntity.getStatusCode());
-
-		return Optional.ofNullable(responseEntity.getBody())
-			.orElseThrow(() -> new RuntimeException("oauth 사용자 정보를 조회하는데 실패하였습니다."));
-	}
-
-	private void validateResponseStatusIsOk(HttpStatus status) {
-		if (!status.is2xxSuccessful()) {
-			throw new RuntimeException("oauth 사용자 정보를 조회하는데 실패하였습니다.");
-		}
 	}
 
 	private Member saveMember(GoogleUserResponse response) {
