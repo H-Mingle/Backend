@@ -13,30 +13,33 @@
 	</resultMap>
 	
 	<select id="getList" resultMap="channelList">
-		SELECT
-   			 name,
-   			 location,
-   			 description,
-   			 business_hours,
-   			 phone_number,
-   			 read_count,
-   			 modified_date
-		FROM (
-   			 SELECT
-   			 	c.name,
-   			 	c.location,
-   			 	c.description,
-   			 	c.business_hours,
-   			 	c.phone_number,
-   			 	p.read_count,
-   			 	p.modified_date,
-   			 	ROW_NUMBER() OVER (PARTITION BY c.id ORDER BY p.modified_date DESC) AS rn
-   			 FROM
-   			 	channel c
-   			 LEFT OUTER JOIN
-   			 	post p ON c.id = p.channel_id
+		WITH ChannelPostInfo AS (
+   			SELECT
+        		c.id AS id,
+        		c.name,
+        		c.location,
+        		c.description,
+        		c.business_hours,
+        		c.phone_number,
+        		p.modified_date as recent,
+         		COUNT(p.id) OVER (PARTITION BY c.id) AS count,
+        		ROW_NUMBER() OVER (PARTITION BY c.id ORDER BY p.modified_date DESC) AS rn
+   			FROM
+        		channel c
+ 		    LEFT OUTER JOIN
+   				post p ON c.id = p.channel_id
 		)
+		SELECT
+			name,
+			location,
+			description,
+			business_hours,
+			phone_number,
+			count,
+			recent
+		FROM
+			ChannelPostInfo
 		WHERE
-   			rn = 1
+			rn = 1
 	</select>
 </mapper>
