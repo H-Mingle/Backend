@@ -14,15 +14,17 @@ public class Member extends Base {
 	private String email;
 	private String nickname;
 	private String introduction;
+	private String imageUrl;
 
-	public Member(Long id, String email, String nickname, String introduction) {
+	public Member(Long id, String email, String nickname, String introduction, String imageUrl) {
 		this.id = id;
 		this.email = email;
 		this.nickname = nickname;
 		this.introduction = introduction;
+		this.imageUrl = imageUrl;
 	}
 
-	public static Member toDomain(String email, String nickname, String introduction) {
-		return new Member(null, email, nickname, introduction);
+	public static Member toDomain(String email, String nickname, String introduction, String imageUrl) {
+		return new Member(null, email, nickname, introduction, imageUrl);
 	}
 }

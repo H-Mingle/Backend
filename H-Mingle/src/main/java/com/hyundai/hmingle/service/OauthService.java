@@ -48,7 +48,7 @@ public class OauthService {
 	private Member saveMember(GoogleUserResponse response) {
 		return memberMapper.findByEmail(response.getEmail())
 			.orElseGet(() -> {
-				memberMapper.save(Member.toDomain(response.getEmail(), response.getName(), null));
+				memberMapper.save(Member.toDomain(response.getEmail(), response.getName(), null, response.getPicture()));
 				return memberMapper.findByEmail(response.getEmail()).get();
 			});
 	}
