@@ -1,5 +1,8 @@
 package com.hyundai.hmingle.service;
 
+import java.util.Optional;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,6 +11,7 @@ import com.hyundai.hmingle.controller.dto.response.OauthLoginResponse;
 import com.hyundai.hmingle.controller.dto.response.OauthLoginUrlResponse;
 import com.hyundai.hmingle.domain.member.Member;
 import com.hyundai.hmingle.domain.member.Token;
+import com.hyundai.hmingle.mapper.MemberMapper;
 import com.hyundai.hmingle.mapper.TokenMapper;
 import com.hyundai.hmingle.support.JwtTokenProvider;
 import com.hyundai.hmingle.support.OauthConnector;
@@ -25,6 +29,7 @@ public class OauthService {
 	private final OauthProvider googleOauthProvider;
 	private final OauthConnector googleOauthConnector;
 	private final JwtTokenProvider jwtTokenProvider;
+	private final MemberMapper memberMapper;
 	private final TokenMapper tokenMapper;
 
 	@Transactional(readOnly = true)
@@ -34,15 +39,36 @@ public class OauthService {
 	}
 
 	public OauthLoginResponse login(String redirectUrl, String authorizationCode) {
-		ResponseEntity<GoogleUserResponse> response = googleOauthConnector.requestUserInfo(redirectUrl, authorizationCode);
+		GoogleUserResponse response = requestUserInfo(redirectUrl, authorizationCode);
+		Member member = saveMember(response);
 
-		Long memberId = 1L;
-		String accessToken = jwtTokenProvider.createAccessToken(String.valueOf(memberId));
-		String refreshToken = jwtTokenProvider.createRefreshToken(String.valueOf(memberId));
+		String accessToken = jwtTokenProvider.createAccessToken(String.valueOf(member.getId()));
+		String refreshToken = jwtTokenProvider.createRefreshToken(String.valueOf(member.getId()));
 
-		Member member = Member.saved(memberId, "email", "nickname", "introduction");
-		saveToken(member, accessToken, refreshToken, memberId);
+		saveToken(member, accessToken, refreshToken, member.getId());
 		return new OauthLoginResponse(accessToken, refreshToken);
+	}
+
+	private GoogleUserResponse requestUserInfo(String redirectUrl, String authorizationCode) {
+		ResponseEntity<GoogleUserResponse> responseEntity = googleOauthConnector.requestUserInfo(redirectUrl, authorizationCode);
+		validateResponseStatusIsOk(responseEntity.getStatusCode());
+
+		return Optional.ofNullable(responseEntity.getBody())
+			.orElseThrow(() -> new RuntimeException("oauth 사용자 정보를 조회하는데 실패하였습니다."));
+	}
+
+	private void validateResponseStatusIsOk(HttpStatus status) {
+		if (!status.is2xxSuccessful()) {
+			throw new RuntimeException("oauth 사용자 정보를 조회하는데 실패하였습니다.");
+		}
+	}
+
+	private Member saveMember(GoogleUserResponse response) {
+		return memberMapper.findByEmail(response.getEmail())
+			.orElseGet(() -> {
+				memberMapper.save(Member.toDomain(response.getEmail(), response.getName(), null));
+				return memberMapper.findByEmail(response.getEmail()).get();
+			});
 	}
 
 	private void saveToken(Member member, String accessToken, String refreshToken, Long memberId) {

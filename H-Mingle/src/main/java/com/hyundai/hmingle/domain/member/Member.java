@@ -22,7 +22,7 @@ public class Member extends Base {
 		this.introduction = introduction;
 	}
 
-	public static Member saved(Long id, String email, String nickname, String introduction) {
-		return new Member(id, email, nickname, introduction);
+	public static Member toDomain(String email, String nickname, String introduction) {
+		return new Member(null, email, nickname, introduction);
 	}
 }
