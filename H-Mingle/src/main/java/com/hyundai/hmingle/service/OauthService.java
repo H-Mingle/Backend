@@ -1,10 +1,14 @@
 package com.hyundai.hmingle.service;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.hyundai.hmingle.controller.dto.response.OauthLoginResponse;
 import com.hyundai.hmingle.controller.dto.response.OauthLoginUrlResponse;
+import com.hyundai.hmingle.support.OauthConnector;
 import com.hyundai.hmingle.support.OauthProvider;
+import com.hyundai.hmingle.support.dto.response.GoogleUserResponse;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -15,10 +19,17 @@ import lombok.RequiredArgsConstructor;
 public class OauthService {
 
 	private final OauthProvider googleOauthProvider;
+	private final OauthConnector googleOauthConnector;
 
 	@Transactional(readOnly = true)
 	public OauthLoginUrlResponse generateLoginUrl(String redirectUrl) {
 		String loginUrl = googleOauthProvider.generateLoginUrl(redirectUrl);
 		return new OauthLoginUrlResponse(loginUrl);
+	}
+
+	public OauthLoginResponse login(String redirectUrl, String authorizationCode) {
+		ResponseEntity<GoogleUserResponse> response = googleOauthConnector.requestUserInfo(redirectUrl, authorizationCode);
+
+		return null;
 	}
 }
