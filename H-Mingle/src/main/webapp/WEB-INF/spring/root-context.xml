@@ -24,7 +24,7 @@
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"
 		p:dataSource-ref="dataSource" />
 
-	<mybatis-spring:scan base-package="com.hyundai.hmingle"/>
+	<mybatis-spring:scan base-package="com.hyundai.hmingle.mapper"/>
 
 	<!-- properties -->
 	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
