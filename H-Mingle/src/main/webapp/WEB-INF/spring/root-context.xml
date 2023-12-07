@@ -24,13 +24,14 @@
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"
 		p:dataSource-ref="dataSource" />
 
-	<mybatis-spring:scan base-package="com.hyundai.hmingle"/>
+	<mybatis-spring:scan base-package="com.hyundai.hmingle.mapper"/>
 
 	<!-- properties -->
 	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
 				<value>classpath:/security/application-oauth.properties</value>
+				<value>classpath:/security/application-jwt.properties</value>
 			</list>
 		</property>
 	</bean>
