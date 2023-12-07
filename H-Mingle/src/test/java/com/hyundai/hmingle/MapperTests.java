@@ -33,15 +33,21 @@ public class MapperTests {
 	    @Test
 	    public void testSaveFile() {
 	    	List<ImageCreateRequest> images = new ArrayList<>();
-	    	ImageCreateRequest imageRequest = new ImageCreateRequest(1, "테스트.txt", "abc.txt", 10768);
+	    	ImageCreateRequest imageRequest = new ImageCreateRequest("테스트.txt", "abc.txt", 10768);
 	    	imageRequest.setPostId(1L);
 	    	images.add(imageRequest);
 	    	
-	    	ImageCreateRequest imageRequest2 = new ImageCreateRequest(2, "테스트2.txt", "abc2.txt", 10768);
-	    	imageRequest.setPostId(1L);
+	    	ImageCreateRequest imageRequest2 = new ImageCreateRequest("테스트2.txt", "abc2.txt", 10768);
+	    	imageRequest2.setPostId(1L);
 	    	images.add(imageRequest2);
 	    	
-	    	log.info(images.get(0).getOriginalName());
+	    	ImageCreateRequest imageRequest3 = new ImageCreateRequest("테스트2.txt", "abc2.txt", 10768);
+	    	imageRequest3.setPostId(1L);
+	    	images.add(imageRequest3);
+	    	
+	    	
+	    	log.info("id="+images.get(0).getPostId()+"sequence="+images.get(0).getSequence()+"saveName="+images.get(0).getSaveName());
+	    	log.info("id="+images.get(1).getPostId()+"sequence="+images.get(1).getSequence()+"saveName="+images.get(1).getSaveName());
 	    	mapper2.saveAll(images);
 	    }
 }

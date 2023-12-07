@@ -11,8 +11,7 @@ public class ImageCreateRequest {
 	private String saveName;
 	private long size;
 	
-	public ImageCreateRequest(int sequence, String originalName, String saveName, long size) {
-		this.sequence = sequence;
+	public ImageCreateRequest(String originalName, String saveName, long size) {
 		this.originalName = originalName;
 		this.saveName = saveName;
 		this.size = size;

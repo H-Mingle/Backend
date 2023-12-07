@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hyundai.hmingle.mapper.ImageMapper">
-	
-	<insert id="saveAll" parameterType="list">
-		INSERT INTO image (
-			sequence,
-			post_id,
-			image_url,
-			created_date
-		VALUES 
-			<foreach item="image" collection="list" separator=",">
-				(
-					#{image.sequence},
-					#{image.postId},				
-					#{image.saveName},
-					sysdate
-				)
-			</foreach>
-	</insert>
+
+<insert id="saveAll" parameterType="com.hyundai.hmingle.controller.dto.request.ImageCreateRequest">
+	insert into image (
+		id, post_id, orders, image_url
+	)
+    select
+    	SEQ_IMAGE_ID.nextval,
+        postId,
+        orders,
+        saveName
+     from (
+     	<foreach collection="list" item="image" separator="union all">
+     		select
+     			#{image.postId} postId,
+     			#{image.sequence} orders,
+     			#{image.saveName} saveName
+   			from dual
+     	</foreach>
+     ) 
+</insert>
+
 </mapper>

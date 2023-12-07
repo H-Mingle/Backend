@@ -2,8 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hyundai.hmingle.mapper.PostMapper">
 	
-	<insert id="save" parameterType="com.hyundai.hmingle.controller.dto.request.PostCreateRequest">
+	<insert id="save" parameterType="com.hyundai.hmingle.controller.dto.request.PostCreateRequest" >
 		INSERT INTO post (id, title, content, member_id, channel_id, read_count, created_date)
-		VALUES (#{postId}, #{title}, #{content}, #{memberId}, #{channelId}, 0, sysdate)	
+		VALUES (SEQ_POST_ID.nextval, #{title}, #{content}, #{memberId}, #{channelId}, 0, sysdate)	
+		<selectKey keyColumn="id" resultType="Long" order="AFTER">
+			SELECT id
+			FROM post
+			WHERE 1=1;
+		</selectKey>
 	</insert>
+	
 </mapper>

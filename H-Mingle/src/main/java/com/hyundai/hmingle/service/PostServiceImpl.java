@@ -13,13 +13,13 @@ import lombok.extern.java.Log;
 @Log
 @Service
 @AllArgsConstructor
-public class PostServiceImpl {
+public class PostServiceImpl implements PostService {
 	@Autowired
 	private PostMapper mapper;
 	
 	public Long savePost(PostCreateRequest params) {
-		mapper.save(params);
-		return params.getPostId();
+		return mapper.save(params);
 	}
+
 
 }

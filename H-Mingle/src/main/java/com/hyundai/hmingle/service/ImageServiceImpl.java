@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import com.hyundai.hmingle.controller.dto.request.ImageCreateRequest;
+import com.hyundai.hmingle.controller.dto.response.PostCreateResponse;
 import com.hyundai.hmingle.mapper.ChannelMapper;
 import com.hyundai.hmingle.mapper.ImageMapper;
 
@@ -16,18 +17,20 @@ import lombok.extern.java.Log;
 @Log
 @Service
 @AllArgsConstructor
-public class ImageServiceImpl {
+public class ImageServiceImpl implements ImageService{
 	@Autowired
 	private ImageMapper mapper;
 	
-	public void saveFiles(Long postId, List<ImageCreateRequest> images) {
+	public PostCreateResponse saveFiles(Long postId, String title, String content, List<ImageCreateRequest> images) {
 		if(CollectionUtils.isEmpty(images)) {
-			return;
+			return null;
 		}
 		for(ImageCreateRequest image:images) {
 			image.setPostId(postId);
 		}
 		mapper.saveAll(images);
+		
+		return new PostCreateResponse(postId, title, content);
 	}
 
 	

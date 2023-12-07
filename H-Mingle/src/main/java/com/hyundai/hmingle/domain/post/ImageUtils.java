@@ -9,31 +9,40 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.hyundai.hmingle.controller.dto.request.ImageCreateRequest;
 
+import lombok.extern.java.Log;
+
 @Component
+@PropertySource("classpath:app.properties")
 public class ImageUtils {
 
-    private final String uploadPath = Paths.get("C:", "develop", "upload-files").toString();
+	@Value("${uploadPath}")
+    private String uploadPath;
 
-    public List<ImageCreateRequest> uploadFiles(final List<MultipartFile> multipartFiles) {
+    public List<ImageCreateRequest> uploadFiles(List<MultipartFile> multipartFiles) {
+    	
         List<ImageCreateRequest> files = new ArrayList<>();
-        int i = 0;
+        int orders = 1;
         for (MultipartFile multipartFile : multipartFiles) {
             if (multipartFile.isEmpty()) {
                 continue;
             }
-            files.add(uploadFile(files.get(i++).getSequence(), multipartFile));
+            files.add(uploadFile(orders++, multipartFile));
+
         }
+        System.out.println(files.size());
         return files;
     }
 
    
-    public ImageCreateRequest uploadFile(int sequence, final MultipartFile multipartFile) {
+    public ImageCreateRequest uploadFile(int orders, MultipartFile multipartFile) {
         if (multipartFile.isEmpty()) {
             return null;
         }
@@ -49,11 +58,10 @@ public class ImageUtils {
             throw new RuntimeException(e);
         }
         
-        ImageCreateRequest createdImage = new ImageCreateRequest(sequence, 
-        														 multipartFile.getOriginalFilename(),
-        														 saveName, 
+        ImageCreateRequest createdImage = new ImageCreateRequest(multipartFile.getOriginalFilename(),
+        														 uploadPath, 
         														 multipartFile.getSize());
-
+        createdImage.setSequence(orders);
         return createdImage;
     }
 

@@ -4,5 +4,6 @@ import com.hyundai.hmingle.controller.dto.request.PostCreateRequest;
 
 public interface PostMapper {
 
-	public void save(PostCreateRequest params);
+	public Long save(PostCreateRequest params);
+	
 }
