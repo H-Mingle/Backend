@@ -22,4 +22,10 @@
      ) 
 </insert>
 
+<select id="getImages">
+	SELECT image_url
+	FROM image
+	WHERE post_id=#{postId}
+</select>
+
 </mapper>

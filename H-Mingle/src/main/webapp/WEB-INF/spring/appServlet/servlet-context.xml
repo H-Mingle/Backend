@@ -36,6 +36,7 @@
 			<beans:list>
 				<beans:value>classpath:security/application-oauth.properties</beans:value>				
 				<beans:value>classpath:app.properties</beans:value>				
+				<beans:value>classpath:security/application-jwt.properties</beans:value>
 			</beans:list>
 		</beans:property>
 	</beans:bean>

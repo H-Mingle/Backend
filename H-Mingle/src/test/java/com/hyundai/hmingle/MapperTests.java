@@ -2,7 +2,6 @@ package com.hyundai.hmingle;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,9 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+
 import com.hyundai.hmingle.controller.dto.request.ImageCreateRequest;
 import com.hyundai.hmingle.mapper.ChannelMapper;
 import com.hyundai.hmingle.mapper.ImageMapper;
+import com.hyundai.hmingle.mapper.ChannelMapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
@@ -21,7 +22,7 @@ public class MapperTests {
 
 	    @Autowired
 	    private ChannelMapper mapper;
-	    
+
 	    @Autowired
 	    private ImageMapper mapper2;
 	    
@@ -50,4 +51,5 @@ public class MapperTests {
 	    	log.info("id="+images.get(1).getPostId()+"sequence="+images.get(1).getSequence()+"saveName="+images.get(1).getSaveName());
 	    	mapper2.saveAll(images);
 	    }
+
 }
