@@ -1,5 +1,7 @@
 package com.hyundai.hmingle.service;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,7 +49,20 @@ public class OauthService {
 	}
 
 	public RefreshResponse refresh(Long memberId) {
-		return null;
+		Optional<Token> savedToken = tokenMapper.findByMemberId(memberId);
+		if (savedToken.isEmpty()) {
+			throw new RuntimeException("");
+		}
+
+		Token token = savedToken.get();
+		if (jwtTokenProvider.validateTokenNotUsable(token.getRefreshToken())) {
+			throw new RuntimeException("");
+		}
+
+		String accessToken = jwtTokenProvider.createAccessToken(String.valueOf(memberId));
+		token.renew(accessToken);
+		tokenMapper.update(token);
+		return new RefreshResponse(accessToken);
 	}
 
 	private Member saveMember(GoogleUserResponse response) {
