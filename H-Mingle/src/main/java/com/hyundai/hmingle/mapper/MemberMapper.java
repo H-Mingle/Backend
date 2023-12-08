@@ -9,8 +9,8 @@ import com.hyundai.hmingle.domain.member.Member;
 
 public interface MemberMapper {
 
-	@Insert("insert into member(email, nickname, introduction, image_url)\n"
-		+ "        values (#{email}, #{nickname}, #{introduction}, #{imageUrl})")
+	@Insert("insert into member(id, email, nickname, introduction, image_url)\n"
+		+ "        values (SEQ_MEMBER_ID.nextval, #{email}, #{nickname}, #{introduction}, #{imageUrl})")
 	void save(Member member);
 
 	@Select("select id, email, nickname, introduction, image_url\n"

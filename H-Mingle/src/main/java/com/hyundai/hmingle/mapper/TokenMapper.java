@@ -10,8 +10,8 @@ import com.hyundai.hmingle.domain.member.Token;
 
 public interface TokenMapper {
 
-	@Insert("insert into token (member_id, access_token, refresh_token)\n"
-		+ "        values (6, #{accessToken}, #{refreshToken})")
+	@Insert("insert into token (id, member_id, access_token, refresh_token)\n"
+		+ "        values (SEQ_TOKEN_ID.nextval, #{member.id}, #{accessToken}, #{refreshToken})")
 	void save(Token token);
 
 	@Update("update token\n"
