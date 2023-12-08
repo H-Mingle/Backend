@@ -9,5 +9,5 @@ public class Image extends Base {
 
 	private String imageUrl;
 	private int sequence;
-	private Integer postId;
+	private Long postId;
 }

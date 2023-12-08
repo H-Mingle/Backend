@@ -41,6 +41,7 @@ public class ChannelServiceImpl implements ChannelService {
 		return channels;
 	}
 	
+
 	public static String calculateTime(Date date) {
 		final int SEC = 60;
 		final int MIN = 60;
