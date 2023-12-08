@@ -5,6 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.hyundai.hmingle.controller.dto.response.OauthLoginResponse;
 import com.hyundai.hmingle.controller.dto.response.OauthLoginUrlResponse;
+import com.hyundai.hmingle.controller.dto.response.RefreshResponse;
 import com.hyundai.hmingle.domain.member.Member;
 import com.hyundai.hmingle.domain.member.Token;
 import com.hyundai.hmingle.mapper.MemberMapper;
@@ -43,6 +44,10 @@ public class OauthService {
 
 		saveToken(member, accessToken, refreshToken, member.getId());
 		return new OauthLoginResponse(accessToken, refreshToken);
+	}
+
+	public RefreshResponse refresh(Long memberId) {
+		return null;
 	}
 
 	private Member saveMember(GoogleUserResponse response) {
