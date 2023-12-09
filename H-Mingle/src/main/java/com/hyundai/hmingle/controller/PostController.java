@@ -19,12 +19,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.hyundai.hmingle.controller.dto.request.ImageCreateRequest;
 import com.hyundai.hmingle.controller.dto.request.PostCreateRequest;
+import com.hyundai.hmingle.controller.dto.response.MemberGetResponse;
 import com.hyundai.hmingle.controller.dto.response.MingleResponse;
 import com.hyundai.hmingle.controller.dto.response.PostCreateResponse;
 import com.hyundai.hmingle.controller.dto.response.PostGetResponse;
 import com.hyundai.hmingle.domain.post.ImageUtils;
 import com.hyundai.hmingle.service.ChannelService;
 import com.hyundai.hmingle.service.ImageService;
+import com.hyundai.hmingle.service.MemberService;
 import com.hyundai.hmingle.service.PostService;
 
 import lombok.AllArgsConstructor;
@@ -36,16 +38,16 @@ public class PostController {
 	private PostService postService;
 	private ImageService imageService;
 	private ImageUtils imageUtils;
+	private MemberService memberService;
 	
 	@PostMapping
 	public ResponseEntity<MingleResponse> savePost(@RequestPart(required = false) List<MultipartFile> uploadImgs,
 												   PostCreateRequest params) {
 		
-		Long postId = postService.savePost(params);
-	
-		List<ImageCreateRequest> images = imageUtils.uploadFiles(uploadImgs);
-		
+		Long postId = postService.savePost(params);	
+		List<ImageCreateRequest> images = imageUtils.uploadFiles(uploadImgs);	
 		PostCreateResponse response = imageService.saveFiles(postId, params.getTitle(), params.getContent(), images);
+		
 		return ResponseEntity.ok(MingleResponse.success("게시글 생성에 성공하였습니다.", response));
 	}
 	
@@ -69,9 +71,8 @@ public class PostController {
 	@GetMapping("/{postId}")
 	public ResponseEntity<MingleResponse<PostGetResponse>> getPost(@PathVariable("postId") Long postId){
 		PostGetResponse response = postService.getPost(postId);
-		Long memberId = postService.findMember(postId);
 		
-		return ResponseEntity.ok(MingleResponse.success("이미지 조회에 성공하셨습니다.", postService.getPost(postId)));
+		return ResponseEntity.ok(MingleResponse.success("게시글 조회에 성공하셨습니다.", response));
 	}
 	
 	

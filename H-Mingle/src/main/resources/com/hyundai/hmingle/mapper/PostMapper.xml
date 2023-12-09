@@ -13,9 +13,18 @@
 	</insert>
 	
 	<select id="getPost">
-		SELECT id, title, content, readCount
-		FROM post
-		WHERE id=#{postId}
+		SELECT t1.*, t2.likes_count
+		FROM (
+	         SELECT p.id as post_id, p.title, p.content, p.read_count, m.nickname
+	    	 FROM post p, member m
+	   		 WHERE p.member_id=m.id and p.id=#{postId}
+	   		 ) t1 
+	    INNER JOIN (
+	   		 	SELECT post_id, count(id) as likes_count
+	   		 	FROM heart
+	   		 	GROUP BY post_id
+	   		 		) t2
+	   	ON t1.post_id = t2.post_id 
 	</select>
 	
 	<select id="findMember">
