@@ -1,10 +1,13 @@
 package com.hyundai.hmingle.service;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.hyundai.hmingle.controller.dto.response.OauthLoginResponse;
 import com.hyundai.hmingle.controller.dto.response.OauthLoginUrlResponse;
+import com.hyundai.hmingle.controller.dto.response.RefreshResponse;
 import com.hyundai.hmingle.domain.member.Member;
 import com.hyundai.hmingle.domain.member.Token;
 import com.hyundai.hmingle.mapper.MemberMapper;
@@ -45,10 +48,27 @@ public class OauthService {
 		return new OauthLoginResponse(accessToken, refreshToken);
 	}
 
+	public RefreshResponse refresh(Long memberId) {
+		Optional<Token> savedToken = tokenMapper.findByMemberId(memberId);
+		if (savedToken.isEmpty()) {
+			throw new RuntimeException("이미 로그아웃하였습니다. 다시 로그인해주세요.");
+		}
+
+		Token token = savedToken.get();
+		if (jwtTokenProvider.validateTokenNotUsable(token.getRefreshToken())) {
+			throw new RuntimeException("부적절한 토큰입니다. 관리자에게 문의해주세요.");
+		}
+
+		String accessToken = jwtTokenProvider.createAccessToken(String.valueOf(memberId));
+		token.renew(accessToken);
+		tokenMapper.update(token);
+		return new RefreshResponse(accessToken);
+	}
+
 	private Member saveMember(GoogleUserResponse response) {
 		return memberMapper.findByEmail(response.getEmail())
 			.orElseGet(() -> {
-				memberMapper.save(Member.toDomain(response.getEmail(), response.getName(), "", response.getPicture()));
+				memberMapper.save(Member.toDomain(response.getEmail(), response.getName(), null, response.getPicture()));
 				return memberMapper.findByEmail(response.getEmail()).get();
 			});
 	}
