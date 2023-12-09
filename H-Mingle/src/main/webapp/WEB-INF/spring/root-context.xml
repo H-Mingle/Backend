@@ -31,6 +31,7 @@
 		<property name="locations">
 			<list>
 				<value>classpath:/security/application-oauth.properties</value>
+				<value>classpath:app.properties</value>
 				<value>classpath:/security/application-jwt.properties</value>
 			</list>
 		</property>
