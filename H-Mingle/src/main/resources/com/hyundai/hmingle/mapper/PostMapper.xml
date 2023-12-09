@@ -27,9 +27,4 @@
 	   	ON t1.post_id = t2.post_id 
 	</select>
 	
-	<select id="findMember">
-		SELECT member_id
-		FROM post
-		WHERE id=#{postId}
-	</select>
 </mapper>

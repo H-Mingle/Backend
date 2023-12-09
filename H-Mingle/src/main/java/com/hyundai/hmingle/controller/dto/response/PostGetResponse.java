@@ -14,4 +14,5 @@ public class PostGetResponse {
 	private int readCount;
 	private String nickname;
 	private int heartCount;
+
 }

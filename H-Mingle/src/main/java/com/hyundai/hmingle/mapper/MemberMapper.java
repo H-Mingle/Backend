@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 
+import com.hyundai.hmingle.controller.dto.response.MemberGetResponse;
 import com.hyundai.hmingle.domain.member.Member;
 
 public interface MemberMapper {
@@ -17,4 +18,6 @@ public interface MemberMapper {
 		+ "        from member\n"
 		+ "        where email = #{email}")
 	Optional<Member> findByEmail(String email);
+	
+	MemberGetResponse getMember(Long memberId);
 }

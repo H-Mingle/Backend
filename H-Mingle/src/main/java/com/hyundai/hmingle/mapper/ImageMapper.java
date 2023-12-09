@@ -10,4 +10,6 @@ public interface ImageMapper {
 
 	public List<String> getFourImages(Long postId);
 
+	public List<String> getImages(Long postId);
+
 }

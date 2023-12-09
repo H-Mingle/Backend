@@ -10,6 +10,11 @@ import org.apache.commons.io.IOUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+
+import java.util.List;
+
+import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.hyundai.hmingle.controller.dto.request.ImageCreateRequest;
 import com.hyundai.hmingle.controller.dto.request.PostCreateRequest;
+
 import com.hyundai.hmingle.controller.dto.response.MemberGetResponse;
 import com.hyundai.hmingle.controller.dto.response.MingleResponse;
 import com.hyundai.hmingle.controller.dto.response.PostCreateResponse;
@@ -27,6 +33,7 @@ import com.hyundai.hmingle.domain.post.ImageUtils;
 import com.hyundai.hmingle.service.ChannelService;
 import com.hyundai.hmingle.service.ImageService;
 import com.hyundai.hmingle.service.MemberService;
+
 import com.hyundai.hmingle.service.PostService;
 
 import lombok.AllArgsConstructor;
@@ -38,7 +45,7 @@ public class PostController {
 	private PostService postService;
 	private ImageService imageService;
 	private ImageUtils imageUtils;
-	private MemberService memberService;
+
 	
 	@PostMapping
 	public ResponseEntity<MingleResponse> savePost(@RequestPart(required = false) List<MultipartFile> uploadImgs,
@@ -74,7 +81,6 @@ public class PostController {
 		
 		return ResponseEntity.ok(MingleResponse.success("게시글 조회에 성공하셨습니다.", response));
 	}
-	
 	
 	
 }
