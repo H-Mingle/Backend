@@ -51,18 +51,21 @@ public class OauthService {
 	public RefreshResponse refresh(Long memberId) {
 		Optional<Token> savedToken = tokenMapper.findByMemberId(memberId);
 		if (savedToken.isEmpty()) {
-			throw new RuntimeException("이미 로그아웃하였습니다. 다시 로그인해주세요.");
+			throw new RuntimeException("로그아웃된 계정입니다.");
 		}
-
 		Token token = savedToken.get();
-		if (jwtTokenProvider.validateTokenNotUsable(token.getRefreshToken())) {
-			throw new RuntimeException("부적절한 토큰입니다. 관리자에게 문의해주세요.");
-		}
 
 		String accessToken = jwtTokenProvider.createAccessToken(String.valueOf(memberId));
 		token.renew(accessToken);
 		tokenMapper.update(token);
 		return new RefreshResponse(accessToken);
+	}
+
+	public void logout(Long memberId) {
+		Optional<Token> savedToken = tokenMapper.findByMemberId(memberId);
+		if (savedToken.isPresent()) {
+			tokenMapper.delete(memberId);
+		}
 	}
 
 	private Member saveMember(GoogleUserResponse response) {

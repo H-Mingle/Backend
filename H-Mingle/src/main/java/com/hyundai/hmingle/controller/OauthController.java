@@ -3,6 +3,7 @@ package com.hyundai.hmingle.controller;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -51,6 +52,16 @@ public class OauthController {
 		return ResponseEntity.ok(MingleResponse.success(
 			"Access Token 재발급에 성공하였습니다.",
 			response
+		));
+	}
+
+	@PostMapping("/logout")
+	public ResponseEntity<MingleResponse<Void>> logout(@RequestHeader HttpHeaders headers) {
+		Long memberId = jwtTokenExtractor.extract(headers);
+		oauthService.logout(memberId);
+		return ResponseEntity.ok(MingleResponse.success(
+			"OAuth2.0 로그아웃에 성공하였습니다.",
+			null
 		));
 	}
 }

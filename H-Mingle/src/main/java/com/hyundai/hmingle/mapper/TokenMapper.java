@@ -11,4 +11,6 @@ public interface TokenMapper {
 	void update(Token token);
 
 	Optional<Token> findByMemberId(Long memberId);
+
+	void delete(Long memberId);
 }

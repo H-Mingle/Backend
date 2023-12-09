@@ -30,4 +30,9 @@
         from token
         where member_id = #{memberId}
     </select>
+
+    <delete id="delete" parameterType="long">
+        delete token
+        where member_id = #{memberId}
+    </delete>
 </mapper>
