@@ -14,7 +14,18 @@
         where member_id = #{member.id}
     </update>
 
-    <select id="findByMemberId" parameterType="long" resultType="token">
+    <resultMap id="tokenResultMap" type="Token">
+        <id property="id" column="id"/>
+        <result property="accessToken" column="access_token"/>
+        <result property="refreshToken" column="refresh_token"/>
+        <collection property="member" ofType="Member" resultMap="memberResultMap"/>
+    </resultMap>
+
+    <resultMap id="memberResultMap" type="Member">
+        <id property="id" column="member_id"/>
+    </resultMap>
+
+    <select id="findByMemberId" parameterType="long" resultMap="tokenResultMap">
         select id, member_id, access_token, refresh_token
         from token
         where member_id = #{memberId}
