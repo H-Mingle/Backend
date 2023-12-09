@@ -46,10 +46,9 @@ public class JwtTokenProvider {
 	public boolean validateTokenNotUsable(String token) {
 		try {
 			Jws<Claims> claims = getClaims(token);
-
 			return claims.getBody().getExpiration().before(new Date());
 		} catch (ExpiredJwtException e) {
-			throw new RuntimeException("");
+			throw new RuntimeException("토큰이 만료되었습니다. 다시 로그인해주세요.");
 		} catch (JwtException | IllegalArgumentException e) {
 			return true;
 		}
