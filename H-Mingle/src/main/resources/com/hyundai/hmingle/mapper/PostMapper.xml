@@ -12,4 +12,15 @@
 		</selectKey>
 	</insert>
 	
+	<select id="getPost">
+		SELECT id, title, content, readCount
+		FROM post
+		WHERE id=#{postId}
+	</select>
+	
+	<select id="findMember">
+		SELECT member_id
+		FROM post
+		WHERE id=#{postId}
+	</select>
 </mapper>

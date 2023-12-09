@@ -22,7 +22,7 @@
      ) 
 </insert>
 
-<select id="getImages">
+<select id="getFourImages">
 	SELECT image_url
 	FROM image
 	WHERE post_id=#{postId}

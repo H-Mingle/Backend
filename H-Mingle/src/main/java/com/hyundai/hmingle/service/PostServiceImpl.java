@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hyundai.hmingle.controller.dto.request.PostCreateRequest;
+import com.hyundai.hmingle.controller.dto.response.PostGetResponse;
 import com.hyundai.hmingle.mapper.ImageMapper;
 import com.hyundai.hmingle.mapper.PostMapper;
 
@@ -21,5 +22,12 @@ public class PostServiceImpl implements PostService {
 		return mapper.save(params);
 	}
 
+	public PostGetResponse getPost(Long postId) {
+		return mapper.getPost(postId);
+	}
+
+	public Long findMember(Long postId) {
+		return mapper.findMember(postId);
+	}
 
 }

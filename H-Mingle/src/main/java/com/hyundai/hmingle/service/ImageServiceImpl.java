@@ -38,20 +38,10 @@ public class ImageServiceImpl implements ImageService{
 	}
 
 
-	public byte[] getImageBytes(Long postId) {
-		byte[] imageBytes = null;
-		
-		List<String> images = mapper.getImages(postId);
-		
-		for(String image:images) {
-			try {
-				imageBytes = IOUtils.toByteArray(new FileInputStream(image));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		return imageBytes;
+	public List<String> getFourImages(Long postId){
+		return mapper.getFourImages(postId);
 	}
+
 
 	
 }

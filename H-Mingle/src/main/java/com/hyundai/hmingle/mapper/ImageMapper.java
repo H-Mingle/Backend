@@ -8,6 +8,6 @@ public interface ImageMapper {
 	
 	public void saveAll(List<ImageCreateRequest> images);
 
-	public List<String> getImages(Long postId);
+	public List<String> getFourImages(Long postId);
 
 }
