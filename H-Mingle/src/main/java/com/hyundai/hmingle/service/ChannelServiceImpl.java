@@ -1,14 +1,9 @@
 package com.hyundai.hmingle.service;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
-
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hyundai.hmingle.controller.dto.response.ChannelGetResponse;
@@ -21,14 +16,14 @@ import lombok.extern.java.Log;
 @Service
 @AllArgsConstructor
 public class ChannelServiceImpl implements ChannelService {
-	@Autowired
+
 	private ChannelMapper mapper;
 	
 	public List<ChannelGetResponse> getList() {
 		List<ChannelGetResponse> channels = mapper.getList();
 		for(ChannelGetResponse channel:channels) {
 			if(channel.getRecent() == null)
-				channel.setRecent("ÀÛ¼º °Ô½Ã¹°ÀÌ ¾ø½À´Ï´Ù");
+				channel.setRecent("ì‘ì„± ê²Œì‹œë¬¼ì´ ì—†ìŠµë‹ˆë‹¤.");
 			else {
 				Timestamp date = Timestamp.valueOf(channel.getRecent());
 				Date modifiedTime = new Date(date.getTime());
@@ -37,12 +32,12 @@ public class ChannelServiceImpl implements ChannelService {
 				channel.setRecent(recentTime);
 			}		
 		}
-	
 		return channels;
 	}
 	
 
 	public static String calculateTime(Date date) {
+
 		final int SEC = 60;
 		final int MIN = 60;
 		final int HOUR = 24;
@@ -56,19 +51,18 @@ public class ChannelServiceImpl implements ChannelService {
 		String msg = null;
 		
 		if(diffTime < SEC) {
-			msg = diffTime + "ÃÊ Àü";
+			msg = diffTime + "ì´ˆ ì „";
 		} else if ((diffTime /= SEC) < MIN) {
-			msg = diffTime + "ºĞ Àü";
+			msg = diffTime + "ë¶„ ì „";
 		} else if ((diffTime /= MIN) < HOUR) {
-			msg = (diffTime) + "½Ã°£ Àü";
+			msg = (diffTime) + "ì‹œê°„ ì „";
 		} else if ((diffTime /= HOUR) < DAY) {
-			msg = (diffTime) + "ÀÏ Àü";
+			msg = (diffTime) + "ì¼ ì „";
 		} else if ((diffTime /= DAY) < MONTH) {
-			msg = (diffTime) + "´Ş Àü";
+			msg = (diffTime) + "ë‹¬ ì „";
 		} else {
-			msg = (diffTime) + "³â Àü";
+			msg = (diffTime) + "ë…„ ì „";
 		}
 		return msg;
 	}
-
 }

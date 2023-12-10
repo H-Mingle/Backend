@@ -2,7 +2,6 @@ package com.hyundai.hmingle.controller;
 
 import java.util.List;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,10 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hyundai.hmingle.controller.dto.response.ChannelGetResponse;
 import com.hyundai.hmingle.controller.dto.response.MingleResponse;
 import com.hyundai.hmingle.service.ChannelService;
-import com.hyundai.hmingle.service.OauthService;
 
 import lombok.AllArgsConstructor;
-import lombok.extern.java.Log;
 
 @RestController
 @RequestMapping("/channels")
@@ -24,6 +21,6 @@ public class ChannelController {
 	
 	@GetMapping
 	public ResponseEntity<MingleResponse<List<ChannelGetResponse>>> getList(){
-		return ResponseEntity.ok(MingleResponse.success("¿µ¾÷Á¡ ¸®½ºÆ® Á¶È¸ ¼º°ø",channelService.getList()));
+		return ResponseEntity.ok(MingleResponse.success("ì˜ì—…ì  ë¦¬ìŠ¤íŠ¸ ì¡°íšŒ ì„±ê³µ",channelService.getList()));
 	}
 }

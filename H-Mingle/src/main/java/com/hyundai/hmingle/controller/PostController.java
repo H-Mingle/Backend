@@ -38,6 +38,6 @@ public class PostController {
 		List<ImageCreateRequest> images = imageUtils.uploadFiles(uploadImgs);
 		
 		PostCreateResponse response = imageService.saveFiles(postId, params.getTitle(), params.getContent(), images);
-		return ResponseEntity.ok(MingleResponse.success("°Ô½Ã±Û »ı¼º¿¡ ¼º°øÇÏ¿´½À´Ï´Ù.", response));
+		return ResponseEntity.ok(MingleResponse.success("ê²Œì‹œê¸€ ìƒì„±ì— ì„±ê³µí•˜ì˜€ìŠµë‹ˆë‹¤.", response));
 	}
 }
