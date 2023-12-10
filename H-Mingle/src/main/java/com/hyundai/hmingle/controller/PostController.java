@@ -54,8 +54,9 @@ public class PostController {
 		Long postId = postService.savePost(params);	
 		List<ImageCreateRequest> images = imageUtils.uploadFiles(uploadImgs);	
 		PostCreateResponse response = imageService.saveFiles(postId, params.getTitle(), params.getContent(), images);
-		
+
 		return ResponseEntity.ok(MingleResponse.success("게시글 생성에 성공하였습니다.", response));
+
 	}
 	
 	@GetMapping("/images/{postId}")

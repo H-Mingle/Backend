@@ -1,14 +1,9 @@
 package com.hyundai.hmingle.service;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
-
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hyundai.hmingle.controller.dto.response.ChannelGetResponse;
@@ -21,14 +16,14 @@ import lombok.extern.java.Log;
 @Service
 @AllArgsConstructor
 public class ChannelServiceImpl implements ChannelService {
-	
+
 	private ChannelMapper mapper;
 	
 	public List<ChannelGetResponse> getList() {
 		List<ChannelGetResponse> channels = mapper.getList();
 		for(ChannelGetResponse channel:channels) {
 			if(channel.getRecent() == null)
-				channel.setRecent("작성 게시물이 없습니다");
+				channel.setRecent("작성 게시물이 없습니다.");
 			else {
 				Timestamp date = Timestamp.valueOf(channel.getRecent());
 				Date modifiedTime = new Date(date.getTime());
@@ -37,12 +32,12 @@ public class ChannelServiceImpl implements ChannelService {
 				channel.setRecent(recentTime);
 			}		
 		}
-	
 		return channels;
 	}
 	
 
 	public static String calculateTime(Date date) {
+
 		final int SEC = 60;
 		final int MIN = 60;
 		final int HOUR = 24;
@@ -70,5 +65,4 @@ public class ChannelServiceImpl implements ChannelService {
 		}
 		return msg;
 	}
-
 }
