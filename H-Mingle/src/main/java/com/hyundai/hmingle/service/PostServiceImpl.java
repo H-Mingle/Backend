@@ -24,7 +24,10 @@ public class PostServiceImpl implements PostService {
 	}
 
 	public PostGetResponse getPost(Long postId) {
-		return mapper.getPost(postId);
+		PostGetResponse response = mapper.getPost(postId);
+		if(response.getHeartCount() == null)
+			response.setHeartCount(0);
+		return response;
 	}
 
 

@@ -19,11 +19,12 @@
 	    	 FROM post p, member m
 	   		 WHERE p.member_id=m.id and p.id=#{postId}
 	   		 ) t1 
-	    INNER JOIN (
+	    LEFT OUTER JOIN (
 	   		 	SELECT post_id, count(id) as likes_count
 	   		 	FROM heart
+	   		 	WHERE removed=0
 	   		 	GROUP BY post_id
-	   		 		) t2
+	   		 ) t2
 	   	ON t1.post_id = t2.post_id 
 	</select>
 	

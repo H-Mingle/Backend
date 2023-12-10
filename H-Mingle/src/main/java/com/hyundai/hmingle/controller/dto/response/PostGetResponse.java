@@ -13,6 +13,6 @@ public class PostGetResponse {
 	private String content;
 	private int readCount;
 	private String nickname;
-	private int heartCount;
+	private Integer heartCount;
 
 }
