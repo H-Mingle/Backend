@@ -1,7 +1,10 @@
 package com.hyundai.hmingle.controller;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,7 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hyundai.hmingle.controller.dto.response.MingleResponse;
 import com.hyundai.hmingle.controller.dto.response.OauthLoginResponse;
 import com.hyundai.hmingle.controller.dto.response.OauthLoginUrlResponse;
+import com.hyundai.hmingle.controller.dto.response.RefreshResponse;
 import com.hyundai.hmingle.service.OauthService;
+import com.hyundai.hmingle.support.JwtTokenExtractor;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -20,12 +25,13 @@ import lombok.RequiredArgsConstructor;
 public class OauthController {
 
 	private final OauthService oauthService;
+	private final JwtTokenExtractor jwtTokenExtractor;
 
 	@GetMapping(value = "/login", params = {"redirectUrl"})
 	public ResponseEntity<MingleResponse<OauthLoginUrlResponse>> generateLoginUrl(@RequestParam String redirectUrl) {
 		OauthLoginUrlResponse response = oauthService.generateLoginUrl(redirectUrl);
 		return ResponseEntity.ok(MingleResponse.success(
-			"OAuth2.0 ë¡œê·¸ì¸ URL ìš”ì²­ì— ì„±ê³µí•˜ì˜€ìŠµë‹ˆë‹¤.",
+			"OAuth2.0 ·Î±×ÀÎ URL ¿äÃ»¿¡ ¼º°øÇÏ¿´½À´Ï´Ù.",
 			response
 		));
 	}
@@ -34,8 +40,28 @@ public class OauthController {
 	public ResponseEntity<MingleResponse<OauthLoginResponse>> login(@RequestParam String redirectUrl, @RequestParam String authorizationCode) {
 		OauthLoginResponse response = oauthService.login(redirectUrl, authorizationCode);
 		return ResponseEntity.ok(MingleResponse.success(
-			"OAuth2.0 ë¡œê·¸ì¸ì— ì„±ê³µí•˜ì˜€ìŠµë‹ˆë‹¤.",
+			"OAuth2.0 ·Î±×ÀÎ¿¡ ¼º°øÇÏ¿´½À´Ï´Ù.",
 			response
+		));
+	}
+
+	@GetMapping("/refresh")
+	public ResponseEntity<MingleResponse<RefreshResponse>> refresh(@RequestHeader HttpHeaders headers) {
+		Long memberId = jwtTokenExtractor.extract(headers);
+		RefreshResponse response = oauthService.refresh(memberId);
+		return ResponseEntity.ok(MingleResponse.success(
+			"Access Token Àç¹ß±Ş¿¡ ¼º°øÇÏ¿´½À´Ï´Ù.",
+			response
+		));
+	}
+
+	@PostMapping("/logout")
+	public ResponseEntity<MingleResponse<Void>> logout(@RequestHeader HttpHeaders headers) {
+		Long memberId = jwtTokenExtractor.extract(headers);
+		oauthService.logout(memberId);
+		return ResponseEntity.ok(MingleResponse.success(
+			"OAuth2.0 ·Î±×¾Æ¿ô¿¡ ¼º°øÇÏ¿´½À´Ï´Ù.",
+			null
 		));
 	}
 }

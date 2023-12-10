@@ -21,7 +21,7 @@ import lombok.extern.java.Log;
 @Service
 @AllArgsConstructor
 public class ChannelServiceImpl implements ChannelService {
-	@Autowired
+	
 	private ChannelMapper mapper;
 	
 	public List<ChannelGetResponse> getList() {
