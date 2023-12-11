@@ -3,8 +3,14 @@
 <mapper namespace="com.hyundai.hmingle.mapper.MemberMapper">
     <insert id="save" parameterType="member" >
         insert into member(id, email, nickname, introduction, image_url)
-        values (seq_memeber_id.nextval, #{email}, #{nickname}, #{introduction}, #{imageUrl})
+        values (seq_member_id.nextval, #{email}, #{nickname}, #{introduction}, #{imageUrl})
     </insert>
+
+    <select id="findById" parameterType="long" resultType="member">
+        select id, email, nickname, introduction, image_url
+        from member
+        where id = #{id}
+    </select>
 
     <select id="findByEmail" parameterType="string" resultType="member">
         select id, email, nickname, introduction, image_url
