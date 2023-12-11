@@ -21,19 +21,19 @@ public class JwtTokenExtractor {
 	public Long extract(HttpHeaders headers) {
 		List<String> authorizations = headers.get(HttpHeaders.AUTHORIZATION);
 		if (authorizations == null) {
-			throw new RuntimeException("token ÀÌ ¾ø½À´Ï´Ù.");
+			throw new RuntimeException("token ì´ ì—†ìŠµë‹ˆë‹¤.");
 		}
 		String token;
 		for (String authorization : authorizations) {
 			if (authorization.toLowerCase().startsWith("Bearer".toLowerCase())) {
 				token = authorization.substring("Bearer".length()).trim();
 				if (isExpired(token)) {
-					throw new RuntimeException("·Î±×¾Æ¿ôµÈ °èÁ¤ÀÔ´Ï´Ù.");
+					throw new RuntimeException("ë¡œê·¸ì•„ì›ƒëœ ê³„ì •ì…ë‹ˆë‹¤.");
 				}
 				return getPayload(token);
 			}
 		}
-		throw new RuntimeException("token À» ÃßÃâÇÏ´Âµ¥ ½ÇÆĞÇÏ¿´½À´Ï´Ù. °ü¸®ÀÚ¿¡°Ô ¹®ÀÇÇØÁÖ¼¼¿ä.");
+		throw new RuntimeException("í—¤ë”ì— í† í°ì´ ì—†ê±°ë‚˜ ì˜ëª»ëœ í† í° í˜•ì‹ì…ë‹ˆë‹¤.");
 	}
 
 	private boolean isExpired(String token) {
