@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyundai.hmingle.mapper.ReplyMapper">
+
+    <select id="findById" parameterType="long" resultType="reply">
+        select id, content, depth
+        from reply
+        where id = #{id}
+    </select>
+
+    <insert id="save" parameterType="map">
+        insert into reply (id, content, post_id, member_id, parent_id, depth)
+        values (seq_reply_id.nextval, #{content}, #{postId}, #{memberId}, #{parentId}, #{depth})
+        <selectKey keyProperty="id" resultType="long" order="AFTER">
+            SELECT seq_reply_id.currval FROM dual
+        </selectKey>
+    </insert>
+</mapper>

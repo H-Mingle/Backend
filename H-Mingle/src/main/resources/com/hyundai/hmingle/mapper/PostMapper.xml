@@ -12,29 +12,34 @@
 		</selectKey>
 	</insert>
 
+    <select id="findById" parameterType="long" resultType="post">
+        select id, title, content
+        from post
+        where id = #{id}
+    </select>
 
-	<select id="getPostDetail" resultType="com.hyundai.hmingle.mapper.dto.response.PostDetailResponse">
-		SELECT t1.*, t2.likes_count
-		FROM (
-				 SELECT p.id as post_id, p.title, p.content, p.read_count, m.nickname
-				 FROM post p, member m
-				 WHERE p.member_id=m.id and p.id=#{postId}
-			 ) t1
-				 LEFT OUTER JOIN (
-			SELECT post_id, count(id) as likes_count
-			FROM heart
-			WHERE removed=0
-			GROUP BY post_id
-		) t2
-	    ON t1.post_id = t2.post_id
-	</select>
+    <select id="getPostDetail" resultType="com.hyundai.hmingle.mapper.dto.response.PostDetailResponse">
+        SELECT t1.*, t2.likes_count
+        FROM (
+                 SELECT p.id as post_id, p.title, p.content, p.read_count, m.nickname
+                 FROM post p, member m
+                 WHERE p.member_id=m.id and p.id=#{postId}
+             ) t1
+                 LEFT OUTER JOIN (
+            SELECT post_id, count(id) as likes_count
+            FROM heart
+            WHERE removed=0
+            GROUP BY post_id
+        ) t2
+                                 ON t1.post_id = t2.post_id
+    </select>
 
-	<select id="getPostId" statementType="CALLABLE">
-		{ call GetPreviousAndNextPostId(
-				#{postId, mode=IN, jdbcType=NUMERIC},
-				#{previousId, mode=OUT, jdbcType=NUMERIC},
-				#{subsequentId, mode=OUT, jdbcType=NUMERIC}
-		)}
-	</select>
-
+    <select id="getPostId" statementType="CALLABLE">
+        { call GetPreviousAndNextPostId(
+                #{postId, mode=IN, jdbcType=NUMERIC},
+                #{previousId, mode=OUT, jdbcType=NUMERIC},
+                #{subsequentId, mode=OUT, jdbcType=NUMERIC}
+               )}
+    </select>
+	
 </mapper>

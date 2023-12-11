@@ -11,6 +11,8 @@
     <typeAliases>
         <typeAlias type="com.hyundai.hmingle.domain.member.Member" alias="member"/>
         <typeAlias type="com.hyundai.hmingle.domain.member.Token" alias="token"/>
+        <typeAlias type="com.hyundai.hmingle.domain.post.Post" alias="post"/>
+        <typeAlias type="com.hyundai.hmingle.domain.post.Reply" alias="reply"/>
 
         <typeAlias type="com.hyundai.hmingle.controller.dto.response.ChannelGetResponse" alias="channelGetResponse"/>
         <typeAlias type="com.hyundai.hmingle.controller.dto.request.ImageCreateRequest" alias="imageCreateRequest"/>

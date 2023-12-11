@@ -11,7 +11,9 @@ public interface MemberMapper {
 
 	void save(Member member);
 
+	Optional<Member> findById(Long memberId);
+
 	Optional<Member> findByEmail(String email);
-	
+
 	MemberGetResponse getMember(Long memberId);
 }
