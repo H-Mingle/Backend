@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.hyundai.hmingle.controller.dto.response.ChannelGetResponse;
-import com.hyundai.hmingle.mapper.ChannelMapper;
+import com.hyundai.hmingle.repository.ChannelRepository;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -18,11 +18,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class ChannelServiceImpl implements ChannelService {
 
-	private final ChannelMapper mapper;
+	private final ChannelRepository channelRepository;
 
 	@Transactional(readOnly = true)
 	public List<ChannelGetResponse> getList() {
-		List<ChannelGetResponse> channels = mapper.getList();
+		List<ChannelGetResponse> channels = channelRepository.getList();
 		for (ChannelGetResponse channel : channels) {
 			if (channel.getRecent() == null)
 				channel.setRecent("작성 게시물이 없습니다.");

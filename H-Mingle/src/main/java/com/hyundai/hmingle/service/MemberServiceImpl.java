@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.hyundai.hmingle.controller.dto.response.MemberGetResponse;
-import com.hyundai.hmingle.mapper.MemberMapper;
+import com.hyundai.hmingle.repository.MemberRepository;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -14,10 +14,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class MemberServiceImpl implements MemberService {
 
-	private final MemberMapper mapper;
+	private final MemberRepository memberRepository;
 
 	@Transactional(readOnly = true)
 	public MemberGetResponse getMember(Long memberId) {
-		return mapper.getMember(memberId);
+		return memberRepository.getMember(memberId);
 	}
 }

@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.hyundai.hmingle.controller.dto.request.PostCreateRequest;
 import com.hyundai.hmingle.controller.dto.response.PostGetResponse;
 
-import com.hyundai.hmingle.mapper.PostMapper;
+import com.hyundai.hmingle.repository.PostRepository;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -22,21 +22,21 @@ import java.util.Map;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class PostServiceImpl implements PostService {
 
-	private final PostMapper mapper;
+	private final PostRepository postRepository;
 
 	public Long savePost(PostCreateRequest params) {
-		return mapper.save(params);
+		return postRepository.save(params);
 	}
 
 	public PostGetResponse getPost(Long postId) {
-		PostDetailResponse details = mapper.getPostDetail(postId);
+		PostDetailResponse details = postRepository.getPostDetail(postId);
 		BigDecimal id = BigDecimal.valueOf(postId);
 
 		Map<String, BigDecimal> parameterMap = new HashMap<>();
 		parameterMap.put("postId", id);
 		parameterMap.put("previousId", null);
 		parameterMap.put("subsequentId", null);
-		mapper.getPostId(parameterMap);
+		postRepository.getPostId(parameterMap);
 
 		Long previousId = convertToLong(parameterMap.get("previousId"));
 		Long subsequentId = convertToLong(parameterMap.get("subsequentId"));
