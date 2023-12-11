@@ -20,6 +20,7 @@ public class ChannelServiceImpl implements ChannelService {
 
 	private final ChannelMapper mapper;
 
+	@Transactional(readOnly = true)
 	public List<ChannelGetResponse> getList() {
 		List<ChannelGetResponse> channels = mapper.getList();
 		for (ChannelGetResponse channel : channels) {

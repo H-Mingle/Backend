@@ -16,6 +16,7 @@ public class MemberServiceImpl implements MemberService {
 
 	private final MemberMapper mapper;
 
+	@Transactional(readOnly = true)
 	public MemberGetResponse getMember(Long memberId) {
 		return mapper.getMember(memberId);
 	}
