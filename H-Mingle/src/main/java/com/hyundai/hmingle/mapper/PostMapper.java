@@ -3,6 +3,7 @@ package com.hyundai.hmingle.mapper;
 import java.util.Optional;
 
 import com.hyundai.hmingle.controller.dto.request.PostCreateRequest;
+import com.hyundai.hmingle.controller.dto.request.PostRequest;
 import com.hyundai.hmingle.mapper.dto.response.PostDetailResponse;
 
 import java.math.BigDecimal;
@@ -18,6 +19,8 @@ public interface PostMapper {
 	PostDetailResponse getPostDetail(Long postId);
 
 	void getPostId(Map<String, BigDecimal> map);
+
+	Long removePost(PostRequest params);
 
 	Optional<Post> findById(Long id);
 

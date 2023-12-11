@@ -1,5 +1,6 @@
 package com.hyundai.hmingle.service;
 
+import com.hyundai.hmingle.controller.dto.request.PostRequest;
 import com.hyundai.hmingle.mapper.dto.response.PostDetailResponse;
 
 import org.springframework.stereotype.Service;
@@ -58,5 +59,9 @@ public class PostServiceImpl implements PostService {
 			return null;
 		}
 		return value.longValue();
+	}
+
+	public Long removePost(PostRequest params){
+		return mapper.removePost(params);
 	}
 }

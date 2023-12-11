@@ -19,5 +19,7 @@
         <typeAlias type="com.hyundai.hmingle.controller.dto.request.ImageCreateRequest" alias="imageCreateRequest"/>
         <typeAlias type="com.hyundai.hmingle.controller.dto.request.PostCreateRequest" alias="postCreateRequest"/>
         <typeAlias type="com.hyundai.hmingle.controller.dto.response.MemberGetResponse" alias="memberGetResponse"/>
+        <typeAlias type="com.hyundai.hmingle.controller.dto.request.PostRequest" alias="postRequest"/>
+        <typeAlias type="com.hyundai.hmingle.mapper.dto.response.PostDetailResponse" alias="postDetailResponse"/>
     </typeAliases>
 </configuration>
