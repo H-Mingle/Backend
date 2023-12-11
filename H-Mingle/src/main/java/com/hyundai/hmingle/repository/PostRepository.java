@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.stereotype.Repository;
 
 import com.hyundai.hmingle.controller.dto.request.PostCreateRequest;
+import com.hyundai.hmingle.controller.dto.request.PostRequest;
 import com.hyundai.hmingle.domain.post.Post;
 import com.hyundai.hmingle.domain.post.Reply;
 import com.hyundai.hmingle.mapper.PostMapper;
@@ -33,6 +34,10 @@ public class PostRepository {
 
 	public void getPostId(Map<String, BigDecimal> parameterMap) {
 		postMapper.getPostId(parameterMap);;
+	}
+
+	public Long removePost(PostRequest params) {
+		return postMapper.removePost(params);
 	}
 
 	public Post findById(Long postId) {

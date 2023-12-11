@@ -54,14 +54,14 @@ public class PostServiceImpl implements PostService {
 		);
 	}
 
+	public Long removePost(PostRequest params){
+		return postRepository.removePost(params);
+	}
+
 	private Long convertToLong(BigDecimal value) {
 		if (value == null) {
 			return null;
 		}
 		return value.longValue();
-	}
-
-	public Long removePost(PostRequest params){
-		return mapper.removePost(params);
 	}
 }
