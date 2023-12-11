@@ -1,27 +1,29 @@
 package com.hyundai.hmingle.service;
 
 import com.hyundai.hmingle.mapper.dto.response.PostDetailResponse;
+
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.hyundai.hmingle.controller.dto.request.PostCreateRequest;
 import com.hyundai.hmingle.controller.dto.response.PostGetResponse;
 
 import com.hyundai.hmingle.mapper.PostMapper;
 
-import lombok.AllArgsConstructor;
-import lombok.extern.java.Log;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
-@Log
 @Service
-@AllArgsConstructor
+@Transactional
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class PostServiceImpl implements PostService {
 
-	private PostMapper mapper;
-	
+	private final PostMapper mapper;
+
 	public Long savePost(PostCreateRequest params) {
 		return mapper.save(params);
 	}
@@ -39,15 +41,16 @@ public class PostServiceImpl implements PostService {
 		Long previousId = convertToLong(parameterMap.get("previousId"));
 		Long subsequentId = convertToLong(parameterMap.get("subsequentId"));
 
-		PostGetResponse response = new PostGetResponse(postId,
-				                                       details.getTitle(),
-													   details.getContent(),
-													   details.getReadCount(),
-				                                       details.getNickname(),
-		                                               details.getHeartCount(),
-		                                               previousId,
-				                                       subsequentId);
-		return response;
+		return new PostGetResponse(
+			postId,
+			details.getTitle(),
+			details.getContent(),
+			details.getReadCount(),
+			details.getNickname(),
+			details.getHeartCount(),
+			previousId,
+			subsequentId
+		);
 	}
 
 	private Long convertToLong(BigDecimal value) {
@@ -56,6 +59,4 @@ public class PostServiceImpl implements PostService {
 		}
 		return value.longValue();
 	}
-
-
 }
