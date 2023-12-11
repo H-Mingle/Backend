@@ -11,6 +11,5 @@ public class Reply extends Base {
 	private String content;
 	private int depth;
 	private Reply parent;
-	private Post post;
 	private Member member;
 }
