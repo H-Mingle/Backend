@@ -1,13 +1,18 @@
 package com.hyundai.hmingle.repository;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
+import com.hyundai.hmingle.controller.dto.request.PostCreateRequest;
+import com.hyundai.hmingle.controller.dto.request.PostRequest;
 import com.hyundai.hmingle.domain.post.Post;
 import com.hyundai.hmingle.domain.post.Reply;
 import com.hyundai.hmingle.mapper.PostMapper;
 import com.hyundai.hmingle.mapper.ReplyMapper;
+import com.hyundai.hmingle.mapper.dto.response.PostDetailResponse;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +23,22 @@ public class PostRepository {
 
 	private final PostMapper postMapper;
 	private final ReplyMapper replyMapper;
+
+	public Long save(PostCreateRequest params) {
+		return postMapper.save(params);
+	}
+
+	public PostDetailResponse getPostDetail(Long postId) {
+		return postMapper.getPostDetail(postId);
+	}
+
+	public void getPostId(Map<String, BigDecimal> parameterMap) {
+		postMapper.getPostId(parameterMap);;
+	}
+
+	public Long removePost(PostRequest params) {
+		return postMapper.removePost(params);
+	}
 
 	public Post findById(Long postId) {
 		return postMapper.findById(postId)
