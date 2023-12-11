@@ -11,4 +11,5 @@ public class MemberGetResponse {
 	private String nickname;
 	private String introduction;
 	private String image;
+	private int postCount;
 }

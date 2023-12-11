@@ -18,10 +18,20 @@
         where email = #{email}
     </select>
 
-	<select id="getMember">
-		SELECT id, email, nickname, introduction, image_url
-		FROM member
-		WHERE id=#{memberId}
+	<select id="getMember" resultType="memberGetResponse">
+        SELECT t1.*, t2.post_count
+        FROM (
+                 SELECT id, email, nickname, introduction, image_url
+                 FROM member
+                 WHERE id=#{memberId}
+             ) t1
+                 LEFT OUTER JOIN (
+            SELECT member_id, count(id) as post_count
+            FROM post
+            WHERE removed=0
+            GROUP BY member_id
+        ) t2
+       ON t1.id = t2.member_id
 	</select>
 
 </mapper>
