@@ -23,7 +23,7 @@ public class ChannelServiceImpl implements ChannelService {
 		List<ChannelGetResponse> channels = mapper.getList();
 		for(ChannelGetResponse channel:channels) {
 			if(channel.getRecent() == null)
-				channel.setRecent("ÀÛ¼º °Ô½Ã¹°ÀÌ ¾ø½À´Ï´Ù.");
+				channel.setRecent("ì‘ì„± ê²Œì‹œë¬¼ì´ ì—†ìŠµë‹ˆë‹¤.");
 			else {
 				Timestamp date = Timestamp.valueOf(channel.getRecent());
 				Date modifiedTime = new Date(date.getTime());
@@ -51,17 +51,17 @@ public class ChannelServiceImpl implements ChannelService {
 		String msg = null;
 		
 		if(diffTime < SEC) {
-			msg = diffTime + "ÃÊ Àü";
+			msg = diffTime + "ì´ˆ ì „";
 		} else if ((diffTime /= SEC) < MIN) {
-			msg = diffTime + "ºĞ Àü";
+			msg = diffTime + "ë¶„ ì „";
 		} else if ((diffTime /= MIN) < HOUR) {
-			msg = (diffTime) + "½Ã°£ Àü";
+			msg = (diffTime) + "ì‹œê°„ ì „";
 		} else if ((diffTime /= HOUR) < DAY) {
-			msg = (diffTime) + "ÀÏ Àü";
+			msg = (diffTime) + "ì¼ ì „";
 		} else if ((diffTime /= DAY) < MONTH) {
-			msg = (diffTime) + "´Ş Àü";
+			msg = (diffTime) + "ë‹¬ ì „";
 		} else {
-			msg = (diffTime) + "³â Àü";
+			msg = (diffTime) + "ë…„ ì „";
 		}
 		return msg;
 	}
