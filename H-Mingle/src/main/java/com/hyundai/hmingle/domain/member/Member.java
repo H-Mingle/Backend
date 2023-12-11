@@ -27,4 +27,8 @@ public class Member extends Base {
 	public static Member toDomain(String email, String nickname, String introduction, String imageUrl) {
 		return new Member(null, email, nickname, introduction, imageUrl);
 	}
+
+	public boolean isSame(Member member) {
+		return id.equals(member.id);
+	}
 }

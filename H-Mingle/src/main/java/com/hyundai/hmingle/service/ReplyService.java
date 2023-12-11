@@ -4,7 +4,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.hyundai.hmingle.controller.dto.request.ReplyCreateRequest;
+import com.hyundai.hmingle.controller.dto.request.ReplyUpdateRequest;
 import com.hyundai.hmingle.controller.dto.response.ReplyCreateResponse;
+import com.hyundai.hmingle.controller.dto.response.ReplyUpdateResponse;
 import com.hyundai.hmingle.domain.member.Member;
 import com.hyundai.hmingle.domain.post.Post;
 import com.hyundai.hmingle.domain.post.Reply;
@@ -12,6 +14,7 @@ import com.hyundai.hmingle.mapper.MemberMapper;
 import com.hyundai.hmingle.mapper.PostMapper;
 import com.hyundai.hmingle.mapper.ReplyMapper;
 import com.hyundai.hmingle.mapper.dto.request.ReplyCreateDto;
+import com.hyundai.hmingle.mapper.dto.request.ReplyUpdateDto;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -41,14 +44,33 @@ public class ReplyService {
 		);
 	}
 
+	public ReplyUpdateResponse update(Long memberId, Long postId, Long replyId, ReplyUpdateRequest request) {
+		Member savedMember = findMemberById(memberId);
+		Post savedPost = findPostById(postId);
+		Reply savedReply = findReplyById(replyId);
+
+		if (!savedReply.isWriter(savedMember)) {
+			throw new RuntimeException("작성자가 아닙니다.");
+		}
+
+		ReplyUpdateDto replyUpdateDto = new ReplyUpdateDto(savedReply.getId(), request.getContent());
+		replyMapper.update(replyUpdateDto);
+		return new ReplyUpdateResponse(savedPost.getId(), savedReply.getId(), replyUpdateDto.getContent());
+	}
+
 	private Member findMemberById(Long memberId) {
 		return memberMapper.findById(memberId)
-			.orElseThrow(() -> new RuntimeException("존재하지 않는 계정입니다."));
+			.orElseThrow(() -> new RuntimeException("존재하지 않는 계정 입니다."));
 	}
 
 	private Post findPostById(Long postId) {
 		return postMapper.findById(postId)
-			.orElseThrow(() -> new RuntimeException("존재하지 않는 포스트입니다."));
+			.orElseThrow(() -> new RuntimeException("존재하지 않는 게시글 입니다."));
+	}
+
+	private Reply findReplyById(Long replyId) {
+		return replyMapper.findById(replyId)
+			.orElseThrow(() -> new RuntimeException("존재하지 않는 댓글입니다."));
 	}
 
 	private Reply findParentReplyById(ReplyCreateRequest request) {

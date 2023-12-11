@@ -2,8 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hyundai.hmingle.mapper.ReplyMapper">
 
-    <select id="findById" parameterType="long" resultType="reply">
-        select id, content, depth
+    <resultMap id="replyResultMap" type="reply">
+        <id property="id" column="id"/>
+        <result property="content" column="content"/>
+        <result property="depth" column="depth"/>
+        <collection property="member" ofType="member" resultMap="memberResultMap"/>
+    </resultMap>
+
+    <resultMap id="memberResultMap" type="member">
+        <id property="id" column="member_id"/>
+    </resultMap>
+
+    <select id="findById" parameterType="long" resultMap="replyResultMap">
+        select id, content, depth, member_id
         from reply
         where id = #{id}
     </select>
@@ -15,4 +26,10 @@
             SELECT seq_reply_id.currval FROM dual
         </selectKey>
     </insert>
+
+    <update id="update" parameterType="replyUpdateDto">
+        update reply
+        set content = #{content}, modified_date = sysdate
+        where id = #{id}
+    </update>
 </mapper>

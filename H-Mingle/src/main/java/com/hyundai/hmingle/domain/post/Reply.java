@@ -27,4 +27,8 @@ public class Reply extends Base {
 			this.parent = reply;
 		}
 	}
+
+	public boolean isWriter(Member member) {
+		return this.member.isSame(member);
+	}
 }
