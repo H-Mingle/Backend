@@ -19,6 +19,12 @@
         where id = #{id}
     </select>
 
+    <select id="findAllByPostId" parameterType="long" resultType="reply">
+        select id
+        from reply
+        where post_id = #{id}
+    </select>
+
     <insert id="save" parameterType="map">
         insert into reply (id, content, post_id, member_id, parent_id, depth)
         values (seq_reply_id.nextval, #{content}, #{postId}, #{memberId}, #{parentId}, #{depth})

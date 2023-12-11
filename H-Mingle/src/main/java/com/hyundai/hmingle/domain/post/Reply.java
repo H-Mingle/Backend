@@ -1,5 +1,7 @@
 package com.hyundai.hmingle.domain.post;
 
+import java.util.Objects;
+
 import org.springframework.stereotype.Component;
 
 import com.hyundai.hmingle.domain.member.Member;
@@ -30,5 +32,18 @@ public class Reply extends Base {
 
 	public boolean isWriter(Member member) {
 		return this.member.isSame(member);
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Reply reply = (Reply)o;
+		return Objects.equals(id, reply.id);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
 	}
 }

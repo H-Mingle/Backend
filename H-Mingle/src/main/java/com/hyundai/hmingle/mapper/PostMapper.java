@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import com.hyundai.hmingle.controller.dto.request.PostCreateRequest;
 import com.hyundai.hmingle.mapper.dto.response.PostDetailResponse;
-import com.hyundai.hmingle.mapper.dto.response.PostIdResponse;
 
 import java.math.BigDecimal;
 import java.util.Map;

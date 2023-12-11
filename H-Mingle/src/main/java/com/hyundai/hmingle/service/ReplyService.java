@@ -1,5 +1,7 @@
 package com.hyundai.hmingle.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,8 +48,12 @@ public class ReplyService {
 
 	public ReplyUpdateResponse update(Long memberId, Long postId, Long replyId, ReplyUpdateRequest request) {
 		Member savedMember = findMemberById(memberId);
-		Post savedPost = findPostById(postId);
+		Post savedPost = findPostWithRepliesById(postId);
 		Reply savedReply = findReplyById(replyId);
+
+		if (!savedPost.contain(savedReply)) {
+			throw new RuntimeException("해당 게시글에 존재하지 않는 댓글입니다.");
+		}
 
 		if (!savedReply.isWriter(savedMember)) {
 			throw new RuntimeException("작성자가 아닙니다.");
@@ -66,6 +72,13 @@ public class ReplyService {
 	private Post findPostById(Long postId) {
 		return postMapper.findById(postId)
 			.orElseThrow(() -> new RuntimeException("존재하지 않는 게시글 입니다."));
+	}
+
+	private Post findPostWithRepliesById(Long postId) {
+		Post post = findPostById(postId);
+		List<Reply> replies = replyMapper.findAllByPostId(postId);
+		post.addReplies(replies);
+		return post;
 	}
 
 	private Reply findReplyById(Long replyId) {
