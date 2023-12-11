@@ -11,6 +11,8 @@ public class PostGetResponse {
 	private Long postId;
 	private String title;
 	private String content;
-	private List<String> images;
-//	private int read
+	private int readCount;
+	private String nickname;
+	private Integer heartCount;
+
 }

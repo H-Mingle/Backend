@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hyundai.hmingle.controller.dto.request.PostCreateRequest;
+import com.hyundai.hmingle.controller.dto.response.PostGetResponse;
+
 import com.hyundai.hmingle.mapper.ImageMapper;
 import com.hyundai.hmingle.mapper.PostMapper;
 
@@ -14,11 +16,18 @@ import lombok.extern.java.Log;
 @Service
 @AllArgsConstructor
 public class PostServiceImpl implements PostService {
-	@Autowired
+	
 	private PostMapper mapper;
 	
 	public Long savePost(PostCreateRequest params) {
 		return mapper.save(params);
+	}
+
+	public PostGetResponse getPost(Long postId) {
+		PostGetResponse response = mapper.getPost(postId);
+		if(response.getHeartCount() == null)
+			response.setHeartCount(0);
+		return response;
 	}
 
 

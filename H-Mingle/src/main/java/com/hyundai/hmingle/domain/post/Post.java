@@ -7,7 +7,6 @@ import com.hyundai.hmingle.domain.common.Base;
 
 @Component
 public class Post extends Base {
-
 	private String title;
 	private String content;
 	private Integer readCount;

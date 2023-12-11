@@ -12,4 +12,10 @@
         from member
         where email = #{email}
     </select>
+
+	<select id="getMember">
+		SELECT id, email, nickname, introduction, image_url
+		FROM member
+		WHERE id=#{memberId}
+	</select>
 </mapper>

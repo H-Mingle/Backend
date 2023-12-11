@@ -9,5 +9,6 @@ public interface ImageService {
 	
 	public PostCreateResponse saveFiles(Long postId, String title, String content, List<ImageCreateRequest> images);
 	
-	public byte[] getImageBytes(Long postId);
+	public List<String> getFourImages(Long postId);
+
 }
