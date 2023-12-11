@@ -11,12 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import java.util.List;
-
-import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,15 +20,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.hyundai.hmingle.controller.dto.request.ImageCreateRequest;
 import com.hyundai.hmingle.controller.dto.request.PostCreateRequest;
-
-import com.hyundai.hmingle.controller.dto.response.MemberGetResponse;
 import com.hyundai.hmingle.controller.dto.response.MingleResponse;
 import com.hyundai.hmingle.controller.dto.response.PostCreateResponse;
 import com.hyundai.hmingle.controller.dto.response.PostGetResponse;
 import com.hyundai.hmingle.domain.post.ImageUtils;
-import com.hyundai.hmingle.service.ChannelService;
 import com.hyundai.hmingle.service.ImageService;
-import com.hyundai.hmingle.service.MemberService;
 
 import com.hyundai.hmingle.service.PostService;
 
@@ -46,18 +38,18 @@ public class PostController {
 	private ImageService imageService;
 	private ImageUtils imageUtils;
 
-	
+
 	@PostMapping
 	public ResponseEntity<MingleResponse> savePost(@RequestPart(required = false) List<MultipartFile> uploadImgs,
 												   PostCreateRequest params) {
 		
-		Long postId = postService.savePost(params);	
-		List<ImageCreateRequest> images = imageUtils.uploadFiles(uploadImgs);	
+		Long postId = postService.savePost(params);
+		List<ImageCreateRequest> images = imageUtils.uploadFiles(uploadImgs);
 		PostCreateResponse response = imageService.saveFiles(postId, params.getTitle(), params.getContent(), images);
-		
-		return ResponseEntity.ok(MingleResponse.success("°Ô½Ã±Û »ý¼º¿¡ ¼º°øÇÏ¿´½À´Ï´Ù.", response));
+
+		return ResponseEntity.ok(MingleResponse.success("ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.", response));
 	}
-	
+
 	@GetMapping("/images/{postId}")
 	public ResponseEntity<MingleResponse<List<byte[]>>> getFourImages(@PathVariable("postId") Long postId){
 		List<String> images = imageService.getFourImages(postId);
@@ -71,16 +63,16 @@ public class PostController {
 		        e.printStackTrace();
 		    }
 		}
-		
-		return ResponseEntity.ok(MingleResponse.success("ÀÌ¹ÌÁö Á¶È¸¿¡ ¼º°øÇÏ¼Ì½À´Ï´Ù.", imageByteArrays));
+
+		return ResponseEntity.ok(MingleResponse.success("ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¼Ì½ï¿½ï¿½Ï´ï¿½.", imageByteArrays));
 	}
-	
+
 	@GetMapping("/{postId}")
 	public ResponseEntity<MingleResponse<PostGetResponse>> getPost(@PathVariable("postId") Long postId){
 		PostGetResponse response = postService.getPost(postId);
-		
-		return ResponseEntity.ok(MingleResponse.success("°Ô½Ã±Û Á¶È¸¿¡ ¼º°øÇÏ¼Ì½À´Ï´Ù.", response));
+
+		return ResponseEntity.ok(MingleResponse.success("ï¿½Ô½Ã±ï¿½ ï¿½ï¿½È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¼Ì½ï¿½ï¿½Ï´ï¿½.", response));
 	}
-	
-	
+
+
 }

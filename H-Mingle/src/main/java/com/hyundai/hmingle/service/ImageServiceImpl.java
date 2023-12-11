@@ -22,7 +22,7 @@ import lombok.extern.java.Log;
 @Service
 @AllArgsConstructor
 public class ImageServiceImpl implements ImageService{
-	@Autowired
+	
 	private ImageMapper mapper;
 	
 	public PostCreateResponse saveFiles(Long postId, String title, String content, List<ImageCreateRequest> images) {

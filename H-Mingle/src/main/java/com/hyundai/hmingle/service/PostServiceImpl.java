@@ -16,7 +16,7 @@ import lombok.extern.java.Log;
 @Service
 @AllArgsConstructor
 public class PostServiceImpl implements PostService {
-	@Autowired
+
 	private PostMapper mapper;
 	
 	public Long savePost(PostCreateRequest params) {
