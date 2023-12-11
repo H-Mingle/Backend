@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.hyundai.hmingle.controller.dto.request.PostRequest;
 import com.hyundai.hmingle.support.JwtTokenExtractor;
 import org.apache.commons.io.IOUtils;
 import org.springframework.http.HttpHeaders;
@@ -75,5 +76,11 @@ public class PostController {
 		return ResponseEntity.ok(MingleResponse.success("게시글 조회에 성공하셨습니다.", response));
 	}
 
+	@PutMapping
+	public ResponseEntity<MingleResponse<Long>> removePost(@RequestParam("postId") Long postId,  @RequestHeader HttpHeaders headers){
+		Long memberId = jwtTokenExtractor.extract(headers);
+		PostRequest params = new PostRequest(postId, memberId);
+		return ResponseEntity.ok(MingleResponse.success("게시글 삭제에 성공하셨습니다.", postService.removePost(params)));
+	}
 
 }

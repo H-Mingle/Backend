@@ -37,4 +37,13 @@
 		)}
 	</select>
 
+	<update id="removePost" parameterType="postRequest">
+		UPDATE post SET removed=1
+		WHERE id=#{postId} AND member_id=#{memberId}
+		<selectKey keyColumn="id" resultType="Long" order="BEFORE">
+			SELECT id
+			FROM post
+			WHERE post_id=#{postId} AND member_id=#{memberId}
+		</selectKey>
+	</update>
 </mapper>
