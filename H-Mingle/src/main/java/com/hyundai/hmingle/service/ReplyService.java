@@ -43,16 +43,23 @@ public class ReplyService {
 		Post savedPost = postRepository.findWithRepliesById(postId);
 		Reply savedReply = replyRepository.findById(replyId);
 
-		if (!savedPost.contain(savedReply)) {
-			throw new RuntimeException("해당 게시글에 존재하지 않는 댓글입니다.");
-		}
-
-		if (!savedReply.isWriter(savedMember)) {
-			throw new RuntimeException("작성자가 아닙니다.");
-		}
+		validateReplyBelongToPost(savedPost, savedReply);
+		validateMemberIsWriter(savedReply, savedMember);
 
 		replyRepository.update(savedReply, request.getContent());
 		return new ReplyUpdateResponse(savedPost.getId(), savedReply.getId(), request.getContent());
+	}
+
+	private void validateReplyBelongToPost(Post savedPost, Reply savedReply) {
+		if (!savedPost.contain(savedReply)) {
+			throw new RuntimeException("해당 게시글에 존재하지 않는 댓글입니다.");
+		}
+	}
+
+	private void validateMemberIsWriter(Reply savedReply, Member savedMember) {
+		if (!savedReply.isWriter(savedMember)) {
+			throw new RuntimeException("작성자가 아닙니다.");
+		}
 	}
 
 	private Long findParentId(Reply parent) {
