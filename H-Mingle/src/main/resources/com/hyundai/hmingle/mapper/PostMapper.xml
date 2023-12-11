@@ -13,12 +13,12 @@
 	</insert>
 
 
-	<select id="getPostDetail" resultType="com.hyundai.hmingle.mapper.dto.response.PostDetailResponse">
+	<select id="getPostDetail" resultType="postDetailResponse">
 		SELECT t1.*, t2.likes_count
 		FROM (
 				 SELECT p.id as post_id, p.title, p.content, p.read_count, m.nickname
 				 FROM post p, member m
-				 WHERE p.member_id=m.id and p.id=#{postId}
+				 WHERE p.member_id=m.id and p.id=#{postId} AND p.removed=0
 			 ) t1
 				 LEFT OUTER JOIN (
 			SELECT post_id, count(id) as likes_count
