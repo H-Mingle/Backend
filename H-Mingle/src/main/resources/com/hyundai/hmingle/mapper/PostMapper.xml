@@ -12,6 +12,11 @@
 		</selectKey>
 	</insert>
 
+    <select id="findById" parameterType="long" resultType="post">
+        select id, title, content
+        from post
+        where id = #{id}
+    </select>
 
 	<select id="getPostDetail" resultType="postDetailResponse">
 		SELECT t1.*, t2.likes_count
