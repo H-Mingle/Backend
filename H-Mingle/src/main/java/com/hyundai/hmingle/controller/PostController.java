@@ -1,14 +1,15 @@
 package com.hyundai.hmingle.controller;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.http.ResponseEntity;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.hyundai.hmingle.controller.dto.request.ImageCreateRequest;
@@ -41,8 +42,7 @@ public class PostController {
 		List<ImageCreateRequest> images = imageUtils.uploadFiles(uploadImgs);
 		PostCreateResponse response = imageService.saveFiles(postId, params.getTitle(), params.getContent(), images);
 
-		return ResponseEntity.ok(MingleResponse.success("�Խñ� ������ �����Ͽ����ϴ�.", response));
-
+		return ResponseEntity.ok(MingleResponse.success("게시글 생성에 성공하였습니다.", response));
 	}
 
 	@GetMapping("/images/{postId}")
@@ -59,14 +59,13 @@ public class PostController {
 		    }
 		}
 
-		return ResponseEntity.ok(MingleResponse.success("�̹��� ��ȸ�� �����ϼ̽��ϴ�.", imageByteArrays));
-	}
+		return ResponseEntity.ok(MingleResponse.success("이미지 조회에 성공하셨습니다.", imageByteArrays));	}
 
 	@GetMapping("/{postId}")
 	public ResponseEntity<MingleResponse<PostGetResponse>> getPost(@PathVariable("postId") Long postId){
 		PostGetResponse response = postService.getPost(postId);
 
-		return ResponseEntity.ok(MingleResponse.success("�Խñ� ��ȸ�� �����ϼ̽��ϴ�.", response));
+		return ResponseEntity.ok(MingleResponse.success("게시글 조회에 성공하셨습니다.", response));
 	}
 
 

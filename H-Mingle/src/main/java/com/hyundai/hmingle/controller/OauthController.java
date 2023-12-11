@@ -31,8 +31,8 @@ public class OauthController {
 	public ResponseEntity<MingleResponse<OauthLoginUrlResponse>> generateLoginUrl(@RequestParam String redirectUrl) {
 		OauthLoginUrlResponse response = oauthService.generateLoginUrl(redirectUrl);
 		return ResponseEntity.ok(MingleResponse.success(
-			"OAuth2.0 ·Î±×ÀÎ URL ¿äÃ»¿¡ ¼º°øÇÏ¿´½À´Ï´Ù.",
-			response
+				"OAuth2.0 ë¡œê·¸ì¸ URL ìš”ì²­ì— ì„±ê³µí•˜ì˜€ìŠµë‹ˆë‹¤.",
+				response
 		));
 	}
 
@@ -40,8 +40,8 @@ public class OauthController {
 	public ResponseEntity<MingleResponse<OauthLoginResponse>> login(@RequestParam String redirectUrl, @RequestParam String authorizationCode) {
 		OauthLoginResponse response = oauthService.login(redirectUrl, authorizationCode);
 		return ResponseEntity.ok(MingleResponse.success(
-			"OAuth2.0 ·Î±×ÀÎ¿¡ ¼º°øÇÏ¿´½À´Ï´Ù.",
-			response
+				"OAuth2.0 ë¡œê·¸ì¸ì— ì„±ê³µí•˜ì˜€ìŠµë‹ˆë‹¤.",
+				response
 		));
 	}
 
@@ -50,8 +50,8 @@ public class OauthController {
 		Long memberId = jwtTokenExtractor.extract(headers);
 		RefreshResponse response = oauthService.refresh(memberId);
 		return ResponseEntity.ok(MingleResponse.success(
-			"Access Token Àç¹ß±Ş¿¡ ¼º°øÇÏ¿´½À´Ï´Ù.",
-			response
+				"Access Token ì¬ë°œê¸‰ì— ì„±ê³µí•˜ì˜€ìŠµë‹ˆë‹¤.",
+				response
 		));
 	}
 
@@ -60,8 +60,8 @@ public class OauthController {
 		Long memberId = jwtTokenExtractor.extract(headers);
 		oauthService.logout(memberId);
 		return ResponseEntity.ok(MingleResponse.success(
-			"OAuth2.0 ·Î±×¾Æ¿ô¿¡ ¼º°øÇÏ¿´½À´Ï´Ù.",
-			null
+				"OAuth2.0 ë¡œê·¸ì•„ì›ƒì— ì„±ê³µí•˜ì˜€ìŠµë‹ˆë‹¤.",
+				null
 		));
 	}
 }

@@ -28,13 +28,13 @@ public class HeartController {
 	public ResponseEntity<MingleResponse<Long>> addHeart(@RequestParam("postId") Long postId, @RequestHeader HttpHeaders headers){
 		Long memberId = jwtTokenExtractor.extract(headers);
 		HeartRequest params = new HeartRequest(postId, memberId);
-		return ResponseEntity.ok(MingleResponse.success("ÁÁ¾Æ¿ä Ãß°¡¿¡ ¼º°øÇÏ¼Ì½À´Ï´Ù.", heartService.addHeart(params)));	
+		return ResponseEntity.ok(MingleResponse.success("ì¢‹ì•„ìš” ì¶”ê°€ì— ì„±ê³µí•˜ì…¨ìŠµë‹ˆë‹¤.", heartService.addHeart(params)));
 	}
 	
 	@PutMapping
 	public ResponseEntity<MingleResponse<Long>> removeHeart(@RequestParam("postId") Long postId,  @RequestHeader HttpHeaders headers){
 		Long memberId = jwtTokenExtractor.extract(headers);
 		HeartRequest params = new HeartRequest(postId, memberId);
-		return ResponseEntity.ok(MingleResponse.success("ÁÁ¾Æ¿ä Ãë¼Ò¿¡ ¼º°øÇÏ¼Ì½À´Ï´Ù.", heartService.removeHeart(params)));	
+		return ResponseEntity.ok(MingleResponse.success("ì¢‹ì•„ìš” ì·¨ì†Œì— ì„±ê³µí•˜ì…¨ìŠµë‹ˆë‹¤.", heartService.removeHeart(params)));
 	}
 }

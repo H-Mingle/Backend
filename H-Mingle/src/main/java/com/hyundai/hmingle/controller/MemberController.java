@@ -21,8 +21,8 @@ public class MemberController {
 	@GetMapping("/{memberId}")
 	public ResponseEntity<MingleResponse<MemberGetResponse>> getPost(@PathVariable("memberId") Long memberId){
 		MemberGetResponse response = memberService.getMember(memberId);
-		
-		return ResponseEntity.ok(MingleResponse.success("¸â¹ö Á¶È¸¿¡ ¼º°øÇÏ¼Ì½À´Ï´Ù.", response));
+
+		return ResponseEntity.ok(MingleResponse.success("ë©¤ë²„ ì¡°íšŒì— ì„±ê³µí•˜ì…¨ìŠµë‹ˆë‹¤.", response));
 	}
 	
 }

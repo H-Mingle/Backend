@@ -21,6 +21,6 @@ public class ChannelController {
 	
 	@GetMapping
 	public ResponseEntity<MingleResponse<List<ChannelGetResponse>>> getList(){
-		return ResponseEntity.ok(MingleResponse.success("¿µ¾÷Á¡ ¸®½ºÆ® Á¶È¸ ¼º°ø",channelService.getList()));
+		return ResponseEntity.ok(MingleResponse.success("ì˜ì—…ì  ë¦¬ìŠ¤íŠ¸ ì¡°íšŒ ì„±ê³µ",channelService.getList()));
 	}
 }
