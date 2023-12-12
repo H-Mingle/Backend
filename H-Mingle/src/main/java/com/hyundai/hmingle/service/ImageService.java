@@ -7,7 +7,7 @@ import com.hyundai.hmingle.controller.dto.response.PostCreateResponse;
 
 public interface ImageService {
 	
-	public PostCreateResponse saveFiles(Long postId, String title, String content, List<ImageCreateRequest> images);
+	public PostCreateResponse saveFiles(Long postId, String content, List<ImageCreateRequest> images);
 	
 	public List<String> getFourImages(Long postId);
 

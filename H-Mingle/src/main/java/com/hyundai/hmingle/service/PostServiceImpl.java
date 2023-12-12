@@ -1,6 +1,7 @@
 package com.hyundai.hmingle.service;
 
-import com.hyundai.hmingle.controller.dto.request.PostRequest;
+import com.hyundai.hmingle.mapper.dto.request.PostCreateDto;
+import com.hyundai.hmingle.mapper.dto.request.PostDeleteDto;
 import com.hyundai.hmingle.mapper.dto.response.PostDetailResponse;
 
 import org.springframework.stereotype.Service;
@@ -25,8 +26,9 @@ public class PostServiceImpl implements PostService {
 
 	private final PostRepository postRepository;
 
-	public Long savePost(PostCreateRequest params) {
-		return postRepository.save(params);
+	public Long savePost(PostCreateRequest params, Long memberId) {
+		PostCreateDto dto = new PostCreateDto(params.getContent(), params.getChannelId(), memberId);
+		return postRepository.save(dto);
 	}
 
 	public PostGetResponse getPost(Long postId) {
@@ -44,7 +46,6 @@ public class PostServiceImpl implements PostService {
 
 		return new PostGetResponse(
 			postId,
-			details.getTitle(),
 			details.getContent(),
 			details.getReadCount(),
 			details.getNickname(),
@@ -54,7 +55,8 @@ public class PostServiceImpl implements PostService {
 		);
 	}
 
-	public Long removePost(PostRequest params){
+	public Long removePost(Long postId, Long memberId){
+		PostDeleteDto params = new PostDeleteDto(postId, memberId);
 		return postRepository.removePost(params);
 	}
 
