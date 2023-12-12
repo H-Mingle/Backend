@@ -32,6 +32,14 @@ public class ReplyRepository {
 		replyMapper.update(replyUpdateDto);
 	}
 
+	public void delete(Long replyId) {
+		replyMapper.delete(replyId);
+	}
+
+	public void deleteWithReplies(Long replyId) {
+		replyMapper.deleteWithReplies(replyId);
+	}
+
 	public Reply findById(Long replyId) {
 		return replyMapper.findById(replyId)
 			.orElseThrow(() -> new RuntimeException("존재하지 않는 댓글입니다."));

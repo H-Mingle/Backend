@@ -38,4 +38,16 @@
         set content = #{content}, modified_date = sysdate
         where id = #{id}
     </update>
+
+    <update id="delete" parameterType="long">
+        update reply
+        set modified_date = sysdate, removed = 1
+        where id = #{id}
+    </update>
+
+    <update id="deleteWithReplies" parameterType="long">
+        update reply
+        set modified_date = sysdate, removed = 1
+        where id = #{id} or parent_id = #{id}
+    </update>
 </mapper>

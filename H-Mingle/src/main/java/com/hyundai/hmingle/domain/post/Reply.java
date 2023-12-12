@@ -34,6 +34,10 @@ public class Reply extends Base {
 		return this.member.isSame(member);
 	}
 
+	public boolean isRoot() {
+		return parent == null;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;

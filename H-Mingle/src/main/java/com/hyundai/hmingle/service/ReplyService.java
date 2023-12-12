@@ -50,6 +50,25 @@ public class ReplyService {
 		return new ReplyUpdateResponse(savedPost.getId(), savedReply.getId(), request.getContent());
 	}
 
+	public void delete(Long memberId, Long postId, Long replyId) {
+		Member savedMember = memberRepository.findById(memberId);
+		Post savedPost = postRepository.findWithRepliesById(postId);
+		Reply savedReply = replyRepository.findById(replyId);
+
+		validateReplyBelongToPost(savedPost, savedReply);
+		validateMemberIsWriter(savedReply, savedMember);
+
+		delete(savedReply);
+	}
+
+	private void delete(Reply savedReply) {
+		if (savedReply.isRoot()) {
+			replyRepository.deleteWithReplies(savedReply.getId());
+		} else {
+			replyRepository.delete(savedReply.getId());
+		}
+	}
+
 	private void validateReplyBelongToPost(Post savedPost, Reply savedReply) {
 		if (!savedPost.contain(savedReply)) {
 			throw new RuntimeException("해당 게시글에 존재하지 않는 댓글입니다.");
