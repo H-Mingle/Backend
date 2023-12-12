@@ -27,8 +27,9 @@ public class PostServiceImpl implements PostService {
 	private final PostRepository postRepository;
 
 	public Long savePost(PostCreateRequest params, Long memberId) {
-		PostCreateDto dto = new PostCreateDto(params.getContent(), params.getChannelId(), memberId);
-		return postRepository.save(dto);
+		PostCreateDto dto = new PostCreateDto(null, params.getContent(), params.getChannelId(), memberId);
+		postRepository.save(dto);
+		return dto.getPostId();
 	}
 
 	public PostGetResponse getPost(Long postId) {

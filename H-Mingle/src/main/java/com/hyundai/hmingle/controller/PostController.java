@@ -31,18 +31,17 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/posts")
 @AllArgsConstructor
 public class PostController {
+
 	private PostService postService;
 	private ImageService imageService;
 	private ImageUtils imageUtils;
 	private JwtTokenExtractor jwtTokenExtractor;
-
 
 	@PostMapping
 	public ResponseEntity<MingleResponse> savePost(@RequestPart(required = false) List<MultipartFile> uploadImgs,
 												   PostCreateRequest params,
 												   @RequestHeader HttpHeaders headers) {
 		Long memberId = jwtTokenExtractor.extract(headers);
-
 		Long postId = postService.savePost(params, memberId);
 		List<ImageCreateRequest> images = imageUtils.uploadFiles(uploadImgs);
 		PostCreateResponse response = imageService.saveFiles(postId, params.getContent(), images);
@@ -63,14 +62,12 @@ public class PostController {
 		        e.printStackTrace();
 		    }
 		}
-
 		return ResponseEntity.ok(MingleResponse.success("이미지 조회에 성공하셨습니다.", imageByteArrays));
 	}
 
 	@GetMapping("/{postId}")
 	public ResponseEntity<MingleResponse<PostGetResponse>> getPost(@PathVariable("postId") Long postId){
 		PostGetResponse response = postService.getPost(postId);
-
 		return ResponseEntity.ok(MingleResponse.success("게시글 조회에 성공하셨습니다.", response));
 	}
 
@@ -79,5 +76,4 @@ public class PostController {
 		Long memberId = jwtTokenExtractor.extract(headers);
 		return ResponseEntity.ok(MingleResponse.success("게시글 삭제에 성공하셨습니다.", postService.removePost(postId, memberId)));
 	}
-
 }
