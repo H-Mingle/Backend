@@ -12,4 +12,6 @@ public interface ImageMapper {
 
 	public List<String> getImages(Long postId);
 
+	void removeImages(Long postId);
+
 }

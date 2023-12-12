@@ -2,6 +2,8 @@ package com.hyundai.hmingle.mapper;
 
 import java.util.Optional;
 
+import com.hyundai.hmingle.controller.dto.request.PostUpdateRequest;
+import com.hyundai.hmingle.controller.dto.response.PostCreateResponse;
 import com.hyundai.hmingle.mapper.dto.request.PostCreateDto;
 import com.hyundai.hmingle.mapper.dto.request.PostDeleteDto;
 import com.hyundai.hmingle.mapper.dto.response.PostDetailResponse;
@@ -27,4 +29,7 @@ public interface PostMapper {
 	int findPostCountByMemberId(Long memberId);
 
 	PostGetResponse getPost(Long postId);
+
+	void updatePost(PostUpdateRequest params);
+
 }

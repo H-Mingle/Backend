@@ -1,6 +1,7 @@
 package com.hyundai.hmingle.service;
 
 import com.hyundai.hmingle.controller.dto.request.PostCreateRequest;
+import com.hyundai.hmingle.controller.dto.request.PostUpdateRequest;
 import com.hyundai.hmingle.controller.dto.response.PostGetResponse;
 
 public interface PostService {
@@ -9,4 +10,6 @@ public interface PostService {
 	public PostGetResponse getPost(Long postId);
 
 	public Long removePost(Long postId, Long memberId);
+
+	public void updatePost(PostUpdateRequest params);
 }

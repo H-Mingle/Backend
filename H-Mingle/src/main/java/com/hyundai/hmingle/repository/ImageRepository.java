@@ -23,4 +23,8 @@ public class ImageRepository {
 	public List<String> getFourImages(Long postId) {
 		return imageMapper.getFourImages(postId);
 	}
+
+	public void removeImages(Long postId){
+		imageMapper.removeImages(postId);
+	};
 }

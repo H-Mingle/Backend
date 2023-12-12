@@ -51,6 +51,11 @@
 		</selectKey>
 	</update>
 
+	<update id="updatePost" parameterType="postUpdateRequest">
+		UPDATE post SET content=#{content}
+		WHERE id=#{postId}
+	</update>
+
 	<select id="findPostCountByMemberId" parameterType="long" resultType="int">
 		select count(id)
 		from post
