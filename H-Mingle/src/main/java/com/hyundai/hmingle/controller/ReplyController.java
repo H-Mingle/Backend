@@ -2,6 +2,7 @@ package com.hyundai.hmingle.controller;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,7 +42,7 @@ public class ReplyController {
 		));
 	}
 
-	@PostMapping("/{replyId}")
+	@PatchMapping("/{replyId}")
 	public ResponseEntity<MingleResponse<ReplyUpdateResponse>> update(
 		@RequestHeader HttpHeaders headers,
 		@PathVariable Long postId,
