@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyundai.hmingle.mapper.MemberMapper">
+    <insert id="save" parameterType="member" >
+        insert into member(id, email, nickname, introduction, image_url)
+        values (seq_member_id.nextval, #{email}, #{nickname}, #{introduction}, #{imageUrl})
+    </insert>
+
+    <select id="findById" parameterType="long" resultType="member">
+        select id, email, nickname, introduction, image_url
+        from member
+        where id = #{id}
+    </select>
+
+    <select id="findByEmail" parameterType="string" resultType="member">
+        select id, email, nickname, introduction, image_url
+        from member
+        where email = #{email}
+    </select>
+
+	<select id="getMember" resultType="memberGetResponse">
+        SELECT t1.*, t2.post_count
+        FROM (
+                 SELECT id, email, nickname, introduction, image_url
+                 FROM member
+                 WHERE id=#{memberId}
+             ) t1
+                 LEFT OUTER JOIN (
+            SELECT member_id, count(id) as post_count
+            FROM post
+            WHERE removed=0
+            GROUP BY member_id
+        ) t2
+       ON t1.id = t2.member_id
+	</select>
+
+</mapper>
+

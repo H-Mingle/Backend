@@ -13,16 +13,28 @@
 
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig"
 		p:driverClassName="oracle.jdbc.OracleDriver"
-		p:jdbcUrl="jdbc:oracle:thin:@localhost:1521/xepdb1"
-		p:username="ace"
-		p:password="1234" />
+		p:jdbcUrl="jdbc:oracle:thin:@localhost:1521/xepdb1?noAccessToProcedureBodies=true"
+		p:username="hmingle"
+		p:password="hmingle1234" />
 	
 	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
 		<constructor-arg ref="hikariConfig" />
 	</bean>
 		
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"
-		p:dataSource-ref="dataSource" />
+		p:dataSource-ref="dataSource"
+		p:configLocation="/WEB-INF/spring/mybatis-config.xml"/>
 
-	<mybatis-spring:scan base-package="com.hyundai.hmingle"/>
+	<mybatis-spring:scan base-package="com.hyundai.hmingle.mapper"/>
+
+	<!-- properties -->
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:/security/application-oauth.properties</value>
+				<value>classpath:app.properties</value>
+				<value>classpath:/security/application-jwt.properties</value>
+			</list>
+		</property>
+	</bean>
 </beans>
