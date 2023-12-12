@@ -76,7 +76,7 @@ public class PostController {
 		return ResponseEntity.ok(MingleResponse.success("게시글 조회에 성공하셨습니다.", response));
 	}
 
-	@PutMapping
+	@DeleteMapping
 	public ResponseEntity<MingleResponse<Long>> removePost(@RequestParam("postId") Long postId,  @RequestHeader HttpHeaders headers){
 		Long memberId = jwtTokenExtractor.extract(headers);
 		PostRequest params = new PostRequest(postId, memberId);
