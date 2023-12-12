@@ -1,22 +1,23 @@
 package com.hyundai.hmingle.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.hyundai.hmingle.controller.dto.response.MemberGetResponse;
-import com.hyundai.hmingle.mapper.ChannelMapper;
-import com.hyundai.hmingle.mapper.MemberMapper;
+import com.hyundai.hmingle.repository.MemberRepository;
 
-import lombok.AllArgsConstructor;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 
 @Service
-@AllArgsConstructor
+@Transactional
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class MemberServiceImpl implements MemberService {
-	@Autowired
-	MemberMapper mapper;
 
+	private final MemberRepository memberRepository;
+
+	@Transactional(readOnly = true)
 	public MemberGetResponse getMember(Long memberId) {
-		return mapper.getMember(memberId);
+		return memberRepository.getMember(memberId);
 	}
-
 }

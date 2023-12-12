@@ -5,24 +5,26 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.hyundai.hmingle.controller.dto.response.ChannelGetResponse;
-import com.hyundai.hmingle.mapper.ChannelMapper;
+import com.hyundai.hmingle.repository.ChannelRepository;
 
-import lombok.AllArgsConstructor;
-import lombok.extern.java.Log;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 
-@Log
 @Service
-@AllArgsConstructor
+@Transactional
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class ChannelServiceImpl implements ChannelService {
 
-	private ChannelMapper mapper;
-	
+	private final ChannelRepository channelRepository;
+
+	@Transactional(readOnly = true)
 	public List<ChannelGetResponse> getList() {
-		List<ChannelGetResponse> channels = mapper.getList();
-		for(ChannelGetResponse channel:channels) {
-			if(channel.getRecent() == null)
+		List<ChannelGetResponse> channels = channelRepository.getList();
+		for (ChannelGetResponse channel : channels) {
+			if (channel.getRecent() == null)
 				channel.setRecent("작성 게시물이 없습니다.");
 			else {
 				Timestamp date = Timestamp.valueOf(channel.getRecent());
@@ -30,27 +32,26 @@ public class ChannelServiceImpl implements ChannelService {
 				String recentTime = calculateTime(modifiedTime);
 
 				channel.setRecent(recentTime);
-			}		
+			}
 		}
 		return channels;
 	}
-	
 
-	public static String calculateTime(Date date) {
+	private String calculateTime(Date date) {
 
 		final int SEC = 60;
 		final int MIN = 60;
 		final int HOUR = 24;
 		final int DAY = 30;
 		final int MONTH = 12;
-		
+
 		long curTime = System.currentTimeMillis();
 		long regTime = date.getTime();
-		long diffTime = (curTime-regTime)/1000;
-		
+		long diffTime = (curTime - regTime) / 1000;
+
 		String msg = null;
-		
-		if(diffTime < SEC) {
+
+		if (diffTime < SEC) {
 			msg = diffTime + "초 전";
 		} else if ((diffTime /= SEC) < MIN) {
 			msg = diffTime + "분 전";

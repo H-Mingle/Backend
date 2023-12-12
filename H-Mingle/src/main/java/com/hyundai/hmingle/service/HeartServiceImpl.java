@@ -1,26 +1,32 @@
 package com.hyundai.hmingle.service;
-import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+
+import org.apache.ibatis.annotations.Param;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.hyundai.hmingle.controller.dto.request.HeartRequest;
-import com.hyundai.hmingle.mapper.HeartMapper;
+import com.hyundai.hmingle.repository.HeartRepository;
 
-import lombok.AllArgsConstructor;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 
 @Service
-@AllArgsConstructor
+@Transactional
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class HeartServiceImpl implements HeartService {
 
-	private HeartMapper mapper;
-	
+	private final HeartRepository heartRepository;
+
 	public Long addHeart(HeartRequest params) {
-		return mapper.addHeart(params);
-	
+		return heartRepository.addHeart(params);
 	}
 
 
 	public Long removeHeart(HeartRequest params) {
-		return mapper.removeHeart(params);
+		return heartRepository.removeHeart(params);
 	}
 
 }
