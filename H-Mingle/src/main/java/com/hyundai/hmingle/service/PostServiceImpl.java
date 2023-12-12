@@ -1,5 +1,7 @@
 package com.hyundai.hmingle.service;
 
+import com.hyundai.hmingle.controller.dto.request.PostUpdateRequest;
+import com.hyundai.hmingle.controller.dto.response.PostCreateResponse;
 import com.hyundai.hmingle.mapper.dto.request.PostCreateDto;
 import com.hyundai.hmingle.mapper.dto.request.PostDeleteDto;
 import com.hyundai.hmingle.mapper.dto.response.PostDetailResponse;
@@ -61,10 +63,17 @@ public class PostServiceImpl implements PostService {
 		return postRepository.removePost(params);
 	}
 
+	public void updatePost(PostUpdateRequest params){
+		postRepository.updatePost(params);
+	}
+
+
 	private Long convertToLong(BigDecimal value) {
 		if (value == null) {
 			return null;
 		}
 		return value.longValue();
 	}
+
+
 }

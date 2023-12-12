@@ -50,4 +50,9 @@
 			WHERE post_id=#{postId} AND member_id=#{memberId}
 		</selectKey>
 	</update>
+
+	<update id="updatePost" parameterType="postUpdateRequest">
+		UPDATE post SET content=#{content}
+		WHERE id=#{postId}
+	</update>
 </mapper>
