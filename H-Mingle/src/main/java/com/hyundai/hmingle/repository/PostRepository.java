@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.hyundai.hmingle.controller.dto.request.PostUpdateRequest;
-import com.hyundai.hmingle.controller.dto.response.PostCreateResponse;
 import com.hyundai.hmingle.mapper.dto.request.PostCreateDto;
 import com.hyundai.hmingle.mapper.dto.request.PostDeleteDto;
 import org.springframework.stereotype.Repository;
