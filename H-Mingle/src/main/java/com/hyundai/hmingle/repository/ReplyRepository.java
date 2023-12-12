@@ -1,13 +1,17 @@
 package com.hyundai.hmingle.repository;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import com.hyundai.hmingle.domain.member.Member;
 import com.hyundai.hmingle.domain.post.Post;
 import com.hyundai.hmingle.domain.post.Reply;
 import com.hyundai.hmingle.mapper.ReplyMapper;
+import com.hyundai.hmingle.mapper.dto.request.RepliesRequest;
 import com.hyundai.hmingle.mapper.dto.request.ReplyCreateDto;
 import com.hyundai.hmingle.mapper.dto.request.ReplyUpdateDto;
+import com.hyundai.hmingle.mapper.dto.response.ReplyResponse;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -53,6 +57,13 @@ public class ReplyRepository {
 			throw new RuntimeException("댓글의 depth 는 최대 1 입니다.");
 		}
 		return parentReply;
+	}
+
+	public List<ReplyResponse> findAll(RepliesRequest request) {
+		if (request.getParentId() == null) {
+			return replyMapper.findAllIfParentIsNull(request.getPostId());
+		}
+		return replyMapper.findAll(request);
 	}
 
 	private Reply findByParentId(Long parentId) {

@@ -1,15 +1,21 @@
 package com.hyundai.hmingle.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.hyundai.hmingle.controller.dto.request.ReplyCreateRequest;
 import com.hyundai.hmingle.controller.dto.request.ReplyUpdateRequest;
 import com.hyundai.hmingle.controller.dto.response.ReplyCreateResponse;
+import com.hyundai.hmingle.controller.dto.response.ReplyDetailResponse;
 import com.hyundai.hmingle.controller.dto.response.ReplyUpdateResponse;
 import com.hyundai.hmingle.domain.member.Member;
 import com.hyundai.hmingle.domain.post.Post;
 import com.hyundai.hmingle.domain.post.Reply;
+import com.hyundai.hmingle.mapper.dto.request.RepliesRequest;
+import com.hyundai.hmingle.mapper.dto.response.ReplyResponse;
 import com.hyundai.hmingle.repository.MemberRepository;
 import com.hyundai.hmingle.repository.PostRepository;
 import com.hyundai.hmingle.repository.ReplyRepository;
@@ -61,11 +67,38 @@ public class ReplyService {
 		delete(savedReply);
 	}
 
+	public List<ReplyDetailResponse> findAllWithPaging(Long postId, Integer page, Integer size, Long parentId) {
+		validatePageIsNotNegative(page);
+		validateSizeIsNotNegative(size);
+
+		Post savedPost = postRepository.findById(postId);
+
+		RepliesRequest request = new RepliesRequest(savedPost.getId(), parentId);
+		List<ReplyResponse> replies = replyRepository.findAll(request);
+
+		return replies.stream()
+			.map(reply -> new ReplyDetailResponse(
+				reply.getId(), reply.getNickname(), reply.getContent(), 0, "", null))
+			.collect(Collectors.toUnmodifiableList());
+	}
+
 	private void delete(Reply savedReply) {
 		if (savedReply.isRoot()) {
 			replyRepository.deleteWithReplies(savedReply.getId());
 		} else {
 			replyRepository.delete(savedReply.getId());
+		}
+	}
+
+	private void validatePageIsNotNegative(Integer page) {
+		if (page <= 0) {
+			throw new RuntimeException("page 는 1보다 커야합니다.");
+		}
+	}
+
+	private void validateSizeIsNotNegative(Integer size) {
+		if (size <= 0) {
+			throw new RuntimeException("size 는 1보다 커야합니다.");
 		}
 	}
 

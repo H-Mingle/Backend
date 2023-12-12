@@ -14,13 +14,16 @@
         <typeAlias type="com.hyundai.hmingle.domain.post.Post" alias="post"/>
         <typeAlias type="com.hyundai.hmingle.domain.post.Reply" alias="reply"/>
 
-        <typeAlias type="com.hyundai.hmingle.mapper.dto.request.ReplyUpdateDto" alias="replyUpdateDto"/>
         <typeAlias type="com.hyundai.hmingle.controller.dto.response.ChannelGetResponse" alias="channelGetResponse"/>
         <typeAlias type="com.hyundai.hmingle.controller.dto.request.ImageCreateRequest" alias="imageCreateRequest"/>
         <typeAlias type="com.hyundai.hmingle.controller.dto.request.PostCreateRequest" alias="postCreateRequest"/>
         <typeAlias type="com.hyundai.hmingle.controller.dto.response.MemberGetResponse" alias="memberGetResponse"/>
+
         <typeAlias type="com.hyundai.hmingle.mapper.dto.response.PostDetailResponse" alias="postDetailResponse"/>
+        <typeAlias type="com.hyundai.hmingle.mapper.dto.response.ReplyResponse" alias="replyResponse"/>
+        <typeAlias type="com.hyundai.hmingle.mapper.dto.request.ReplyUpdateDto" alias="replyUpdateDto"/>
         <typeAlias type="com.hyundai.hmingle.mapper.dto.request.PostCreateDto" alias="postCreateDto"/>
         <typeAlias type="com.hyundai.hmingle.mapper.dto.request.PostDeleteDto" alias="postDeleteDto"/>
+        <typeAlias type="com.hyundai.hmingle.mapper.dto.request.RepliesRequest" alias="repliesRequest"/>
     </typeAliases>
 </configuration>
