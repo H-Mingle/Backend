@@ -33,7 +33,7 @@ public class PostRepository {
 	}
 
 	public void getPostId(Map<String, BigDecimal> parameterMap) {
-		postMapper.getPostId(parameterMap);;
+		postMapper.getPostId(parameterMap);
 	}
 
 	public Long removePost(PostDeleteDto params) {

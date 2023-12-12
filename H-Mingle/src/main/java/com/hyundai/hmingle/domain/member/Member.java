@@ -5,10 +5,12 @@ import org.springframework.stereotype.Component;
 import com.hyundai.hmingle.domain.common.Base;
 
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@Getter
 @Component
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Member extends Base {
 
 	private String email;

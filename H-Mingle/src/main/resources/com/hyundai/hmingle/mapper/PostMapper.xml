@@ -50,4 +50,10 @@
 			WHERE post_id=#{postId} AND member_id=#{memberId}
 		</selectKey>
 	</update>
+
+	<select id="findPostCountByMemberId" parameterType="long" resultType="int">
+		select count(id)
+		from post
+		where member_id = #{member_id}
+	</select>
 </mapper>
