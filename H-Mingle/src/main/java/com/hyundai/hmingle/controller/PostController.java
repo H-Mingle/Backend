@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.hyundai.hmingle.controller.dto.request.PostRequest;
 import com.hyundai.hmingle.support.JwtTokenExtractor;
 import org.apache.commons.io.IOUtils;
 import org.springframework.http.HttpHeaders;
