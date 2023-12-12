@@ -23,7 +23,7 @@ public class MemberController {
 	public ResponseEntity<MingleResponse<MemberGetResponse>> findById(@PathVariable Long memberId) {
 		MemberGetResponse response = memberService.findById(memberId);
 		return ResponseEntity.ok(MingleResponse.success(
-			"멤버 조회에 성공하셨습니다.",
+			"사용자 상세 조회에 성공하셨습니다.",
 			response
 		));
 	}
