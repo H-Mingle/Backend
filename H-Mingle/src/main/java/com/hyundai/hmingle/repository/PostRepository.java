@@ -4,10 +4,10 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
+import com.hyundai.hmingle.mapper.dto.request.PostCreateDto;
+import com.hyundai.hmingle.mapper.dto.request.PostDeleteDto;
 import org.springframework.stereotype.Repository;
 
-import com.hyundai.hmingle.controller.dto.request.PostCreateRequest;
-import com.hyundai.hmingle.controller.dto.request.PostRequest;
 import com.hyundai.hmingle.domain.post.Post;
 import com.hyundai.hmingle.domain.post.Reply;
 import com.hyundai.hmingle.mapper.PostMapper;
@@ -24,7 +24,7 @@ public class PostRepository {
 	private final PostMapper postMapper;
 	private final ReplyMapper replyMapper;
 
-	public Long save(PostCreateRequest params) {
+	public Long save(PostCreateDto params) {
 		return postMapper.save(params);
 	}
 
@@ -36,7 +36,7 @@ public class PostRepository {
 		postMapper.getPostId(parameterMap);;
 	}
 
-	public Long removePost(PostRequest params) {
+	public Long removePost(PostDeleteDto params) {
 		return postMapper.removePost(params);
 	}
 

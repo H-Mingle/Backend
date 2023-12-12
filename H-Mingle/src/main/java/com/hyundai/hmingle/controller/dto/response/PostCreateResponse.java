@@ -7,6 +7,5 @@ import lombok.Data;
 @AllArgsConstructor
 public class PostCreateResponse {
 	private Long postId;
-	private String title;
 	private String content;
 }

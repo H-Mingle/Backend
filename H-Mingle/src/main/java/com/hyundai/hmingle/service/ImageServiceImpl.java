@@ -20,7 +20,7 @@ public class ImageServiceImpl implements ImageService {
 
 	private final ImageRepository imageRepository;
 
-	public PostCreateResponse saveFiles(Long postId, String title, String content, List<ImageCreateRequest> images) {
+	public PostCreateResponse saveFiles(Long postId, String content, List<ImageCreateRequest> images) {
 		if (CollectionUtils.isEmpty(images)) {
 			return null;
 		}
@@ -29,7 +29,7 @@ public class ImageServiceImpl implements ImageService {
 		}
 		imageRepository.saveAll(images);
 
-		return new PostCreateResponse(postId, title, content);
+		return new PostCreateResponse(postId, content);
 	}
 
 	public List<String> getFourImages(Long postId) {
