@@ -16,4 +16,8 @@ public interface ReplyMapper {
 	void save(ReplyCreateDto reply);
 
 	void update(ReplyUpdateDto reply);
+
+	void delete(Long id);
+
+	void deleteWithReplies(Long id);
 }

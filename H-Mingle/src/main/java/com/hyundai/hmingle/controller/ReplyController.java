@@ -2,6 +2,7 @@ package com.hyundai.hmingle.controller;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -53,6 +54,19 @@ public class ReplyController {
 		return ResponseEntity.ok(MingleResponse.success(
 			"댓글 수정에 성공하였습니다.",
 			response
+		));
+	}
+
+	@DeleteMapping("/{replyId}")
+	public ResponseEntity<MingleResponse<Void>> delete(
+		@RequestHeader HttpHeaders headers,
+		@PathVariable Long postId,
+		@PathVariable Long replyId) {
+		Long memberId = jwtTokenExtractor.extract(headers);
+		replyService.delete(memberId, postId, replyId);
+		return ResponseEntity.ok(MingleResponse.success(
+			"댓글 삭제에 성공하였습니다.",
+			null
 		));
 	}
 }
