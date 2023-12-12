@@ -17,7 +17,7 @@ public class MemberServiceImpl implements MemberService {
 	private final MemberRepository memberRepository;
 
 	@Transactional(readOnly = true)
-	public MemberGetResponse getMember(Long memberId) {
-		return memberRepository.getMember(memberId);
+	public MemberGetResponse findById(Long memberId) {
+		return memberRepository.findWithPostCountByMemberId(memberId);
 	}
 }

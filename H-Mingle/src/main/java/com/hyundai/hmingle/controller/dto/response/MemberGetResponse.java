@@ -1,15 +1,15 @@
 package com.hyundai.hmingle.controller.dto.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
-@Data
-@AllArgsConstructor
+@Getter
+@RequiredArgsConstructor
 public class MemberGetResponse {
-	private Long memberId;
-	private String email;
-	private String nickname;
-	private String introduction;
-	private String image;
-	private int postCount;
+
+	private final Long memberId;
+	private final String email;
+	private final String nickname;
+	private final String introduction;
+	private final int postCount;
 }
