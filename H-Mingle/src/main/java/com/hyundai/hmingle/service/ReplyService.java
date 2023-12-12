@@ -29,7 +29,7 @@ public class ReplyService {
 	public ReplyCreateResponse save(Long memberId, Long postId, ReplyCreateRequest request) {
 		Member savedMember = memberRepository.findById(memberId);
 		Post savedPost = postRepository.findById(postId);
-		Reply savedParentReply = replyRepository.findParentById(request);
+		Reply savedParentReply = replyRepository.findParentByParentId(request.getParentId());
 
 		Reply reply = new Reply(request.getContent(), savedParentReply, savedMember);
 		Long parentId = findParentId(savedParentReply);

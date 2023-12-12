@@ -2,7 +2,6 @@ package com.hyundai.hmingle.repository;
 
 import org.springframework.stereotype.Repository;
 
-import com.hyundai.hmingle.controller.dto.request.ReplyCreateRequest;
 import com.hyundai.hmingle.domain.member.Member;
 import com.hyundai.hmingle.domain.post.Post;
 import com.hyundai.hmingle.domain.post.Reply;
@@ -45,19 +44,19 @@ public class ReplyRepository {
 			.orElseThrow(() -> new RuntimeException("존재하지 않는 댓글입니다."));
 	}
 
-	public Reply findParentById(ReplyCreateRequest request) {
-		if (request.getParentId() == null) {
+	public Reply findParentByParentId(Long parentId) {
+		if (parentId == null) {
 			return null;
 		}
-		Reply parentReply = findByParentId(request);
+		Reply parentReply = findByParentId(parentId);
 		if (parentReply.getDepth() > 0) {
 			throw new RuntimeException("댓글의 depth 는 최대 1 입니다.");
 		}
 		return parentReply;
 	}
 
-	private Reply findByParentId(ReplyCreateRequest request) {
-		return replyMapper.findById(request.getParentId())
+	private Reply findByParentId(Long parentId) {
+		return replyMapper.findById(parentId)
 			.orElseThrow(() -> new RuntimeException("존재하지 않는 상위 댓글입니다."));
 	}
 }
