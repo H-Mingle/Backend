@@ -6,6 +6,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class PostCreateDto {
+    private Long postId;
     private String content;
     private Long channelId;
     private Long memberId;

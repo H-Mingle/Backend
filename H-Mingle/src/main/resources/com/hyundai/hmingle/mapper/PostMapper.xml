@@ -5,10 +5,9 @@
 	<insert id="save" parameterType="postCreateDto" >
 		INSERT INTO post (id, content, member_id, channel_id, read_count, created_date)
 		VALUES (SEQ_POST_ID.nextval, #{content}, #{memberId}, #{channelId}, 0, sysdate)
-		<selectKey keyColumn="id" resultType="Long" order="AFTER">
-			SELECT id
-			FROM post
-			WHERE 1=1;
+		<selectKey keyProperty="postId" resultType="Long" order="AFTER">
+			SELECT SEQ_POST_ID.currval
+			FROM dual
 		</selectKey>
 	</insert>
 

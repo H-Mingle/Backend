@@ -42,7 +42,6 @@ public class PostController {
 												   PostCreateRequest params,
 												   @RequestHeader HttpHeaders headers) {
 		Long memberId = jwtTokenExtractor.extract(headers);
-
 		Long postId = postService.savePost(params, memberId);
 		List<ImageCreateRequest> images = imageUtils.uploadFiles(uploadImgs);
 		PostCreateResponse response = imageService.saveFiles(postId, params.getContent(), images);
