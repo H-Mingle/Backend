@@ -3,28 +3,28 @@ package com.hyundai.hmingle.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.hyundai.hmingle.support.JwtTokenExtractor;
-import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 
 import com.hyundai.hmingle.controller.dto.response.MemberGetResponse;
 import com.hyundai.hmingle.controller.dto.response.MingleResponse;
 import com.hyundai.hmingle.service.MemberService;
 
-import lombok.AllArgsConstructor;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 
 @RestController
-@AllArgsConstructor
+@RequestMapping("/members")
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class MemberController {
-	private MemberService memberService;
-	private JwtTokenExtractor jwtTokenExtractor;
 
-	@GetMapping("/profile")
-	public ResponseEntity<MingleResponse<MemberGetResponse>> getPost(@RequestHeader HttpHeaders headers){
-		Long memberId = jwtTokenExtractor.extract(headers);
-		MemberGetResponse response = memberService.getMember(memberId);
+	private final MemberService memberService;
 
-		return ResponseEntity.ok(MingleResponse.success("멤버 조회에 성공하셨습니다.", response));
+	@GetMapping("/{memberId}")
+	public ResponseEntity<MingleResponse<MemberGetResponse>> findById(@PathVariable Long memberId) {
+		MemberGetResponse response = memberService.findById(memberId);
+		return ResponseEntity.ok(MingleResponse.success(
+			"사용자 상세 조회에 성공하셨습니다.",
+			response
+		));
 	}
-	
 }

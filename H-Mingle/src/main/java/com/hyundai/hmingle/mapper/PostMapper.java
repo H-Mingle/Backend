@@ -26,6 +26,8 @@ public interface PostMapper {
 
 	Optional<Post> findById(Long id);
 
+	int findPostCountByMemberId(Long memberId);
+
 	PostGetResponse getPost(Long postId);
 
 	void updatePost(PostUpdateRequest params);
