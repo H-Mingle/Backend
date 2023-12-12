@@ -1,5 +1,9 @@
 package com.hyundai.hmingle.service;
 
+import java.util.HashMap;
+
+import org.apache.ibatis.annotations.Param;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +24,9 @@ public class HeartServiceImpl implements HeartService {
 		return heartRepository.addHeart(params);
 	}
 
+
 	public Long removeHeart(HeartRequest params) {
 		return heartRepository.removeHeart(params);
 	}
+
 }
