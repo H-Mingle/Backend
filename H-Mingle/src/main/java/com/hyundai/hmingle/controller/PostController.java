@@ -1,18 +1,14 @@
 package com.hyundai.hmingle.controller;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.hyundai.hmingle.controller.dto.request.PostUpdateRequest;
+import com.hyundai.hmingle.support.ImageConvertor;
 import com.hyundai.hmingle.support.JwtTokenExtractor;
-import org.apache.commons.io.IOUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,17 +22,18 @@ import com.hyundai.hmingle.service.ImageService;
 
 import com.hyundai.hmingle.service.PostService;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/posts")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class PostController {
-	private PostService postService;
-	private ImageService imageService;
-	private ImageUtils imageUtils;
-	private JwtTokenExtractor jwtTokenExtractor;
 
+	private final PostService postService;
+	private final ImageService imageService;
+	private final ImageUtils imageUtils;
+	private final ImageConvertor imageConvertor;
+	private final JwtTokenExtractor jwtTokenExtractor;
 
 	@PostMapping
 	public ResponseEntity<MingleResponse> savePost(@RequestPart(required = false) List<MultipartFile> uploadImgs,
@@ -53,16 +50,9 @@ public class PostController {
 	@GetMapping("/images/{postId}")
 	public ResponseEntity<MingleResponse<List<byte[]>>> getFourImages(@PathVariable("postId") Long postId){
 		List<String> images = imageService.getFourImages(postId);
-		List<byte[]> imageByteArrays = new ArrayList<>();
-
-		for (String image : images) {
-		    try (InputStream imageStream = new FileInputStream(image)) {
-		        byte[] imageByteArray = IOUtils.toByteArray(imageStream);
-		        imageByteArrays.add(imageByteArray);
-		    } catch (IOException e) {
-		        e.printStackTrace();
-		    }
-		}
+		List<byte[]> imageByteArrays = images.stream()
+			.map(imageConvertor::convertPath)
+			.collect(Collectors.toUnmodifiableList());
 
 		return ResponseEntity.ok(MingleResponse.success("이미지 조회에 성공하셨습니다.", imageByteArrays));
 	}
