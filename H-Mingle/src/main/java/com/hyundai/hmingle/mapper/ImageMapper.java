@@ -16,6 +16,8 @@ public interface ImageMapper {
 
 	List<MyPostResponse> findImageUrlByMemberId(MyPostRequest request);
 
+	List<MyPostResponse> findImageUrlLikedByMemberId(MyPostRequest request);
+
 	void saveAll(List<ImageCreateRequest> images);
 
 	void removeImages(Long postId);
