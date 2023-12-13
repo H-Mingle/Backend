@@ -64,4 +64,9 @@ public class PostRepository {
 	public List<Long> findPostByChannelId(Long channelId){
 		return postMapper.findPostByChannelId(channelId);
 	}
+
+	public int upReadCount(Long postId){
+		return postMapper.upReadCount(postId);
+	}
+
 }

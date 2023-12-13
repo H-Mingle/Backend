@@ -56,8 +56,9 @@ public class PostController {
 	}
 
 	@GetMapping("/{postId}")
-	public ResponseEntity<MingleResponse<PostGetResponse>> getPost(@PathVariable("postId") Long postId){
-		PostGetResponse response = postService.getPost(postId);
+	public ResponseEntity<MingleResponse<PostGetResponse>> getPost(@PathVariable("postId") Long postId,
+																   @RequestHeader(name="memberId", required = false) Long memberId){
+		PostGetResponse response = postService.getPost(postId, memberId);
 		return ResponseEntity.ok(MingleResponse.success("게시글 조회에 성공하셨습니다.", response));
 	}
 
@@ -69,7 +70,7 @@ public class PostController {
 
 	@PatchMapping("/{postId}")
 	public ResponseEntity<MingleResponse<PostCreateResponse>> updatePost(@PathVariable("postId") Long postId,
-																		 @RequestPart(required = false) List<MultipartFile> uploadImgs,
+																		 @RequestPart List<MultipartFile> uploadImgs,
 																		 PostUpdateRequest params){
 
 		PostUpdateRequest request = new PostUpdateRequest(params.getPostId(), params.getContent());

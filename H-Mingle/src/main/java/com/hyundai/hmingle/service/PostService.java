@@ -11,7 +11,7 @@ import java.util.List;
 public interface PostService {
 	public Long savePost(PostCreateRequest params, Long memberId);
 
-	public PostGetResponse getPost(Long postId);
+	public PostGetResponse getPost(Long postId, Long memberId);
 
 	public Long removePost(Long postId, Long memberId);
 

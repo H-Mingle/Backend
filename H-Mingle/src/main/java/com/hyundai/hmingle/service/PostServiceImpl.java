@@ -9,6 +9,7 @@ import com.hyundai.hmingle.mapper.dto.request.PostDeleteDto;
 import com.hyundai.hmingle.mapper.dto.response.PostDetailResponse;
 
 import com.hyundai.hmingle.mapper.dto.response.PostResponse;
+import com.hyundai.hmingle.repository.HeartRepository;
 import com.hyundai.hmingle.repository.ImageRepository;
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Service;
@@ -38,6 +39,7 @@ public class PostServiceImpl implements PostService {
 
 	private final PostRepository postRepository;
 	private final ImageRepository imageRepository;
+	private final HeartRepository heartRepository;
 
 	public Long savePost(PostCreateRequest params, Long memberId) {
 		PostCreateDto dto = new PostCreateDto(null, params.getContent(), params.getChannelId(), memberId);
@@ -46,11 +48,15 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Transactional(readOnly = true)
-	public PostGetResponse getPost(Long postId) {
-		postRepository.findById(postId);
+	public PostGetResponse getPost(Long postId, Long memberId) {
+		postRepository.upReadCount(postId);
 
 		PostDetailResponse details = postRepository.getPostDetail(postId);
 		BigDecimal id = BigDecimal.valueOf(postId);
+
+		int heartCount = 0;
+		if(details.getHeartCount() != null)
+			heartCount = details.getHeartCount();
 
 		Map<String, BigDecimal> parameterMap = new HashMap<>();
 		parameterMap.put("postId", id);
@@ -63,15 +69,23 @@ public class PostServiceImpl implements PostService {
 
 		Long channelId = details.getChannel_id();
 		String channelName = getChannelName(channelId);
+
+
+		boolean isLiked = false;
+		if(heartRepository.findHeart(postId, memberId)!=null)
+			isLiked = true;
+
+
 		PostGetResponse response = new PostGetResponse(postId,
 													   details.getContent(),
 													   details.getReadCount(),
 				                                       details.getNickname(),
-		                                               details.getHeartCount(),
+				                                       heartCount,
 													   channelName,
 													   details.getCreatedDate(),
 		                                               previousId,
-				                                       subsequentId);
+				                                       subsequentId,
+				                                       isLiked);
 		return response;
 	}
 
