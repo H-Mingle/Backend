@@ -37,7 +37,11 @@ public class TokenRepository {
 	}
 
 	public Token findByMemberId(Long memberId) {
-		return tokenMapper.findByMemberId(memberId)
+		Token savedToken = tokenMapper.findByMemberId(memberId)
 			.orElseThrow(() -> new RuntimeException("로그아웃된 계정입니다."));
+		if (savedToken.isRemoved()) {
+			throw new RuntimeException("삭제된 토큰입니다.");
+		}
+		return savedToken;
 	}
 }
