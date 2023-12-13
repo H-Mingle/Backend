@@ -21,4 +21,9 @@ public class HeartRepository {
 	public Long removeHeart(HeartRequest params) {
 		return heartMapper.removeHeart(params);
 	}
+
+	public Long findHeart(Long postId, Long memberId){
+		HeartRequest params = new HeartRequest(postId, memberId);
+		return heartMapper.findHeart(params);
+	}
 }

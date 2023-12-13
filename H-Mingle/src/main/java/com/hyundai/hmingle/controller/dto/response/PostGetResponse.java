@@ -10,9 +10,10 @@ public class PostGetResponse {
 	private String content;
 	private int readCount;
 	private String nickname;
-	private Integer heartCount;
+	private int heartCount;
 	private String channelName;
 	private String createdDate;
 	private Long previousId;
 	private Long subsequentId;
+	private boolean isLiked;
 }
