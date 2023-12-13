@@ -28,12 +28,14 @@
 	WHERE post_id=#{postId} AND removed=0
 </select>
 
-	<select id="findImageUrlByMemberId" parameterType="long" resultType="myPostResponse">
+	<select id="findImageUrlByMemberId" resultType="myPostResponse">
 		select p.id as id, image_url
 		from post p
 	 		left join image im
 				on p.id = im.post_id
 		where member_id = #{memberId} and orders = 1
+		order by p.id desc
+		offset #{startRow} rows fetch next #{size} rows only
 	</select>
 
 	<update id="removeImages">

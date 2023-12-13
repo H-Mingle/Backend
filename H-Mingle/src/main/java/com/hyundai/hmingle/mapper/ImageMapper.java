@@ -3,6 +3,7 @@ package com.hyundai.hmingle.mapper;
 import java.util.List;
 
 import com.hyundai.hmingle.controller.dto.request.ImageCreateRequest;
+import com.hyundai.hmingle.mapper.dto.request.MyPostRequest;
 import com.hyundai.hmingle.mapper.dto.response.MyPostResponse;
 
 public interface ImageMapper {
@@ -11,7 +12,7 @@ public interface ImageMapper {
 
 	List<String> getImages(Long postId);
 
-	List<MyPostResponse> findImageUrlByMemberId(Long memberId);
+	List<MyPostResponse> findImageUrlByMemberId(MyPostRequest request);
 
 	void saveAll(List<ImageCreateRequest> images);
 

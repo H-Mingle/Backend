@@ -26,12 +26,40 @@ public class MyPageService {
 	private final ImageRepository imageRepository;
 	private final ImageConvertor imageConvertor;
 
-	public MyPostsResponse findPostsWrittenMember(Long memberId, Integer page, Integer size) {
+	public MyPostsResponse findPostsWrittenMember(Long memberId, Integer requestPage, Integer requestSize) {
+		int page = validatePageIsNotNegative(requestPage);
+		int size = validateSizeIsNotNegative(requestSize);
+		int startRow = calculateStartRow(page, size);
+
 		Member savedMember = memberRepository.findById(memberId);
-		List<MyPostResponse> responses = imageRepository.findImageUrlsByMemberId(savedMember.getId());
+		List<MyPostResponse> responses = imageRepository.findImageUrlsByMemberId(savedMember.getId(), startRow, size);
 		return new MyPostsResponse(false,
 			responses.stream()
 				.map(response -> new PostsResponse(response.getId(), imageConvertor.convertPath(response.getImageUrl())))
 				.collect(Collectors.toUnmodifiableList()));
+	}
+
+	private int calculateStartRow(int page, int size) {
+		return (page - 1) * size;
+	}
+
+	private int validatePageIsNotNegative(Integer page) {
+		if (page == null) {
+			throw new RuntimeException("page 를 입력해주세요.");
+		}
+		if (page <= 0) {
+			throw new RuntimeException("page 는 1보다 커야합니다.");
+		}
+		return page;
+	}
+
+	private int validateSizeIsNotNegative(Integer size) {
+		if (size == null) {
+			throw new RuntimeException("size 를 입력해주세요.");
+		}
+		if (size <= 0) {
+			throw new RuntimeException("size 는 1보다 커야합니다.");
+		}
+		return size;
 	}
 }
