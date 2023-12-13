@@ -20,7 +20,7 @@
 	<select id="getPostDetail" resultType="postDetailResponse">
 		SELECT t1.*, t2.likes_count
 		FROM (
-				 SELECT p.id as post_id, p.title, p.content, p.read_count, m.nickname, p.channel_id, p.created_date
+				 SELECT p.id as post_id,  p.content, p.read_count, m.nickname, p.channel_id, p.created_date
 				 FROM post p, member m
 				 WHERE p.member_id=m.id and p.id=#{postId} AND p.removed=0
 			 ) t1
