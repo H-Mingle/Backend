@@ -32,8 +32,9 @@ public class MyPageService {
 		int startRow = calculateStartRow(page, size);
 
 		Member savedMember = memberRepository.findById(memberId);
-		List<MyPostResponse> responses = imageRepository.findImageUrlsByMemberId(savedMember.getId(), startRow, size);
-		return new MyPostsResponse(false,
+		List<MyPostResponse> responses = imageRepository.findImageUrlsByMemberId(savedMember.getId(), startRow, size + 1);
+		boolean hasNext = hasNext(size, responses.size());
+		return new MyPostsResponse(hasNext,
 			responses.stream()
 				.map(response -> new PostsResponse(response.getId(), imageConvertor.convertPath(response.getImageUrl())))
 				.collect(Collectors.toUnmodifiableList()));
@@ -41,6 +42,10 @@ public class MyPageService {
 
 	private int calculateStartRow(int page, int size) {
 		return (page - 1) * size;
+	}
+
+	private boolean hasNext(int requestSize, int responseSize) {
+		return responseSize > requestSize;
 	}
 
 	private int validatePageIsNotNegative(Integer page) {
