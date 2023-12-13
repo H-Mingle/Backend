@@ -9,4 +9,6 @@ public interface MemberService {
 	MemberGetResponse findById(Long memberId);
 
 	MemberUpdateResponse update(MemberUpdateRequest memberUpdateDto);
+
+	void leave(Long memberId);
 }
