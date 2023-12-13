@@ -25,6 +25,36 @@
         where post_id = #{id}
     </select>
 
+    <select id="findAll" resultType="replyResponse">
+        select
+            r.id as id, nickname, content, parent_id,
+            (select count(id)
+             from reply_heart
+             where reply_id = r.id)  as heart_count,
+            r.created_date as create_date
+        from reply r
+            left join member m
+                on r.member_id = m.id
+        where post_id = #{postId} and parent_id = #{parentId}
+        order by r.id desc
+        offset #{startRow} rows fetch next #{size} rows only
+    </select>
+
+    <select id="findAllIfParentIsNull" resultType="replyResponse">
+        select
+            r.id as id, nickname, content, parent_id,
+            (select count(id)
+             from reply_heart
+             where reply_id = r.id)  as heart_count,
+            r.created_date as create_date
+        from reply r
+            left join member m
+                on r.member_id = m.id
+        where post_id = #{postId} and parent_id is null
+        order by r.id desc
+        offset #{startRow} rows fetch next #{size} rows only
+    </select>
+
     <insert id="save" parameterType="map">
         insert into reply (id, content, post_id, member_id, parent_id, depth)
         values (seq_reply_id.nextval, #{content}, #{postId}, #{memberId}, #{parentId}, #{depth})
