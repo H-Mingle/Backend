@@ -81,7 +81,7 @@ public class ReplyService {
 		return replies.stream()
 			.map(reply -> new ReplyDetailResponse(
 				reply.getId(), reply.getNickname(), reply.getContent(), reply.getHeartCount(),
-				dateTimeConvertor.calculate(reply.getCreateDate()), null))
+				dateTimeConvertor.calculate(reply.getCreateDate()), reply.getParentId()))
 			.collect(Collectors.toUnmodifiableList());
 	}
 
