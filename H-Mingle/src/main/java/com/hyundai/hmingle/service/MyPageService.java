@@ -26,6 +26,7 @@ public class MyPageService {
 	private final ImageRepository imageRepository;
 	private final ImageConvertor imageConvertor;
 
+	@Transactional(readOnly = true)
 	public MyPostsResponse findPostsWrittenMember(Long memberId, Integer requestPage, Integer requestSize) {
 		int page = validatePageIsNotNegative(requestPage);
 		int size = validateSizeIsNotNegative(requestSize);
@@ -33,6 +34,21 @@ public class MyPageService {
 
 		Member savedMember = memberRepository.findById(memberId);
 		List<MyPostResponse> responses = imageRepository.findImageUrlsByMemberId(savedMember.getId(), startRow, size + 1);
+		return convertMyPostsResponse(size, responses);
+	}
+
+	@Transactional(readOnly = true)
+	public MyPostsResponse findPostsLikedMember(Long memberId, Integer requestPage, Integer requestSize) {
+		int page = validatePageIsNotNegative(requestPage);
+		int size = validateSizeIsNotNegative(requestSize);
+		int startRow = calculateStartRow(page, size);
+
+		Member savedMember = memberRepository.findById(memberId);
+		List<MyPostResponse> responses = imageRepository.findImageUrlLikedByMemberId(savedMember.getId(), startRow, size + 1);
+		return convertMyPostsResponse(size, responses);
+	}
+
+	private MyPostsResponse convertMyPostsResponse(int size, List<MyPostResponse> responses) {
 		boolean hasNext = hasNext(size, responses.size());
 		if (hasNext) {
 			responses.remove(responses.size() - 1);
