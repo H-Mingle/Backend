@@ -34,6 +34,9 @@ public class MyPageService {
 		Member savedMember = memberRepository.findById(memberId);
 		List<MyPostResponse> responses = imageRepository.findImageUrlsByMemberId(savedMember.getId(), startRow, size + 1);
 		boolean hasNext = hasNext(size, responses.size());
+		if (hasNext) {
+			responses.remove(responses.size() - 1);
+		}
 		return new MyPostsResponse(hasNext,
 			responses.stream()
 				.map(response -> new PostsResponse(response.getId(), imageConvertor.convertPath(response.getImageUrl())))
