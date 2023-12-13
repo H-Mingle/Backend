@@ -30,7 +30,8 @@
             r.id as id, nickname, content, parent_id,
             (select count(id)
              from reply_heart
-             where reply_id = r.id)  as heart_count
+             where reply_id = r.id)  as heart_count,
+            r.created_date as create_date
         from reply r
             left join member m
                 on r.member_id = m.id
@@ -43,7 +44,8 @@
             r.id as id, nickname, content, parent_id,
             (select count(id)
              from reply_heart
-             where reply_id = r.id)  as heart_count
+             where reply_id = r.id)  as heart_count,
+            r.created_date as create_date
         from reply r
             left join member m
                 on r.member_id = m.id

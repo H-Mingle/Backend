@@ -19,6 +19,7 @@ import com.hyundai.hmingle.mapper.dto.response.ReplyResponse;
 import com.hyundai.hmingle.repository.MemberRepository;
 import com.hyundai.hmingle.repository.PostRepository;
 import com.hyundai.hmingle.repository.ReplyRepository;
+import com.hyundai.hmingle.support.DateTimeConvertor;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +32,7 @@ public class ReplyService {
 	private final MemberRepository memberRepository;
 	private final PostRepository postRepository;
 	private final ReplyRepository replyRepository;
+	private final DateTimeConvertor dateTimeConvertor;
 
 	public ReplyCreateResponse save(Long memberId, Long postId, ReplyCreateRequest request) {
 		Member savedMember = memberRepository.findById(memberId);
@@ -78,7 +80,8 @@ public class ReplyService {
 
 		return replies.stream()
 			.map(reply -> new ReplyDetailResponse(
-				reply.getId(), reply.getNickname(), reply.getContent(), reply.getHeartCount(), "", null))
+				reply.getId(), reply.getNickname(), reply.getContent(), reply.getHeartCount(),
+				dateTimeConvertor.calculate(reply.getCreateDate()), null))
 			.collect(Collectors.toUnmodifiableList());
 	}
 

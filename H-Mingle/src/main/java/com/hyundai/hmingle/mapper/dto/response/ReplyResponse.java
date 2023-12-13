@@ -1,5 +1,7 @@
 package com.hyundai.hmingle.mapper.dto.response;
 
+import java.time.LocalDateTime;
+
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,4 +15,5 @@ public class ReplyResponse {
 	private String content;
 	private Long parentId;
 	private int heartCount;
+	private LocalDateTime createDate;
 }
