@@ -25,4 +25,11 @@
         modified_date=sysdate
         WHERE id=#{memberId}
     </update>
+
+    <update id="delete" parameterType="long">
+        update member
+        set removed = 1,
+            modified_date = sysdate
+        where id = #{memberId}
+    </update>
 </mapper>
