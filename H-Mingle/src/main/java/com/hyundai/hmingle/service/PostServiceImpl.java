@@ -27,6 +27,9 @@ public class PostServiceImpl implements PostService {
 	}
 
 	public PostGetResponse getPost(Long postId) {
+		if(mapper.findById(postId)==null)
+			throw new RuntimeException("존재하지 않는 게시글입니다.");
+
 		PostDetailResponse details = mapper.getPostDetail(postId);
 		BigDecimal id = BigDecimal.valueOf(postId);
 
@@ -39,12 +42,27 @@ public class PostServiceImpl implements PostService {
 		Long previousId = convertToLong(parameterMap.get("previousId"));
 		Long subsequentId = convertToLong(parameterMap.get("subsequentId"));
 
+		String channelName = "";
+		Long channelId = details.getChannel_id();
+		if(channelId == 1) {
+			channelName = "더현대 서울";
+		} else if(channelId == 2){
+			channelName = "더현대 대구";
+		} else if(channelId == 3){
+			channelName = "현대백화점 압구정본점";
+		} else if(channelId == 4){
+			channelName = "현대백화점 천호점";
+		} else{
+			channelName = "현대백화점 신촌점";
+		}
 		PostGetResponse response = new PostGetResponse(postId,
 				                                       details.getTitle(),
 													   details.getContent(),
 													   details.getReadCount(),
 				                                       details.getNickname(),
 		                                               details.getHeartCount(),
+													   channelName,
+													   details.getCreatedDate(),
 		                                               previousId,
 				                                       subsequentId);
 		return response;

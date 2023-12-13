@@ -11,5 +11,7 @@ public class PostDetailResponse {
     private String content;
     private int readCount;
     private String nickname;
+    private Long channel_id;
+    private String createdDate;
     private Integer heartCount;
 }

@@ -16,7 +16,7 @@
 	<select id="getPostDetail" resultType="com.hyundai.hmingle.mapper.dto.response.PostDetailResponse">
 		SELECT t1.*, t2.likes_count
 		FROM (
-				 SELECT p.id as post_id, p.title, p.content, p.read_count, m.nickname
+				 SELECT p.id as post_id, p.title, p.content, p.read_count, m.nickname, p.channel_id, p.created_date
 				 FROM post p, member m
 				 WHERE p.member_id=m.id and p.id=#{postId}
 			 ) t1
@@ -35,6 +35,12 @@
 				#{previousId, mode=OUT, jdbcType=NUMERIC},
 				#{subsequentId, mode=OUT, jdbcType=NUMERIC}
 		)}
+	</select>
+
+	<select id="findById">
+		SELECT id
+		FROM post
+		WHERE id=#{postId}
 	</select>
 
 </mapper>

@@ -16,5 +16,6 @@ public interface PostMapper {
 
 	public void getPostId(Map<String, BigDecimal> map);
 
+	public Long findById(Long postId);
 
 }
