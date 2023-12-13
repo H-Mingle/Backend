@@ -1,7 +1,5 @@
 package com.hyundai.hmingle.controller.dto.response;
 
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -13,6 +11,8 @@ public class PostGetResponse {
 	private int readCount;
 	private String nickname;
 	private Integer heartCount;
+	private String channelName;
+	private String createdDate;
 	private Long previousId;
 	private Long subsequentId;
 }
