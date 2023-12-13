@@ -6,5 +6,4 @@ import com.hyundai.hmingle.controller.dto.response.ChannelGetResponse;
 
 public interface ChannelMapper {
 	public List<ChannelGetResponse> getList();
-
 }

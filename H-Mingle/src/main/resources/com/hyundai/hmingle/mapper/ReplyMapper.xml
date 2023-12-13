@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyundai.hmingle.mapper.ReplyMapper">
+
+    <resultMap id="replyResultMap" type="reply">
+        <id property="id" column="id"/>
+        <result property="content" column="content"/>
+        <result property="depth" column="depth"/>
+        <collection property="member" ofType="member" resultMap="memberResultMap"/>
+    </resultMap>
+
+    <resultMap id="memberResultMap" type="member">
+        <id property="id" column="member_id"/>
+    </resultMap>
+
+    <select id="findById" parameterType="long" resultMap="replyResultMap">
+        select id, content, depth, member_id
+        from reply
+        where id = #{id}
+    </select>
+
+    <select id="findAllByPostId" parameterType="long" resultType="reply">
+        select id
+        from reply
+        where post_id = #{id}
+    </select>
+
+    <select id="findAll" resultType="replyResponse">
+        select
+            r.id as id, nickname, content, parent_id,
+            (select count(id)
+             from reply_heart
+             where reply_id = r.id)  as heart_count,
+            r.created_date as create_date
+        from reply r
+            left join member m
+                on r.member_id = m.id
+        where post_id = #{postId} and parent_id = #{parentId}
+        order by r.id desc
+        offset #{startRow} rows fetch next #{size} rows only
+    </select>
+
+    <select id="findAllIfParentIsNull" resultType="replyResponse">
+        select
+            r.id as id, nickname, content, parent_id,
+            (select count(id)
+             from reply_heart
+             where reply_id = r.id)  as heart_count,
+            r.created_date as create_date
+        from reply r
+            left join member m
+                on r.member_id = m.id
+        where post_id = #{postId} and parent_id is null
+        order by r.id desc
+        offset #{startRow} rows fetch next #{size} rows only
+    </select>
+
+    <insert id="save" parameterType="map">
+        insert into reply (id, content, post_id, member_id, parent_id, depth)
+        values (seq_reply_id.nextval, #{content}, #{postId}, #{memberId}, #{parentId}, #{depth})
+        <selectKey keyProperty="id" resultType="long" order="AFTER">
+            SELECT seq_reply_id.currval FROM dual
+        </selectKey>
+    </insert>
+
+    <update id="update" parameterType="replyUpdateDto">
+        update reply
+        set content = #{content}, modified_date = sysdate
+        where id = #{id}
+    </update>
+
+    <update id="delete" parameterType="long">
+        update reply
+        set modified_date = sysdate, removed = 1
+        where id = #{id}
+    </update>
+
+    <update id="deleteWithReplies" parameterType="long">
+        update reply
+        set modified_date = sysdate, removed = 1
+        where id = #{id} or parent_id = #{id}
+    </update>
+</mapper>

@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.hyundai.hmingle.controller.dto.request.PostUpdateRequest;
 import com.hyundai.hmingle.support.JwtTokenExtractor;
 import org.apache.commons.io.IOUtils;
 import org.springframework.http.HttpHeaders;
@@ -42,11 +43,9 @@ public class PostController {
 												   PostCreateRequest params,
 												   @RequestHeader HttpHeaders headers) {
 		Long memberId = jwtTokenExtractor.extract(headers);
-		params.setMemberId(memberId);
-
-		Long postId = postService.savePost(params);
+		Long postId = postService.savePost(params, memberId);
 		List<ImageCreateRequest> images = imageUtils.uploadFiles(uploadImgs);
-		PostCreateResponse response = imageService.saveFiles(postId, params.getTitle(), params.getContent(), images);
+		PostCreateResponse response = imageService.saveFiles(postId, params.getContent(), images);
 
 		return ResponseEntity.ok(MingleResponse.success("게시글 생성에 성공하였습니다.", response));
 	}
@@ -71,9 +70,27 @@ public class PostController {
 	@GetMapping("/{postId}")
 	public ResponseEntity<MingleResponse<PostGetResponse>> getPost(@PathVariable("postId") Long postId){
 		PostGetResponse response = postService.getPost(postId);
-
 		return ResponseEntity.ok(MingleResponse.success("게시글 조회에 성공하셨습니다.", response));
 	}
 
+	@DeleteMapping
+	public ResponseEntity<MingleResponse<Long>> removePost(@RequestParam("postId") Long postId,  @RequestHeader HttpHeaders headers){
+		Long memberId = jwtTokenExtractor.extract(headers);
+		return ResponseEntity.ok(MingleResponse.success("게시글 삭제에 성공하셨습니다.", postService.removePost(postId, memberId)));
+	}
 
+	@PatchMapping("/{postId}")
+	public ResponseEntity<MingleResponse<PostCreateResponse>> updatePost(@PathVariable("postId") Long postId,
+																		 @RequestPart(required = false) List<MultipartFile> uploadImgs,
+																		 PostUpdateRequest params){
+
+		PostUpdateRequest request = new PostUpdateRequest(params.getPostId(), params.getContent());
+		postService.updatePost(request);
+
+		List<ImageCreateRequest> images = imageUtils.uploadFiles(uploadImgs);
+
+        imageService.removeImages(postId);
+		PostCreateResponse response = imageService.saveFiles(postId, params.getContent(), images);
+		return ResponseEntity.ok(MingleResponse.success("게시글 수정에 성공하였습니다.", response));
+	}
 }

@@ -1,29 +1,36 @@
 package com.hyundai.hmingle.service;
 
+import com.hyundai.hmingle.controller.dto.request.PostUpdateRequest;
+import com.hyundai.hmingle.mapper.dto.request.PostCreateDto;
+import com.hyundai.hmingle.mapper.dto.request.PostDeleteDto;
 import com.hyundai.hmingle.mapper.dto.response.PostDetailResponse;
+
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.hyundai.hmingle.controller.dto.request.PostCreateRequest;
 import com.hyundai.hmingle.controller.dto.response.PostGetResponse;
 
-import com.hyundai.hmingle.mapper.PostMapper;
+import com.hyundai.hmingle.repository.PostRepository;
 
-import lombok.AllArgsConstructor;
-import lombok.extern.java.Log;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
-@Log
 @Service
-@AllArgsConstructor
+@Transactional
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class PostServiceImpl implements PostService {
 
-	private PostMapper mapper;
-	
-	public Long savePost(PostCreateRequest params) {
-		return mapper.save(params);
+	private final PostRepository postRepository;
+
+	public Long savePost(PostCreateRequest params, Long memberId) {
+		PostCreateDto dto = new PostCreateDto(null, params.getContent(), params.getChannelId(), memberId);
+		postRepository.save(dto);
+		return dto.getPostId();
 	}
 
 	public PostGetResponse getPost(Long postId) {
@@ -67,6 +74,11 @@ public class PostServiceImpl implements PostService {
 				                                       subsequentId);
 		return response;
 	}
+
+	public void updatePost(PostUpdateRequest params){
+		postRepository.updatePost(params);
+	}
+
 
 	private Long convertToLong(BigDecimal value) {
 		if (value == null) {

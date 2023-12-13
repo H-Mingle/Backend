@@ -7,7 +7,6 @@ import lombok.Data;
 @AllArgsConstructor
 public class PostDetailResponse {
     private Long postId;
-    private String title;
     private String content;
     private int readCount;
     private String nickname;

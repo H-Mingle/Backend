@@ -1,46 +1,43 @@
 package com.hyundai.hmingle.service;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.List;
 
-import org.apache.commons.io.IOUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import com.hyundai.hmingle.controller.dto.request.ImageCreateRequest;
 import com.hyundai.hmingle.controller.dto.response.PostCreateResponse;
-import com.hyundai.hmingle.mapper.ChannelMapper;
-import com.hyundai.hmingle.mapper.ImageMapper;
+import com.hyundai.hmingle.repository.ImageRepository;
 
-import lombok.AllArgsConstructor;
-import lombok.extern.java.Log;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 
-@Log
 @Service
-@AllArgsConstructor
-public class ImageServiceImpl implements ImageService{
-	
-	private ImageMapper mapper;
-	
-	public PostCreateResponse saveFiles(Long postId, String title, String content, List<ImageCreateRequest> images) {
-		if(CollectionUtils.isEmpty(images)) {
+@Transactional
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+public class ImageServiceImpl implements ImageService {
+
+	private final ImageRepository imageRepository;
+
+	public PostCreateResponse saveFiles(Long postId, String content, List<ImageCreateRequest> images) {
+		if (CollectionUtils.isEmpty(images)) {
 			return null;
 		}
-		for(ImageCreateRequest image:images) {
+		for (ImageCreateRequest image : images) {
 			image.setPostId(postId);
 		}
-		mapper.saveAll(images);
-		
-		return new PostCreateResponse(postId, title, content);
+		imageRepository.saveAll(images);
+
+		return new PostCreateResponse(postId, content);
 	}
 
-
-	public List<String> getFourImages(Long postId){
-		return mapper.getFourImages(postId);
+	public List<String> getFourImages(Long postId) {
+		return imageRepository.getFourImages(postId);
 	}
 
+	public void removeImages(Long postId){
+		imageRepository.removeImages(postId);
+	}
 
 }

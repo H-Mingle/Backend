@@ -5,10 +5,12 @@ import org.springframework.stereotype.Component;
 import com.hyundai.hmingle.domain.common.Base;
 
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@Getter
 @Component
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Member extends Base {
 
 	private String email;
@@ -26,5 +28,9 @@ public class Member extends Base {
 
 	public static Member toDomain(String email, String nickname, String introduction, String imageUrl) {
 		return new Member(null, email, nickname, introduction, imageUrl);
+	}
+
+	public boolean isSame(Member member) {
+		return id.equals(member.id);
 	}
 }

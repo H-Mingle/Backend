@@ -2,23 +2,27 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hyundai.hmingle.mapper.PostMapper">
 	
-	<insert id="save" parameterType="postCreateRequest" >
-		INSERT INTO post (id, title, content, member_id, channel_id, read_count, created_date)
-		VALUES (SEQ_POST_ID.nextval, #{title}, #{content}, #{memberId}, #{channelId}, 0, sysdate)	
-		<selectKey keyColumn="id" resultType="Long" order="AFTER">
-			SELECT id
-			FROM post
-			WHERE 1=1;
+	<insert id="save" parameterType="postCreateDto" >
+		INSERT INTO post (id, content, member_id, channel_id, read_count, created_date)
+		VALUES (SEQ_POST_ID.nextval, #{content}, #{memberId}, #{channelId}, 0, sysdate)
+		<selectKey keyProperty="postId" resultType="Long" order="AFTER">
+			SELECT SEQ_POST_ID.currval
+			FROM dual
 		</selectKey>
 	</insert>
 
+    <select id="findById" parameterType="long" resultType="post">
+        select id, content
+        from post
+        where id = #{id}
+    </select>
 
-	<select id="getPostDetail" resultType="com.hyundai.hmingle.mapper.dto.response.PostDetailResponse">
+	<select id="getPostDetail" resultType="postDetailResponse">
 		SELECT t1.*, t2.likes_count
 		FROM (
 				 SELECT p.id as post_id, p.title, p.content, p.read_count, m.nickname, p.channel_id, p.created_date
 				 FROM post p, member m
-				 WHERE p.member_id=m.id and p.id=#{postId}
+				 WHERE p.member_id=m.id and p.id=#{postId} AND p.removed=0
 			 ) t1
 				 LEFT OUTER JOIN (
 			SELECT post_id, count(id) as likes_count
@@ -37,10 +41,24 @@
 		)}
 	</select>
 
-	<select id="findById">
-		SELECT id
-		FROM post
-		WHERE id=#{postId}
-	</select>
+	<update id="removePost" parameterType="postDeleteDto">
+		UPDATE post SET removed=1
+		WHERE id=#{postId} AND member_id=#{memberId}
+		<selectKey keyColumn="id" resultType="Long" order="BEFORE">
+			SELECT id
+			FROM post
+			WHERE post_id=#{postId} AND member_id=#{memberId}
+		</selectKey>
+	</update>
 
+	<update id="updatePost" parameterType="postUpdateRequest">
+		UPDATE post SET content=#{content}
+		WHERE id=#{postId}
+	</update>
+
+	<select id="findPostCountByMemberId" parameterType="long" resultType="int">
+		select count(id)
+		from post
+		where member_id = #{member_id}
+	</select>
 </mapper>

@@ -1,21 +1,35 @@
 package com.hyundai.hmingle.mapper;
 
-import com.hyundai.hmingle.controller.dto.request.PostCreateRequest;
+import java.util.Optional;
+
+import com.hyundai.hmingle.controller.dto.request.PostUpdateRequest;
+import com.hyundai.hmingle.controller.dto.response.PostCreateResponse;
+import com.hyundai.hmingle.mapper.dto.request.PostCreateDto;
+import com.hyundai.hmingle.mapper.dto.request.PostDeleteDto;
 import com.hyundai.hmingle.mapper.dto.response.PostDetailResponse;
-import com.hyundai.hmingle.mapper.dto.response.PostIdResponse;
 
 import java.math.BigDecimal;
 import java.util.Map;
 
+import com.hyundai.hmingle.controller.dto.response.PostGetResponse;
+import com.hyundai.hmingle.domain.post.Post;
 
 public interface PostMapper {
 
-	public Long save(PostCreateRequest params);
+	Long save(PostCreateDto params);
 	
-	public PostDetailResponse getPostDetail(Long postId);
+	PostDetailResponse getPostDetail(Long postId);
 
-	public void getPostId(Map<String, BigDecimal> map);
+	void getPostId(Map<String, BigDecimal> map);
 
-	public Long findById(Long postId);
+	Long removePost(PostDeleteDto params);
+
+	Optional<Post> findById(Long id);
+
+	int findPostCountByMemberId(Long memberId);
+
+	PostGetResponse getPost(Long postId);
+
+	void updatePost(PostUpdateRequest params);
 
 }

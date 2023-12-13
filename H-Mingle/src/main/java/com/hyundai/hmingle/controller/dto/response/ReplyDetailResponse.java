@@ -5,11 +5,12 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class MemberGetResponse {
+public class ReplyDetailResponse {
 
-	private final Long memberId;
-	private final String email;
+	private final Long id;
 	private final String nickname;
-	private final String introduction;
-	private final int postCount;
+	private final String content;
+	private final int like;
+	private final String recent;
+	private final Long parentId;
 }
