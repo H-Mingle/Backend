@@ -21,7 +21,7 @@ public class JwtTokenExtractor {
 	public Long extract(HttpHeaders headers) {
 		List<String> authorizations = headers.get(HttpHeaders.AUTHORIZATION);
 		if (authorizations == null) {
-			throw new RuntimeException("token 이 없습니다.");
+			return null;
 		}
 		String token;
 		for (String authorization : authorizations) {
@@ -33,7 +33,7 @@ public class JwtTokenExtractor {
 				return getPayload(token);
 			}
 		}
-		throw new RuntimeException("헤더에 토큰이 없거나 잘못된 토큰 형식입니다.");
+		throw new RuntimeException("잘못된 토큰 형식입니다.");
 	}
 
 	private boolean isExpired(String token) {

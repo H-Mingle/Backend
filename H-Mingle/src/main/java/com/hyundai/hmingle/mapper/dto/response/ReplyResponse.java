@@ -11,9 +11,11 @@ import lombok.NoArgsConstructor;
 public class ReplyResponse {
 
 	private Long id;
+	private Long memberId;
 	private String nickname;
 	private String content;
 	private Long parentId;
 	private int heartCount;
 	private LocalDateTime createDate;
+	private String imageUrl;
 }

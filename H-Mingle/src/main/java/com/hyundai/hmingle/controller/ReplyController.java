@@ -77,11 +77,13 @@ public class ReplyController {
 
 	@GetMapping
 	public ResponseEntity<MingleResponse<List<ReplyDetailResponse>>> findAllWithPaging(
+		@RequestHeader(required = false) HttpHeaders headers,
 		@PathVariable Long postId,
 		@RequestParam Integer page,
 		@RequestParam Integer size,
 		@RequestParam(required = false) Long parentId) {
-		List<ReplyDetailResponse> responses = replyService.findAllWithPaging(postId, page, size, parentId);
+		Long memberId = jwtTokenExtractor.extract(headers);
+		List<ReplyDetailResponse> responses = replyService.findAllWithPaging(memberId, postId, page, size, parentId);
 		return ResponseEntity.ok(MingleResponse.success(
 			"댓글 목록 조회에 성공하였습니다.",
 			responses
