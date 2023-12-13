@@ -37,6 +37,7 @@
                 on r.member_id = m.id
         where post_id = #{postId} and parent_id = #{parentId}
         order by r.id desc
+        offset #{startRow} rows fetch next #{size} rows only
     </select>
 
     <select id="findAllIfParentIsNull" resultType="replyResponse">
@@ -51,6 +52,7 @@
                 on r.member_id = m.id
         where post_id = #{postId} and parent_id is null
         order by r.id desc
+        offset #{startRow} rows fetch next #{size} rows only
     </select>
 
     <insert id="save" parameterType="map">

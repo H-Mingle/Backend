@@ -69,13 +69,13 @@ public class ReplyService {
 		delete(savedReply);
 	}
 
-	public List<ReplyDetailResponse> findAllWithPaging(Long postId, Integer page, Integer size, Long parentId) {
-		validatePageIsNotNegative(page);
-		validateSizeIsNotNegative(size);
+	public List<ReplyDetailResponse> findAllWithPaging(Long postId, Integer requestPage, Integer requestSize, Long parentId) {
+		int page = validatePageIsNotNegative(requestPage);
+		int size = validateSizeIsNotNegative(requestSize);
+		int startRow = calculateStartRow(page, size);
 
 		Post savedPost = postRepository.findById(postId);
-
-		RepliesRequest request = new RepliesRequest(savedPost.getId(), parentId);
+		RepliesRequest request = new RepliesRequest(savedPost.getId(), parentId, startRow, size);
 		List<ReplyResponse> replies = replyRepository.findAll(request);
 
 		return replies.stream()
@@ -93,16 +93,28 @@ public class ReplyService {
 		}
 	}
 
-	private void validatePageIsNotNegative(Integer page) {
+	private int calculateStartRow(int page, int size) {
+		return (page - 1) * size;
+	}
+
+	private int validatePageIsNotNegative(Integer page) {
+		if (page == null) {
+			throw new RuntimeException("page 를 입력해주세요.");
+		}
 		if (page <= 0) {
 			throw new RuntimeException("page 는 1보다 커야합니다.");
 		}
+		return page;
 	}
 
-	private void validateSizeIsNotNegative(Integer size) {
+	private int validateSizeIsNotNegative(Integer size) {
+		if (size == null) {
+			throw new RuntimeException("size 를 입력해주세요.");
+		}
 		if (size <= 0) {
 			throw new RuntimeException("size 는 1보다 커야합니다.");
 		}
+		return size;
 	}
 
 	private void validateReplyBelongToPost(Post savedPost, Reply savedReply) {

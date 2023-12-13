@@ -17,7 +17,7 @@ public interface ReplyMapper {
 
 	List<ReplyResponse> findAll(RepliesRequest request);
 
-	List<ReplyResponse> findAllIfParentIsNull(Long postId);
+	List<ReplyResponse> findAllIfParentIsNull(RepliesRequest request);
 
 	void save(ReplyCreateDto reply);
 

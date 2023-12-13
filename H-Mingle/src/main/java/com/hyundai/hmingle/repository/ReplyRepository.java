@@ -61,7 +61,7 @@ public class ReplyRepository {
 
 	public List<ReplyResponse> findAll(RepliesRequest request) {
 		if (request.getParentId() == null) {
-			return replyMapper.findAllIfParentIsNull(request.getPostId());
+			return replyMapper.findAllIfParentIsNull(request);
 		}
 		return replyMapper.findAll(request);
 	}
