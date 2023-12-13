@@ -42,4 +42,13 @@
 		UPDATE image SET removed=1
 		WHERE post_id=#{postId}
 	</update>
+
+	<select id="findByPostId" resultType="postResponse">
+		SELECT p.id as postId, i.image_url as image
+		FROM image i
+				 JOIN post p ON i.post_id = p.id
+		WHERE p.channel_id = #{channelId} AND p.removed = 0 AND i.orders = 1 AND i.removed = 0
+		ORDER BY i.id DESC
+		OFFSET #{startRow} ROWS FETCH NEXT #{size} ROWS ONLY
+	</select>
 </mapper>
