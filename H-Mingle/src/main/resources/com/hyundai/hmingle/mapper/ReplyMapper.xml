@@ -27,11 +27,12 @@
 
     <select id="findAll" resultType="replyResponse">
         select
-            r.id as id, nickname, content, parent_id,
+            r.id as id, m.id as member_id, nickname, content, parent_id,
             (select count(id)
              from reply_heart
              where reply_id = r.id)  as heart_count,
-            r.created_date as create_date
+            r.created_date as create_date,
+            m.image_url as image_url
         from reply r
             left join member m
                 on r.member_id = m.id
@@ -42,11 +43,12 @@
 
     <select id="findAllIfParentIsNull" resultType="replyResponse">
         select
-            r.id as id, nickname, content, parent_id,
+            r.id as id, m.id as member_id, nickname, content, parent_id,
             (select count(id)
              from reply_heart
              where reply_id = r.id)  as heart_count,
-            r.created_date as create_date
+            r.created_date as create_date,
+            m.image_url as image_url
         from reply r
             left join member m
                 on r.member_id = m.id
