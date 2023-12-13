@@ -42,7 +42,7 @@
 	</select>
 
 	<update id="removePost" parameterType="postDeleteDto">
-		UPDATE post SET removed=1
+		UPDATE post SET removed=1, MODIFIED_DATE = sysdate
 		WHERE id=#{postId} AND member_id=#{memberId}
 		<selectKey keyColumn="id" resultType="Long" order="BEFORE">
 			SELECT id
@@ -52,7 +52,7 @@
 	</update>
 
 	<update id="updatePost" parameterType="postUpdateRequest">
-		UPDATE post SET content=#{content}
+		UPDATE post SET content=#{content}, MODIFIED_DATE = sysdate
 		WHERE id=#{postId}
 	</update>
 

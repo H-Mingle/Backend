@@ -13,7 +13,7 @@
 	</insert>
 		
 	<update id="removeHeart" parameterType="com.hyundai.hmingle.controller.dto.request.HeartRequest">	
-		UPDATE heart SET removed=1
+		UPDATE heart SET removed=1, MODIFIED_DATE = sysdate
 		WHERE post_id=#{postId} AND member_id=#{memberId}
 		<selectKey keyColumn="id" resultType="Long" order="BEFORE">			
 			SELECT id

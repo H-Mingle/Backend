@@ -39,7 +39,7 @@
 	</select>
 
 	<update id="removeImages">
-		UPDATE image SET removed=1
+		UPDATE image SET removed=1, MODIFIED_DATE = sysdate
 		WHERE post_id=#{postId}
 	</update>
 
