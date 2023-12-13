@@ -35,4 +35,9 @@ public class ImageServiceImpl implements ImageService {
 	public List<String> getFourImages(Long postId) {
 		return imageRepository.getFourImages(postId);
 	}
+
+	public void removeImages(Long postId){
+		imageRepository.removeImages(postId);
+	}
+
 }

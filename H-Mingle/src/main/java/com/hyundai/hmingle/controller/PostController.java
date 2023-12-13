@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.hyundai.hmingle.controller.dto.request.PostUpdateRequest;
 import com.hyundai.hmingle.support.JwtTokenExtractor;
 import org.apache.commons.io.IOUtils;
 import org.springframework.http.HttpHeaders;
@@ -31,11 +32,11 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/posts")
 @AllArgsConstructor
 public class PostController {
-
 	private PostService postService;
 	private ImageService imageService;
 	private ImageUtils imageUtils;
 	private JwtTokenExtractor jwtTokenExtractor;
+
 
 	@PostMapping
 	public ResponseEntity<MingleResponse> savePost(@RequestPart(required = false) List<MultipartFile> uploadImgs,
@@ -62,6 +63,7 @@ public class PostController {
 		        e.printStackTrace();
 		    }
 		}
+
 		return ResponseEntity.ok(MingleResponse.success("이미지 조회에 성공하셨습니다.", imageByteArrays));
 	}
 
@@ -75,5 +77,20 @@ public class PostController {
 	public ResponseEntity<MingleResponse<Long>> removePost(@RequestParam("postId") Long postId,  @RequestHeader HttpHeaders headers){
 		Long memberId = jwtTokenExtractor.extract(headers);
 		return ResponseEntity.ok(MingleResponse.success("게시글 삭제에 성공하셨습니다.", postService.removePost(postId, memberId)));
+	}
+
+	@PatchMapping("/{postId}")
+	public ResponseEntity<MingleResponse<PostCreateResponse>> updatePost(@PathVariable("postId") Long postId,
+																		 @RequestPart(required = false) List<MultipartFile> uploadImgs,
+																		 PostUpdateRequest params){
+
+		PostUpdateRequest request = new PostUpdateRequest(params.getPostId(), params.getContent());
+		postService.updatePost(request);
+
+		List<ImageCreateRequest> images = imageUtils.uploadFiles(uploadImgs);
+
+        imageService.removeImages(postId);
+		PostCreateResponse response = imageService.saveFiles(postId, params.getContent(), images);
+		return ResponseEntity.ok(MingleResponse.success("게시글 수정에 성공하였습니다.", response));
 	}
 }
