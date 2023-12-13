@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import com.hyundai.hmingle.controller.dto.request.PostUpdateRequest;
-import com.hyundai.hmingle.controller.dto.response.PostCreateResponse;
 import com.hyundai.hmingle.mapper.dto.request.PostCreateDto;
 import com.hyundai.hmingle.mapper.dto.request.PostDeleteDto;
 import com.hyundai.hmingle.mapper.dto.response.PostDetailResponse;

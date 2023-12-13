@@ -3,8 +3,6 @@ package com.hyundai.hmingle.service;
 import com.hyundai.hmingle.controller.dto.request.PostUpdateRequest;
 import com.hyundai.hmingle.controller.dto.response.PostListGetResponse;
 import com.hyundai.hmingle.controller.dto.response.PostsGetResponse;
-import com.hyundai.hmingle.domain.member.Member;
-import com.hyundai.hmingle.domain.post.Post;
 import com.hyundai.hmingle.mapper.dto.request.ImagesRequest;
 import com.hyundai.hmingle.mapper.dto.request.PostCreateDto;
 import com.hyundai.hmingle.mapper.dto.request.PostDeleteDto;

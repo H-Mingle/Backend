@@ -64,4 +64,5 @@ public class PostRepository {
 	public int upReadCount(Long postId){
 		return postMapper.upReadCount(postId);
 	}
+
 }

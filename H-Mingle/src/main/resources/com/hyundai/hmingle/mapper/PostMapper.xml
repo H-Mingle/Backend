@@ -72,4 +72,5 @@
 		UPDATE post SET read_count = read_count+1
 		WHERE id=#{postId}
 	</update>
+
 </mapper>
