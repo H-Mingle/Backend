@@ -42,8 +42,12 @@ public class PostRepository {
 	}
 
 	public Post findById(Long postId) {
-		return postMapper.findById(postId)
+		Post savedPost = postMapper.findById(postId)
 			.orElseThrow(() -> new RuntimeException("존재하지 않는 게시글 입니다."));
+		if (savedPost.isRemoved()) {
+			throw new RuntimeException("삭제된 게시글 입니다.");
+		}
+		return savedPost;
 	}
 
 	public Post findWithRepliesById(Long postId) {

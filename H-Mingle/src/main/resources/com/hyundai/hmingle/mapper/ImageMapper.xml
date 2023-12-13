@@ -33,7 +33,7 @@
 		from post p
 	 		left join image im
 				on p.id = im.post_id
-		where member_id = #{memberId} and orders = 1
+		where member_id = #{memberId} and orders = 1 and p.removed = 0
 		order by p.id desc
 		offset #{startRow} rows fetch next #{size} rows only
 	</select>

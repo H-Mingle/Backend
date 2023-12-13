@@ -44,8 +44,12 @@ public class ReplyRepository {
 	}
 
 	public Reply findById(Long replyId) {
-		return replyMapper.findById(replyId)
+		Reply savedReply = replyMapper.findById(replyId)
 			.orElseThrow(() -> new RuntimeException("존재하지 않는 댓글입니다."));
+		if (savedReply.isRemoved()) {
+			throw new RuntimeException("삭제된 댓글입니다.");
+		}
+		return savedReply;
 	}
 
 	public Reply findParentByParentId(Long parentId) {
@@ -67,7 +71,11 @@ public class ReplyRepository {
 	}
 
 	private Reply findByParentId(Long parentId) {
-		return replyMapper.findById(parentId)
+		Reply parentReply = replyMapper.findById(parentId)
 			.orElseThrow(() -> new RuntimeException("존재하지 않는 상위 댓글입니다."));
+		if (parentReply.isRemoved()) {
+			throw new RuntimeException("삭제된 상위 댓글 입니다.");
+		}
+		return parentReply;
 	}
 }

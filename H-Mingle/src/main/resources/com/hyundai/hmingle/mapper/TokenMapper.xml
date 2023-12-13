@@ -10,7 +10,8 @@
     <update id="update" parameterType="token" >
         update token
         set access_token = #{accessToken},
-            refresh_token = #{refreshToken}
+            refresh_token = #{refreshToken},
+            modified_date = sysdate
         where member_id = #{member.id}
     </update>
 
