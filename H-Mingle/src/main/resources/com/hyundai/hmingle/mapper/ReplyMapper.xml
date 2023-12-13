@@ -35,7 +35,7 @@
         from reply r
             left join member m
                 on r.member_id = m.id
-        where post_id = #{postId} and parent_id = #{parentId}
+        where post_id = #{postId} and parent_id = #{parentId} and r.removed = 0
         order by r.id
         offset #{startRow} rows fetch next #{size} rows only
     </select>
@@ -50,7 +50,7 @@
         from reply r
             left join member m
                 on r.member_id = m.id
-        where post_id = #{postId} and parent_id is null
+        where post_id = #{postId} and parent_id is null and r.removed = 0
         order by r.id
         offset #{startRow} rows fetch next #{size} rows only
     </select>
