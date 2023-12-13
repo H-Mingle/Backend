@@ -2,11 +2,15 @@ package com.hyundai.hmingle.service;
 
 import com.hyundai.hmingle.controller.dto.request.PostUpdateRequest;
 import com.hyundai.hmingle.controller.dto.response.PostListGetResponse;
+import com.hyundai.hmingle.controller.dto.response.PostsGetResponse;
+import com.hyundai.hmingle.mapper.dto.request.ImagesRequest;
 import com.hyundai.hmingle.mapper.dto.request.PostCreateDto;
 import com.hyundai.hmingle.mapper.dto.request.PostDeleteDto;
 import com.hyundai.hmingle.mapper.dto.response.PostDetailResponse;
 
+import com.hyundai.hmingle.mapper.dto.response.PostResponse;
 import com.hyundai.hmingle.repository.ImageRepository;
+import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +22,10 @@ import com.hyundai.hmingle.repository.PostRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,6 +46,7 @@ public class PostServiceImpl implements PostService {
 		return dto.getPostId();
 	}
 
+	@Transactional(readOnly = true)
 	public PostGetResponse getPost(Long postId) {
 		postRepository.findById(postId);
 
@@ -53,19 +62,8 @@ public class PostServiceImpl implements PostService {
 		Long previousId = convertToLong(parameterMap.get("previousId"));
 		Long subsequentId = convertToLong(parameterMap.get("subsequentId"));
 
-		String channelName = "";
 		Long channelId = details.getChannel_id();
-		if(channelId == 1) {
-			channelName = "더현대 서울";
-		} else if(channelId == 2){
-			channelName = "더현대 대구";
-		} else if(channelId == 3){
-			channelName = "현대백화점 압구정본점";
-		} else if(channelId == 4){
-			channelName = "현대백화점 천호점";
-		} else{
-			channelName = "현대백화점 신촌점";
-		}
+		String channelName = getChannelName(channelId);
 		PostGetResponse response = new PostGetResponse(postId,
 													   details.getContent(),
 													   details.getReadCount(),
@@ -96,17 +94,79 @@ public class PostServiceImpl implements PostService {
 	}
 
 
-	public List<PostListGetResponse> getPostsByChannel(Long channelId, int page, int size){
-		List<PostListGetResponse> list = new ArrayList<>();
-		List<Long> postIds = postRepository.findPostByChannelId(channelId);
+	@Transactional(readOnly = true)
+	public PostsGetResponse getPostsByChannel(Long channelId, Integer requestPage, Integer requestsize){
+		int page = validatePageIsNotNegative(requestPage);
+		int size = validateSizeIsNotNegative(requestsize);
+		int startRow = calculateStartRow(page, size);
 
-		for(Long postId : postIds){
-			if(!imageRepository.findByPostId(postId).isEmpty()) {
-				List<PostListGetResponse> image = imageRepository.findByPostId(postId);
-				list.addAll(image);
+		ImagesRequest nextImage = new ImagesRequest(channelId, startRow+size, size);
+		boolean isNext = false;
+		if(!imageRepository.findByPostId(nextImage).isEmpty()){
+			isNext = true;
+		}
+
+		String channelName = getChannelName(channelId);
+
+		List<PostListGetResponse> list = new ArrayList<>();
+		ImagesRequest request = new ImagesRequest(channelId, startRow, size);
+
+		if(!imageRepository.findByPostId(request).isEmpty()) {
+			List<PostResponse> images = imageRepository.findByPostId(request);
+			for(PostResponse image:images) {
+				PostListGetResponse response = new PostListGetResponse();
+				try (InputStream imageStream = new FileInputStream(image.getImage())) {
+					byte[] imageByteArray = IOUtils.toByteArray(imageStream);
+					response.setPostId(image.getPostId());
+					response.setImage(imageByteArray);
+                }  catch (IOException e) {
+					e.printStackTrace();
+				}
+
+                list.add(response);
 			}
 		}
 
-		return list;
+		return new PostsGetResponse(channelName, isNext, list);
+	}
+
+	private int calculateStartRow(int page, int size) {
+		return (page - 1) * size;
+	}
+
+	private int validatePageIsNotNegative(Integer page) {
+		if (page == null) {
+			throw new RuntimeException("page를 입력해주세요.");
+		}
+		if (page <= 0) {
+			throw new RuntimeException("page는 1보다 커야합니다.");
+		}
+		return page;
+	}
+
+	private int validateSizeIsNotNegative(Integer size) {
+		if (size == null) {
+			throw new RuntimeException("size를 입력해주세요.");
+		}
+		if (size <= 0) {
+			throw new RuntimeException("size는 1보다 커야합니다.");
+		}
+		return size;
+	}
+
+	public String getChannelName(Long channelId){
+		String channelName = "";
+		if(channelId == 1) {
+			channelName = "더현대 서울";
+		} else if(channelId == 2){
+			channelName = "더현대 대구";
+		} else if(channelId == 3){
+			channelName = "현대백화점 압구정본점";
+		} else if(channelId == 4){
+			channelName = "현대백화점 천호점";
+		} else{
+			channelName = "현대백화점 신촌점";
+		}
+		return channelName;
 	}
 }

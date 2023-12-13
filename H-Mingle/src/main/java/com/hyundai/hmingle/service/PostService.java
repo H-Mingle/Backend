@@ -4,6 +4,7 @@ import com.hyundai.hmingle.controller.dto.request.PostCreateRequest;
 import com.hyundai.hmingle.controller.dto.request.PostUpdateRequest;
 import com.hyundai.hmingle.controller.dto.response.PostGetResponse;
 import com.hyundai.hmingle.controller.dto.response.PostListGetResponse;
+import com.hyundai.hmingle.controller.dto.response.PostsGetResponse;
 
 import java.util.List;
 
@@ -16,5 +17,5 @@ public interface PostService {
 
 	public void updatePost(PostUpdateRequest params);
 
-	public List<PostListGetResponse> getPostsByChannel(Long channelId, int page, int size);
+	public PostsGetResponse getPostsByChannel(Long channelId, Integer page, Integer size);
 }

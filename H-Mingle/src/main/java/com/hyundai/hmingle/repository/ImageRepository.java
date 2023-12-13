@@ -2,7 +2,8 @@ package com.hyundai.hmingle.repository;
 
 import java.util.List;
 
-import com.hyundai.hmingle.controller.dto.response.PostListGetResponse;
+import com.hyundai.hmingle.mapper.dto.request.ImagesRequest;
+import com.hyundai.hmingle.mapper.dto.response.PostResponse;
 import org.springframework.stereotype.Repository;
 
 import com.hyundai.hmingle.controller.dto.request.ImageCreateRequest;
@@ -29,7 +30,7 @@ public class ImageRepository {
 		imageMapper.removeImages(postId);
 	};
 
-	public List<PostListGetResponse> findByPostId(Long postId){
-		return imageMapper.findByPostId(postId);
+	public List<PostResponse> findByPostId(ImagesRequest request){
+		return imageMapper.findByPostId(request);
 	}
 }

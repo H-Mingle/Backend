@@ -7,5 +7,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PostListGetResponse {
     private Long postId;
-    private String image;
+    private byte[] image;
 }
