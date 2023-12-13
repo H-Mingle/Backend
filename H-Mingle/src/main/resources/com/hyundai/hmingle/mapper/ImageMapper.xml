@@ -32,4 +32,10 @@
 		UPDATE image SET removed=1
 		WHERE post_id=#{postId}
 	</update>
+
+	<select id="findByPostId" resultType="postListGetResponse">
+		SELECT post_id as postId, image_url as image
+		FROM image
+		where post_id=#{postId} AND orders=1 AND removed=0
+	</select>
 </mapper>

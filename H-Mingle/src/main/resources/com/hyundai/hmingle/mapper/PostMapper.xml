@@ -61,4 +61,10 @@
 		from post
 		where member_id = #{member_id}
 	</select>
+
+	<select id="findPostByChannelId" parameterType="long" >
+		SELECT id
+		FROM post
+		WHERE channel_id = #{channel_id} AND removed=0
+	</select>
 </mapper>

@@ -1,10 +1,12 @@
 package com.hyundai.hmingle.service;
 
 import com.hyundai.hmingle.controller.dto.request.PostUpdateRequest;
+import com.hyundai.hmingle.controller.dto.response.PostListGetResponse;
 import com.hyundai.hmingle.mapper.dto.request.PostCreateDto;
 import com.hyundai.hmingle.mapper.dto.request.PostDeleteDto;
 import com.hyundai.hmingle.mapper.dto.response.PostDetailResponse;
 
+import com.hyundai.hmingle.repository.ImageRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +19,9 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -26,6 +30,7 @@ import java.util.Map;
 public class PostServiceImpl implements PostService {
 
 	private final PostRepository postRepository;
+	private final ImageRepository imageRepository;
 
 	public Long savePost(PostCreateRequest params, Long memberId) {
 		PostCreateDto dto = new PostCreateDto(null, params.getContent(), params.getChannelId(), memberId);
@@ -75,4 +80,17 @@ public class PostServiceImpl implements PostService {
 	}
 
 
+	public List<PostListGetResponse> getPostsByChannel(Long channelId, int page, int size){
+		List<PostListGetResponse> list = new ArrayList<>();
+		List<Long> postIds = postRepository.findPostByChannelId(channelId);
+
+		for(Long postId : postIds){
+			if(!imageRepository.findByPostId(postId).isEmpty()) {
+				List<PostListGetResponse> image = imageRepository.findByPostId(postId);
+				list.addAll(image);
+			}
+		}
+
+		return list;
+	}
 }

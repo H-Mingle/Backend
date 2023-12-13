@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.hyundai.hmingle.controller.dto.request.PostUpdateRequest;
+import com.hyundai.hmingle.controller.dto.response.PostListGetResponse;
 import com.hyundai.hmingle.support.JwtTokenExtractor;
 import org.apache.commons.io.IOUtils;
 import org.springframework.http.HttpHeaders;
@@ -93,4 +94,16 @@ public class PostController {
 		PostCreateResponse response = imageService.saveFiles(postId, params.getContent(), images);
 		return ResponseEntity.ok(MingleResponse.success("게시글 수정에 성공하였습니다.", response));
 	}
+
+
+
+	@GetMapping
+	public ResponseEntity<MingleResponse<List<PostListGetResponse>>> getPostsByChannel(@RequestParam("page") int page,
+																					  @RequestParam("size") int size,
+																					  @RequestHeader("channel") Long channelId) {
+		List<PostListGetResponse> response = postService.getPostsByChannel(channelId, page, size);
+		return ResponseEntity.ok(MingleResponse.success("게시글 리스트 조회에 성공하셨습니다.", response));
+	}
+
+
 }

@@ -57,4 +57,7 @@ public class PostRepository {
 		postMapper.updatePost(params);
 	};
 
+	public List<Long> findPostByChannelId(Long channelId){
+		return postMapper.findPostByChannelId(channelId);
+	}
 }
