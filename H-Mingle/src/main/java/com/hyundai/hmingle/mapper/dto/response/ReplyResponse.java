@@ -12,4 +12,5 @@ public class ReplyResponse {
 	private String nickname;
 	private String content;
 	private Long parentId;
+	private int heartCount;
 }

@@ -78,7 +78,7 @@ public class ReplyService {
 
 		return replies.stream()
 			.map(reply -> new ReplyDetailResponse(
-				reply.getId(), reply.getNickname(), reply.getContent(), 0, "", null))
+				reply.getId(), reply.getNickname(), reply.getContent(), reply.getHeartCount(), "", null))
 			.collect(Collectors.toUnmodifiableList());
 	}
 
