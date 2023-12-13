@@ -12,7 +12,7 @@
 	</insert>
 
     <select id="findById" parameterType="long" resultType="post">
-        select id, content
+        select id, content, member_id
         from post
         where id = #{id}
     </select>
@@ -67,4 +67,9 @@
 		FROM post
 		WHERE channel_id = #{channel_id} AND removed=0
 	</select>
+
+	<update id="upReadCount">
+		UPDATE post SET read_count = read_count+1
+		WHERE id=#{postId}
+	</update>
 </mapper>

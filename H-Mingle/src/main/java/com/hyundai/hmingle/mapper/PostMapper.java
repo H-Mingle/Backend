@@ -35,4 +35,6 @@ public interface PostMapper {
 
 	List<Long> findPostByChannelId(Long channelId);
 
+	int upReadCount(Long postId);
+
 }
