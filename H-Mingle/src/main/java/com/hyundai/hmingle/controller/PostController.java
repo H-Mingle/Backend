@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.hyundai.hmingle.controller.dto.request.PostUpdateRequest;
+import com.hyundai.hmingle.controller.dto.response.*;
 import com.hyundai.hmingle.support.ImageConvertor;
 import com.hyundai.hmingle.support.JwtTokenExtractor;
 import org.springframework.http.HttpHeaders;
@@ -14,9 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.hyundai.hmingle.controller.dto.request.ImageCreateRequest;
 import com.hyundai.hmingle.controller.dto.request.PostCreateRequest;
-import com.hyundai.hmingle.controller.dto.response.MingleResponse;
-import com.hyundai.hmingle.controller.dto.response.PostCreateResponse;
-import com.hyundai.hmingle.controller.dto.response.PostGetResponse;
 import com.hyundai.hmingle.domain.post.ImageUtils;
 import com.hyundai.hmingle.service.ImageService;
 
@@ -83,4 +81,16 @@ public class PostController {
 		PostCreateResponse response = imageService.saveFiles(postId, params.getContent(), images);
 		return ResponseEntity.ok(MingleResponse.success("게시글 수정에 성공하였습니다.", response));
 	}
+
+
+
+	@GetMapping
+	public ResponseEntity<MingleResponse<PostsGetResponse>> getPostsByChannel(@RequestParam("page") int page,
+																			  @RequestParam("size") int size,
+																			  @RequestHeader("channel") Long channelId) {
+		PostsGetResponse response = postService.getPostsByChannel(channelId, page, size);
+		return ResponseEntity.ok(MingleResponse.success("게시글 리스트 조회에 성공하셨습니다.", response));
+	}
+
+
 }

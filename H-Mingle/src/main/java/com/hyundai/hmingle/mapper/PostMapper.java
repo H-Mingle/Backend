@@ -1,5 +1,6 @@
 package com.hyundai.hmingle.mapper;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.hyundai.hmingle.controller.dto.request.PostUpdateRequest;
@@ -31,5 +32,7 @@ public interface PostMapper {
 	PostGetResponse getPost(Long postId);
 
 	void updatePost(PostUpdateRequest params);
+
+	List<Long> findPostByChannelId(Long channelId);
 
 }
