@@ -11,11 +11,13 @@
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 
+	<context:property-placeholder location="classpath:/security/application-db.properties"/>
+
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig"
-		p:driverClassName="oracle.jdbc.OracleDriver"
-		p:jdbcUrl="jdbc:oracle:thin:@localhost:1521/xepdb1?noAccessToProcedureBodies=true"
-		p:username="hmingle"
-		p:password="hmingle1234" />
+		p:driverClassName="${driverClassName}"
+		p:jdbcUrl="${jdbcUrl}"
+		p:username="${username}"
+		p:password="${password}" />
 	
 	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
 		<constructor-arg ref="hikariConfig" />
