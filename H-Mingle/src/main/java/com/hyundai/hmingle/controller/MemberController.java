@@ -1,5 +1,7 @@
 package com.hyundai.hmingle.controller;
 
+import com.hyundai.hmingle.controller.dto.request.MemberUpdateRequest;
+import com.hyundai.hmingle.mapper.dto.response.MemberUpdateResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,6 +27,17 @@ public class MemberController {
 		return ResponseEntity.ok(MingleResponse.success(
 			"사용자 상세 조회에 성공하셨습니다.",
 			response
+		));
+	}
+
+	@PatchMapping("/{memberId}")
+	public ResponseEntity<MingleResponse<MemberUpdateResponse>> update(@PathVariable Long memberId,
+																	   @RequestBody MemberUpdateRequest params) {
+
+		MemberUpdateResponse response = memberService.update(params);
+		return ResponseEntity.ok(MingleResponse.success(
+				"사용자 수정에 성공하였습니다.",
+				response
 		));
 	}
 }

@@ -1,5 +1,7 @@
 package com.hyundai.hmingle.repository;
 
+import com.hyundai.hmingle.controller.dto.request.MemberUpdateRequest;
+import com.hyundai.hmingle.mapper.dto.response.MemberUpdateResponse;
 import org.springframework.stereotype.Repository;
 
 import com.hyundai.hmingle.controller.dto.response.MemberGetResponse;
@@ -9,6 +11,9 @@ import com.hyundai.hmingle.mapper.PostMapper;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Repository
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -37,5 +42,22 @@ public class MemberRepository {
 			savedMember.getId(), savedMember.getEmail(), savedMember.getNickname(), savedMember.getIntroduction(),
 			postCount
 		);
+	}
+
+	public MemberUpdateResponse update(MemberUpdateRequest memberUpdateDto){
+		findById(memberUpdateDto.getMemberId());
+		memberMapper.update(memberUpdateDto);
+
+		Member updatedMember = findById(memberUpdateDto.getMemberId());
+		Timestamp date = Timestamp.valueOf(updatedMember.getModifiedDate());
+		LocalDateTime modifiedDate = date.toLocalDateTime();
+
+		MemberUpdateResponse response = new MemberUpdateResponse(updatedMember.getId(),
+											updatedMember.getEmail(),
+											updatedMember.getNickname(),
+											updatedMember.getIntroduction(),
+											modifiedDate.toString()
+										);
+		return response;
 	}
 }

@@ -1,5 +1,7 @@
 package com.hyundai.hmingle.service;
 
+import com.hyundai.hmingle.controller.dto.request.MemberUpdateRequest;
+import com.hyundai.hmingle.mapper.dto.response.MemberUpdateResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,4 +22,9 @@ public class MemberServiceImpl implements MemberService {
 	public MemberGetResponse findById(Long memberId) {
 		return memberRepository.findWithPostCountByMemberId(memberId);
 	}
+
+	public MemberUpdateResponse update(MemberUpdateRequest memberUpdateDto){
+		return memberRepository.update(memberUpdateDto);
+	}
+
 }
