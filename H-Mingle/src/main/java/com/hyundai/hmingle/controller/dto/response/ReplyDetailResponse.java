@@ -14,6 +14,6 @@ public class ReplyDetailResponse {
 	private final int like;
 	private final String recent;
 	private final Long parentId;
-	private final boolean isWriter;
+	private final boolean writer;
 	private final byte[] image;
 }
