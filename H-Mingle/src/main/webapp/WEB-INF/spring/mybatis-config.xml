@@ -24,6 +24,5 @@
         <typeAlias type="com.hyundai.hmingle.mapper.dto.request.PostDeleteDto" alias="postDeleteDto"/>
         <typeAlias type="com.hyundai.hmingle.controller.dto.request.PostUpdateRequest" alias="postUpdateRequest"/>
         <typeAlias type="com.hyundai.hmingle.controller.dto.request.MemberUpdateRequest" alias="memberUpdateDto"/>
-
     </typeAliases>
 </configuration>
