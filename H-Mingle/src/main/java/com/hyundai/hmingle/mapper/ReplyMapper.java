@@ -3,6 +3,7 @@ package com.hyundai.hmingle.mapper;
 import java.util.List;
 import java.util.Optional;
 
+import com.hyundai.hmingle.mapper.dto.request.ReplyDeleteDto;
 import com.hyundai.hmingle.mapper.dto.response.ReplyResponse;
 import com.hyundai.hmingle.domain.post.Reply;
 import com.hyundai.hmingle.mapper.dto.request.RepliesRequest;
@@ -23,7 +24,7 @@ public interface ReplyMapper {
 
 	void update(ReplyUpdateDto reply);
 
-	void delete(Long id);
+	void delete(ReplyDeleteDto replyDeleteDto);
 
-	void deleteWithReplies(Long id);
+	void deleteWithReplies(ReplyDeleteDto replyDeleteDto);
 }

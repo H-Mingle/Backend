@@ -27,6 +27,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -42,7 +43,7 @@ public class PostServiceImpl implements PostService {
 	private final HeartRepository heartRepository;
 
 	public Long savePost(PostCreateRequest params, Long memberId) {
-		PostCreateDto dto = new PostCreateDto(null, params.getContent(), params.getChannelId(), memberId);
+		PostCreateDto dto = new PostCreateDto(null, params.getContent(), params.getChannelId(), memberId, LocalDateTime.now());
 		postRepository.save(dto);
 		return dto.getPostId();
 	}
@@ -89,7 +90,7 @@ public class PostServiceImpl implements PostService {
 	}
 
 	public Long removePost(Long postId, Long memberId){
-		PostDeleteDto params = new PostDeleteDto(postId, memberId);
+		PostDeleteDto params = new PostDeleteDto(postId, memberId, LocalDateTime.now());
 		return postRepository.removePost(params);
 	}
 

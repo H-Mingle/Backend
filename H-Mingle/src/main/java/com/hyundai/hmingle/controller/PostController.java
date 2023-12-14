@@ -1,5 +1,6 @@
 package com.hyundai.hmingle.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -76,7 +77,7 @@ public class PostController {
 																		 @RequestPart List<MultipartFile> uploadImgs,
 																		 PostUpdateRequest params){
 
-		PostUpdateRequest request = new PostUpdateRequest(params.getPostId(), params.getContent());
+		PostUpdateRequest request = new PostUpdateRequest(params.getPostId(), params.getContent(), LocalDateTime.now());
 		postService.updatePost(request);
 
 		List<ImageCreateRequest> images = imageUtils.uploadFiles(uploadImgs);

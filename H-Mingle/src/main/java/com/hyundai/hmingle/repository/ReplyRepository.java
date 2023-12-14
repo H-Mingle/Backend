@@ -1,5 +1,6 @@
 package com.hyundai.hmingle.repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -10,6 +11,7 @@ import com.hyundai.hmingle.domain.post.Reply;
 import com.hyundai.hmingle.mapper.ReplyMapper;
 import com.hyundai.hmingle.mapper.dto.request.RepliesRequest;
 import com.hyundai.hmingle.mapper.dto.request.ReplyCreateDto;
+import com.hyundai.hmingle.mapper.dto.request.ReplyDeleteDto;
 import com.hyundai.hmingle.mapper.dto.request.ReplyUpdateDto;
 import com.hyundai.hmingle.mapper.dto.response.ReplyResponse;
 
@@ -24,23 +26,25 @@ public class ReplyRepository {
 
 	public Long save(Post post, Reply reply, Member member, Long parentId) {
 		ReplyCreateDto replyCreateDto = new ReplyCreateDto(
-			reply.getContent(), post.getId(), member.getId(), parentId, reply.getDepth()
+			reply.getContent(), post.getId(), member.getId(), parentId, reply.getDepth(), LocalDateTime.now()
 		);
 		replyMapper.save(replyCreateDto);
 		return replyCreateDto.getId();
 	}
 
 	public void update(Reply reply, String content) {
-		ReplyUpdateDto replyUpdateDto = new ReplyUpdateDto(reply.getId(), content);
+		ReplyUpdateDto replyUpdateDto = new ReplyUpdateDto(reply.getId(), content, LocalDateTime.now());
 		replyMapper.update(replyUpdateDto);
 	}
 
 	public void delete(Long replyId) {
-		replyMapper.delete(replyId);
+		ReplyDeleteDto replyDeleteDto = new ReplyDeleteDto(replyId, LocalDateTime.now());
+		replyMapper.delete(replyDeleteDto);
 	}
 
 	public void deleteWithReplies(Long replyId) {
-		replyMapper.deleteWithReplies(replyId);
+		ReplyDeleteDto replyDeleteDto = new ReplyDeleteDto(replyId, LocalDateTime.now());
+		replyMapper.deleteWithReplies(replyDeleteDto);
 	}
 
 	public Reply findById(Long replyId) {
