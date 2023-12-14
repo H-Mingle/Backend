@@ -19,6 +19,7 @@ import com.hyundai.hmingle.controller.dto.request.PostCreateRequest;
 import com.hyundai.hmingle.controller.dto.response.PostGetResponse;
 
 import com.hyundai.hmingle.repository.PostRepository;
+import com.hyundai.hmingle.support.DateTimeConvertor;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +28,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,9 +41,10 @@ public class PostServiceImpl implements PostService {
 	private final PostRepository postRepository;
 	private final ImageRepository imageRepository;
 	private final HeartRepository heartRepository;
+	private final DateTimeConvertor dateTimeConvertor;
 
 	public Long savePost(PostCreateRequest params, Long memberId) {
-		PostCreateDto dto = new PostCreateDto(null, params.getContent(), params.getChannelId(), memberId, LocalDateTime.now());
+		PostCreateDto dto = new PostCreateDto(null, params.getContent(), params.getChannelId(), memberId, dateTimeConvertor.current());
 		postRepository.save(dto);
 		return dto.getPostId();
 	}
@@ -90,7 +91,7 @@ public class PostServiceImpl implements PostService {
 	}
 
 	public Long removePost(Long postId, Long memberId){
-		PostDeleteDto params = new PostDeleteDto(postId, memberId, LocalDateTime.now());
+		PostDeleteDto params = new PostDeleteDto(postId, memberId, dateTimeConvertor.current());
 		return postRepository.removePost(params);
 	}
 
