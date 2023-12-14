@@ -1,11 +1,11 @@
 package com.hyundai.hmingle.controller;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import com.hyundai.hmingle.controller.dto.request.PostUpdateRequest;
 import com.hyundai.hmingle.controller.dto.response.*;
+import com.hyundai.hmingle.support.DateTimeConvertor;
 import com.hyundai.hmingle.support.ImageConvertor;
 import com.hyundai.hmingle.support.JwtTokenExtractor;
 import org.springframework.http.HttpHeaders;
@@ -33,6 +33,7 @@ public class PostController {
 	private final ImageUtils imageUtils;
 	private final ImageConvertor imageConvertor;
 	private final JwtTokenExtractor jwtTokenExtractor;
+	private final DateTimeConvertor dateTimeConvertor;
 
 	@PostMapping
 	public ResponseEntity<MingleResponse> savePost(@RequestPart(required = false) List<MultipartFile> uploadImgs,
@@ -77,7 +78,7 @@ public class PostController {
 																		 @RequestPart List<MultipartFile> uploadImgs,
 																		 PostUpdateRequest params){
 
-		PostUpdateRequest request = new PostUpdateRequest(params.getPostId(), params.getContent(), LocalDateTime.now());
+		PostUpdateRequest request = new PostUpdateRequest(params.getPostId(), params.getContent(), dateTimeConvertor.current());
 		postService.updatePost(request);
 
 		List<ImageCreateRequest> images = imageUtils.uploadFiles(uploadImgs);
