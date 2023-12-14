@@ -10,8 +10,10 @@ import com.hyundai.hmingle.domain.post.Reply;
 import com.hyundai.hmingle.mapper.ReplyMapper;
 import com.hyundai.hmingle.mapper.dto.request.RepliesRequest;
 import com.hyundai.hmingle.mapper.dto.request.ReplyCreateDto;
+import com.hyundai.hmingle.mapper.dto.request.ReplyDeleteDto;
 import com.hyundai.hmingle.mapper.dto.request.ReplyUpdateDto;
 import com.hyundai.hmingle.mapper.dto.response.ReplyResponse;
+import com.hyundai.hmingle.support.DateTimeConvertor;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -21,26 +23,29 @@ import lombok.RequiredArgsConstructor;
 public class ReplyRepository {
 
 	private final ReplyMapper replyMapper;
+	private final DateTimeConvertor dateTimeConvertor;
 
 	public Long save(Post post, Reply reply, Member member, Long parentId) {
 		ReplyCreateDto replyCreateDto = new ReplyCreateDto(
-			reply.getContent(), post.getId(), member.getId(), parentId, reply.getDepth()
+			reply.getContent(), post.getId(), member.getId(), parentId, reply.getDepth(), dateTimeConvertor.current()
 		);
 		replyMapper.save(replyCreateDto);
 		return replyCreateDto.getId();
 	}
 
 	public void update(Reply reply, String content) {
-		ReplyUpdateDto replyUpdateDto = new ReplyUpdateDto(reply.getId(), content);
+		ReplyUpdateDto replyUpdateDto = new ReplyUpdateDto(reply.getId(), content, dateTimeConvertor.current());
 		replyMapper.update(replyUpdateDto);
 	}
 
 	public void delete(Long replyId) {
-		replyMapper.delete(replyId);
+		ReplyDeleteDto replyDeleteDto = new ReplyDeleteDto(replyId, dateTimeConvertor.current());
+		replyMapper.delete(replyDeleteDto);
 	}
 
 	public void deleteWithReplies(Long replyId) {
-		replyMapper.deleteWithReplies(replyId);
+		ReplyDeleteDto replyDeleteDto = new ReplyDeleteDto(replyId, dateTimeConvertor.current());
+		replyMapper.deleteWithReplies(replyDeleteDto);
 	}
 
 	public Reply findById(Long replyId) {

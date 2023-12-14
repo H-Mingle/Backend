@@ -3,8 +3,8 @@
 <mapper namespace="com.hyundai.hmingle.mapper.PostMapper">
 	
 	<insert id="save" parameterType="postCreateDto" >
-		INSERT INTO post (id, content, member_id, channel_id, read_count, created_date)
-		VALUES (SEQ_POST_ID.nextval, #{content}, #{memberId}, #{channelId}, 0, sysdate)
+		INSERT INTO post (id, content, member_id, channel_id, read_count, created_date, modified_date)
+		VALUES (SEQ_POST_ID.nextval, #{content}, #{memberId}, #{channelId}, 0, #{createDate}, #{createDate})
 		<selectKey keyProperty="postId" resultType="Long" order="AFTER">
 			SELECT SEQ_POST_ID.currval
 			FROM dual
@@ -44,7 +44,7 @@
 	</select>
 
 	<update id="removePost" parameterType="postDeleteDto">
-		UPDATE post SET removed=1, MODIFIED_DATE = sysdate
+		UPDATE post SET removed=1, MODIFIED_DATE = #{modifiedDate}
 		WHERE id=#{postId} AND member_id=#{memberId}
 		<selectKey keyColumn="id" resultType="Long" order="BEFORE">
 			SELECT id
@@ -54,7 +54,7 @@
 	</update>
 
 	<update id="updatePost" parameterType="postUpdateRequest">
-		UPDATE post SET content=#{content}, MODIFIED_DATE = sysdate
+		UPDATE post SET content=#{content}, MODIFIED_DATE = #{modifiedDate}
 		WHERE id=#{postId}
 	</update>
 

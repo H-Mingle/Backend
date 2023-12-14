@@ -1,13 +1,17 @@
 package com.hyundai.hmingle.mapper.dto.request;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import java.time.LocalDateTime;
 
-@Data
-@AllArgsConstructor
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@Getter
+@RequiredArgsConstructor
 public class PostCreateDto {
-    private Long postId;
-    private String content;
-    private Long channelId;
-    private Long memberId;
+
+    private final Long postId;
+    private final String content;
+    private final Long channelId;
+    private final Long memberId;
+    private final LocalDateTime createDate;
 }

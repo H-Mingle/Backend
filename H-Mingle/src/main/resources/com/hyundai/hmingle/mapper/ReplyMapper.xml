@@ -58,8 +58,8 @@
     </select>
 
     <insert id="save" parameterType="map">
-        insert into reply (id, content, post_id, member_id, parent_id, depth)
-        values (seq_reply_id.nextval, #{content}, #{postId}, #{memberId}, #{parentId}, #{depth})
+        insert into reply (id, content, post_id, member_id, parent_id, depth, created_date, modified_date)
+        values (seq_reply_id.nextval, #{content}, #{postId}, #{memberId}, #{parentId}, #{depth}, #{createdDate}, #{createdDate})
         <selectKey keyProperty="id" resultType="long" order="AFTER">
             SELECT seq_reply_id.currval FROM dual
         </selectKey>
@@ -67,19 +67,19 @@
 
     <update id="update" parameterType="replyUpdateDto">
         update reply
-        set content = #{content}, modified_date = sysdate
+        set content = #{content}, modified_date = #{modifiedDate}
         where id = #{id}
     </update>
 
-    <update id="delete" parameterType="long">
+    <update id="delete" parameterType="replyDeleteDto">
         update reply
-        set modified_date = sysdate, removed = 1
+        set modified_date = #{modifiedDate}, removed = 1
         where id = #{id}
     </update>
 
-    <update id="deleteWithReplies" parameterType="long">
+    <update id="deleteWithReplies" parameterType="replyDeleteDto">
         update reply
-        set modified_date = sysdate, removed = 1
+        set modified_date = #{modifiedDate}, removed = 1
         where id = #{id} or parent_id = #{id}
     </update>
 </mapper>

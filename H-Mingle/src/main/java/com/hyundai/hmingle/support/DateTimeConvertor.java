@@ -1,6 +1,8 @@
 package com.hyundai.hmingle.support;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 
 import org.springframework.stereotype.Component;
@@ -22,6 +24,10 @@ public class DateTimeConvertor {
 		long diffTime = date.until(now, ChronoUnit.SECONDS);
 
 		return convert(diffTime);
+	}
+
+	public LocalDateTime current() {
+		return ZonedDateTime.now(ZoneId.of("Asia/Seoul")).toLocalDateTime();
 	}
 
 	private String convert(long diffTime) {

@@ -1,11 +1,15 @@
 package com.hyundai.hmingle.mapper.dto.request;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import java.time.LocalDateTime;
 
-@Data
-@AllArgsConstructor
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@Getter
+@RequiredArgsConstructor
 public class PostDeleteDto {
-    Long postId;
-    Long memberId;
+
+    private final Long postId;
+    private final Long memberId;
+    private final LocalDateTime modifiedDate;
 }
