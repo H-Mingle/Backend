@@ -1,5 +1,7 @@
 package com.hyundai.hmingle.mapper.dto.request;
 
+import java.time.LocalDateTime;
+
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -13,4 +15,5 @@ public class ReplyCreateDto {
 	private final Long memberId;
 	private final Long parentId;
 	private final int depth;
+	private final LocalDateTime createdDate;
 }

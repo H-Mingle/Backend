@@ -7,9 +7,8 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class ReplyUpdateDto {
+public class ReplyDeleteDto {
 
 	private final Long id;
-	private final String content;
 	private final LocalDateTime modifiedDate;
 }
