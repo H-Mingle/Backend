@@ -29,8 +29,8 @@ public class PostRepository {
 		return postMapper.save(params);
 	}
 
-	public PostDetailResponse getPostDetail(Long postId) {
-		return postMapper.getPostDetail(postId);
+	public PostDetailResponse getPostDetail(Long postId, Long memberId) {
+		return postMapper.getPostDetail(postId, memberId);
 	}
 
 	public void getPostId(Map<String, BigDecimal> parameterMap) {
@@ -68,5 +68,10 @@ public class PostRepository {
 	public int upReadCount(Long postId){
 		return postMapper.upReadCount(postId);
 	}
+
+	public Long findMemberId(Long postId){
+		return postMapper.findMemberId(postId);
+	}
+
 
 }

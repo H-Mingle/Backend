@@ -28,6 +28,13 @@
         <typeAlias type="com.hyundai.hmingle.mapper.dto.request.ReplyUpdateDto" alias="replyUpdateDto"/>
         <typeAlias type="com.hyundai.hmingle.mapper.dto.request.PostCreateDto" alias="postCreateDto"/>
         <typeAlias type="com.hyundai.hmingle.mapper.dto.request.PostDeleteDto" alias="postDeleteDto"/>
+        <typeAlias type="com.hyundai.hmingle.controller.dto.request.PostUpdateRequest" alias="postUpdateRequest"/>
+        <typeAlias type="com.hyundai.hmingle.controller.dto.request.MemberUpdateRequest" alias="memberUpdateDto"/>
+        <typeAlias type="com.hyundai.hmingle.controller.dto.response.PostListGetResponse" alias="postListGetResponse"/>
+        <typeAlias type="com.hyundai.hmingle.mapper.dto.response.PostResponse" alias="postResponse"/>
+
+
+        <typeAlias type="com.hyundai.hmingle.mapper.dto.request.ImageUpdateDto" alias="imageUpdateDto"/>
         <typeAlias type="com.hyundai.hmingle.mapper.dto.request.ImageUpdateDto" alias="imageUpdateDto"/>
         <typeAlias type="com.hyundai.hmingle.mapper.dto.request.RepliesRequest" alias="repliesRequest"/>
         <typeAlias type="com.hyundai.hmingle.mapper.dto.request.ReplyDeleteDto" alias="replyDeleteDto"/>

@@ -13,12 +13,13 @@ import java.util.Map;
 
 import com.hyundai.hmingle.controller.dto.response.PostGetResponse;
 import com.hyundai.hmingle.domain.post.Post;
+import org.apache.ibatis.annotations.Param;
 
 public interface PostMapper {
 
 	Long save(PostCreateDto params);
-	
-	PostDetailResponse getPostDetail(Long postId);
+
+	PostDetailResponse getPostDetail(@Param("postId") Long postId, @Param("memberId") Long memberId);
 
 	void getPostId(Map<String, BigDecimal> map);
 
@@ -35,5 +36,7 @@ public interface PostMapper {
 	List<Long> findPostByChannelId(Long channelId);
 
 	int upReadCount(Long postId);
+
+	Long findMemberId(Long postId);
 
 }

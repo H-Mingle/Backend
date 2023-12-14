@@ -5,17 +5,16 @@
 	<insert id="addHeart" parameterType="com.hyundai.hmingle.controller.dto.request.HeartRequest">
 		INSERT INTO heart (id, post_id, member_id)
 		VALUES (SEQ_HEART_ID.nextval, #{postId}, #{memberId})
-		<selectKey keyColumn="id" resultType="Long" order="AFTER">			
+		<selectKey keyColumn="id" resultType="Long" order="AFTER">
 			SELECT id
 			FROM heart
-			WHERE 1=1
 		</selectKey> 
 	</insert>
 		
 	<update id="removeHeart" parameterType="com.hyundai.hmingle.controller.dto.request.HeartRequest">	
 		UPDATE heart SET removed=1, MODIFIED_DATE = sysdate
 		WHERE post_id=#{postId} AND member_id=#{memberId}
-		<selectKey keyColumn="id" resultType="Long" order="BEFORE">			
+		<selectKey keyColumn="id" resultType="Long" order="BEFORE">
 			SELECT id
 			FROM heart
 			WHERE post_id=#{postId} AND member_id=#{memberId}

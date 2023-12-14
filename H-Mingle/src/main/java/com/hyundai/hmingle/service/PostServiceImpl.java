@@ -3,6 +3,8 @@ package com.hyundai.hmingle.service;
 import com.hyundai.hmingle.controller.dto.request.PostUpdateRequest;
 import com.hyundai.hmingle.controller.dto.response.PostListGetResponse;
 import com.hyundai.hmingle.controller.dto.response.PostsGetResponse;
+import com.hyundai.hmingle.domain.member.Member;
+import com.hyundai.hmingle.domain.post.Post;
 import com.hyundai.hmingle.mapper.dto.request.ImagesRequest;
 import com.hyundai.hmingle.mapper.dto.request.PostCreateDto;
 import com.hyundai.hmingle.mapper.dto.request.PostDeleteDto;
@@ -11,6 +13,7 @@ import com.hyundai.hmingle.mapper.dto.response.PostDetailResponse;
 import com.hyundai.hmingle.mapper.dto.response.PostResponse;
 import com.hyundai.hmingle.repository.HeartRepository;
 import com.hyundai.hmingle.repository.ImageRepository;
+import com.hyundai.hmingle.repository.MemberRepository;
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +22,6 @@ import com.hyundai.hmingle.controller.dto.request.PostCreateRequest;
 import com.hyundai.hmingle.controller.dto.response.PostGetResponse;
 
 import com.hyundai.hmingle.repository.PostRepository;
-import com.hyundai.hmingle.support.DateTimeConvertor;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -41,10 +43,10 @@ public class PostServiceImpl implements PostService {
 	private final PostRepository postRepository;
 	private final ImageRepository imageRepository;
 	private final HeartRepository heartRepository;
-	private final DateTimeConvertor dateTimeConvertor;
+	private final MemberRepository memberRepository;
 
 	public Long savePost(PostCreateRequest params, Long memberId) {
-		PostCreateDto dto = new PostCreateDto(null, params.getContent(), params.getChannelId(), memberId, dateTimeConvertor.current());
+		PostCreateDto dto = new PostCreateDto(null, params.getContent(), params.getChannelId(), memberId);
 		postRepository.save(dto);
 		return dto.getPostId();
 	}
@@ -53,7 +55,9 @@ public class PostServiceImpl implements PostService {
 	public PostGetResponse getPost(Long postId, Long memberId) {
 		postRepository.upReadCount(postId);
 
-		PostDetailResponse details = postRepository.getPostDetail(postId);
+		Long writerId = postRepository.findMemberId(postId);
+
+		PostDetailResponse details = postRepository.getPostDetail(postId, writerId);
 		BigDecimal id = BigDecimal.valueOf(postId);
 
 		int heartCount = 0;
@@ -69,14 +73,15 @@ public class PostServiceImpl implements PostService {
 		Long previousId = convertToLong(parameterMap.get("previousId"));
 		Long subsequentId = convertToLong(parameterMap.get("subsequentId"));
 
-		Long channelId = details.getChannel_id();
+		Long channelId = details.getChannelId();
 		String channelName = getChannelName(channelId);
 
 		boolean liked = false;
 		if(heartRepository.findHeart(postId, memberId)!=null)
 			liked = true;
 
-
+		byte[] writerImg = convertByteArr(writerId);
+		byte[] memberImg = convertByteArr(memberId);
 		PostGetResponse response = new PostGetResponse(postId,
 													   details.getContent(),
 													   details.getReadCount(),
@@ -86,12 +91,25 @@ public class PostServiceImpl implements PostService {
 													   details.getCreatedDate(),
 		                                               previousId,
 				                                       subsequentId,
-				                                       liked);
+				                                       liked,
+				                                       memberImg,
+				                                       writerImg);
 		return response;
 	}
 
+	public byte[] convertByteArr(long id){
+		Member member = memberRepository.findById(id);
+		byte[] memberImg = null;
+		try (InputStream imageStream = new FileInputStream(member.getImageUrl())) {
+			memberImg = IOUtils.toByteArray(imageStream);
+		}  catch (IOException e) {
+			e.printStackTrace();
+		}
+		return memberImg;
+	}
+
 	public Long removePost(Long postId, Long memberId){
-		PostDeleteDto params = new PostDeleteDto(postId, memberId, dateTimeConvertor.current());
+		PostDeleteDto params = new PostDeleteDto(postId, memberId);
 		return postRepository.removePost(params);
 	}
 

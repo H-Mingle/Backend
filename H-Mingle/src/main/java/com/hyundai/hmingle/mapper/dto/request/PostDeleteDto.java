@@ -11,5 +11,5 @@ public class PostDeleteDto {
 
     private final Long postId;
     private final Long memberId;
-    private final LocalDateTime modifiedDate;
+    private LocalDateTime modifiedDate;
 }
