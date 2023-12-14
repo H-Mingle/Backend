@@ -60,8 +60,9 @@ public class PostController {
 
 	@GetMapping("/{postId}")
 	public ResponseEntity<MingleResponse<PostGetResponse>> getPost(@PathVariable("postId") Long postId,
-																   @RequestHeader(name="memberId", required = false) Long memberId){
-		PostGetResponse response = postService.getPost(postId, memberId);
+																   @RequestHeader HttpHeaders headers){
+		Long id = jwtTokenExtractor.extract(headers);
+		PostGetResponse response = postService.getPost(postId, id);
 		return ResponseEntity.ok(MingleResponse.success("게시글 조회에 성공하셨습니다.", response));
 	}
 

@@ -18,19 +18,21 @@
     </select>
 
 	<select id="getPostDetail" resultType="postDetailResponse">
-		SELECT t1.*, t2.likes_count
-		FROM (
-				 SELECT p.id as post_id,  p.content, p.read_count, m.nickname, p.channel_id, p.created_date
-				 FROM post p, member m
-				 WHERE p.member_id=m.id and p.id=#{postId} AND p.removed=0
-			 ) t1
-				 LEFT OUTER JOIN (
-			SELECT post_id, count(id) as likes_count
-			FROM heart
-			WHERE removed=0
-			GROUP BY post_id
-		) t2
-	    ON t1.post_id = t2.post_id
+		SELECT
+			p.id as post_id,
+			p.content,
+			p.read_count,
+			m.nickname,
+			p.channel_id,
+			p.created_date,
+			(SELECT count(id)
+			 FROM heart
+			 WHERE removed=0) as likes_count,
+			(SELECT id
+			 FROM heart
+			 WHERE post_id=#{postId} AND member_id=#{memberId} AND removed=0) as liked
+		FROM post p, member m
+		WHERE p.member_id=m.id and p.id=#{postId} AND p.removed=0
 	</select>
 
 	<select id="getPostId" statementType="CALLABLE">

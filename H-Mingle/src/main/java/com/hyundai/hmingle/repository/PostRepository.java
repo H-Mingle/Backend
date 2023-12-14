@@ -29,8 +29,8 @@ public class PostRepository {
 		return postMapper.save(params);
 	}
 
-	public PostDetailResponse getPostDetail(Long postId) {
-		return postMapper.getPostDetail(postId);
+	public PostDetailResponse getPostDetail(Long postId, Long memberId) {
+		return postMapper.getPostDetail(postId, memberId);
 	}
 
 	public void getPostId(Map<String, BigDecimal> parameterMap) {
