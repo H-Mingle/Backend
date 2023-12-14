@@ -70,7 +70,6 @@ public class PostServiceImpl implements PostService {
 		Long channelId = details.getChannel_id();
 		String channelName = getChannelName(channelId);
 
-
 		boolean liked = false;
 		if(heartRepository.findHeart(postId, memberId)!=null)
 			liked = true;
@@ -85,7 +84,7 @@ public class PostServiceImpl implements PostService {
 													   details.getCreatedDate(),
 		                                               previousId,
 				                                       subsequentId,
-				                                       liked);
+				                                       isLiked);
 		return response;
 	}
 
