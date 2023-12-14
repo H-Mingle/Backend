@@ -1,6 +1,7 @@
 package com.hyundai.hmingle.repository;
 
 import com.hyundai.hmingle.controller.dto.request.MemberUpdateRequest;
+import com.hyundai.hmingle.mapper.dto.request.ImageUpdateDto;
 import com.hyundai.hmingle.mapper.dto.response.MemberUpdateResponse;
 
 import org.springframework.stereotype.Repository;
@@ -69,4 +70,9 @@ public class MemberRepository {
 	public void delete(Long memberId) {
 		memberMapper.delete(memberId);
 	}
+
+	public int updateImg(ImageUpdateDto imageUpdateDto){
+		return memberMapper.updateImg(imageUpdateDto);
+	}
+
 }

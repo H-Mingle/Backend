@@ -32,4 +32,10 @@
             modified_date = sysdate
         where id = #{memberId}
     </update>
+
+    <update id="updateImg" parameterType="imageUpdateDto">
+        UPDATE member
+        SET image_url = #{image}
+        WHERE id = #{memberId}
+    </update>
 </mapper>

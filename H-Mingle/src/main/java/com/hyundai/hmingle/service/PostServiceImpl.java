@@ -75,7 +75,6 @@ public class PostServiceImpl implements PostService {
 		if(heartRepository.findHeart(postId, memberId)!=null)
 			isLiked = true;
 
-
 		PostGetResponse response = new PostGetResponse(postId,
 													   details.getContent(),
 													   details.getReadCount(),
