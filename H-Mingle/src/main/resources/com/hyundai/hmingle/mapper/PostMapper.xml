@@ -4,7 +4,7 @@
 	
 	<insert id="save" parameterType="postCreateDto" >
 		INSERT INTO post (id, content, member_id, channel_id, read_count, created_date, modified_date)
-		VALUES (SEQ_POST_ID.nextval, #{content}, #{memberId}, #{channelId}, 0, #{createDate}, #{createDate})
+		VALUES (SEQ_POST_ID.nextval, #{content}, #{memberId}, #{channelId}, 0, sysdate, sysdate)
 		<selectKey keyProperty="postId" resultType="Long" order="AFTER">
 			SELECT SEQ_POST_ID.currval
 			FROM dual
@@ -75,4 +75,9 @@
 		WHERE id=#{postId}
 	</update>
 
+	<select id="findMemberId" parameterType="long" >
+		select member_id
+		from post
+		where id = #{id}
+	</select>
 </mapper>

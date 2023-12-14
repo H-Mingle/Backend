@@ -16,5 +16,6 @@ public class PostGetResponse {
 	private Long previousId;
 	private Long subsequentId;
 	private boolean liked;
+	private byte[] myImage;
 	private byte[] writerImage;
 }

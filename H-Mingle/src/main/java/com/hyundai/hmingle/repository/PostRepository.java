@@ -69,4 +69,9 @@ public class PostRepository {
 		return postMapper.upReadCount(postId);
 	}
 
+	public Long findMemberId(Long postId){
+		return postMapper.findMemberId(postId);
+	}
+
+
 }

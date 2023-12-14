@@ -37,4 +37,6 @@ public interface PostMapper {
 
 	int upReadCount(Long postId);
 
+	Long findMemberId(Long postId);
+
 }
