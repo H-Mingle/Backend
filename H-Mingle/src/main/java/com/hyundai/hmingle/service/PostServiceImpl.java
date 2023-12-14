@@ -70,10 +70,10 @@ public class PostServiceImpl implements PostService {
 		Long channelId = details.getChannel_id();
 		String channelName = getChannelName(channelId);
 
-
-		boolean isLiked = false;
+		boolean liked = false;
 		if(heartRepository.findHeart(postId, memberId)!=null)
-			isLiked = true;
+			liked = true;
+
 
 		PostGetResponse response = new PostGetResponse(postId,
 													   details.getContent(),

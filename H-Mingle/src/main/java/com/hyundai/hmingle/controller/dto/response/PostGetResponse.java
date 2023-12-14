@@ -15,5 +15,5 @@ public class PostGetResponse {
 	private String createdDate;
 	private Long previousId;
 	private Long subsequentId;
-	private boolean isLiked;
+	private boolean liked;
 }

@@ -22,35 +22,37 @@
     <select id="findAllByPostId" parameterType="long" resultType="reply">
         select id
         from reply
-        where post_id = #{id}
+        where post_id = #{id} and removed = 0
     </select>
 
     <select id="findAll" resultType="replyResponse">
         select
-            r.id as id, nickname, content, parent_id,
+            r.id as id, m.id as member_id, nickname, content, parent_id,
             (select count(id)
              from reply_heart
              where reply_id = r.id)  as heart_count,
-            r.created_date as create_date
+            r.created_date as create_date,
+            m.image_url as image_url
         from reply r
             left join member m
                 on r.member_id = m.id
-        where post_id = #{postId} and parent_id = #{parentId}
+        where post_id = #{postId} and parent_id = #{parentId} and r.removed = 0
         order by r.id
         offset #{startRow} rows fetch next #{size} rows only
     </select>
 
     <select id="findAllIfParentIsNull" resultType="replyResponse">
         select
-            r.id as id, nickname, content, parent_id,
+            r.id as id, m.id as member_id, nickname, content, parent_id,
             (select count(id)
              from reply_heart
              where reply_id = r.id)  as heart_count,
-            r.created_date as create_date
+            r.created_date as create_date,
+            m.image_url as image_url
         from reply r
             left join member m
                 on r.member_id = m.id
-        where post_id = #{postId} and parent_id is null
+        where post_id = #{postId} and parent_id is null and r.removed = 0
         order by r.id
         offset #{startRow} rows fetch next #{size} rows only
     </select>

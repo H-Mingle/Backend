@@ -1,6 +1,7 @@
 package com.hyundai.hmingle.service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ import com.hyundai.hmingle.repository.MemberRepository;
 import com.hyundai.hmingle.repository.PostRepository;
 import com.hyundai.hmingle.repository.ReplyRepository;
 import com.hyundai.hmingle.support.DateTimeConvertor;
+import com.hyundai.hmingle.support.ImageConvertor;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +35,7 @@ public class ReplyService {
 	private final PostRepository postRepository;
 	private final ReplyRepository replyRepository;
 	private final DateTimeConvertor dateTimeConvertor;
+	private final ImageConvertor imageConvertor;
 
 	public ReplyCreateResponse save(Long memberId, Long postId, ReplyCreateRequest request) {
 		Member savedMember = memberRepository.findById(memberId);
@@ -69,7 +72,7 @@ public class ReplyService {
 		delete(savedReply);
 	}
 
-	public List<ReplyDetailResponse> findAllWithPaging(Long postId, Integer requestPage, Integer requestSize, Long parentId) {
+	public List<ReplyDetailResponse> findAllWithPaging(Long memberId, Long postId, Integer requestPage, Integer requestSize, Long parentId) {
 		int page = validatePageIsNotNegative(requestPage);
 		int size = validateSizeIsNotNegative(requestSize);
 		int startRow = calculateStartRow(page, size);
@@ -80,9 +83,15 @@ public class ReplyService {
 
 		return replies.stream()
 			.map(reply -> new ReplyDetailResponse(
-				reply.getId(), reply.getNickname(), reply.getContent(), reply.getHeartCount(),
-				dateTimeConvertor.calculate(reply.getCreateDate()), reply.getParentId()))
+				reply.getId(), reply.getMemberId(), reply.getNickname(), reply.getContent(), reply.getHeartCount(),
+				dateTimeConvertor.calculate(reply.getCreateDate()), reply.getParentId(),
+				isWriter(memberId, reply.getMemberId()),
+				imageConvertor.convertPath(reply.getImageUrl())))
 			.collect(Collectors.toUnmodifiableList());
+	}
+
+	private boolean isWriter(Long memberId, Long replyMemberId) {
+		return Objects.equals(memberId, replyMemberId);
 	}
 
 	private void delete(Reply savedReply) {

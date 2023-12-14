@@ -32,4 +32,16 @@ public class MyPageController {
 			response
 		));
 	}
+
+	@GetMapping("/like")
+	public ResponseEntity<MingleResponse<MyPostsResponse>> findPostsLikedMember(
+		@PathVariable Long memberId,
+		@RequestParam Integer page,
+		@RequestParam Integer size) {
+		MyPostsResponse response = myPageService.findPostsLikedMember(memberId, page, size);
+		return ResponseEntity.ok(MingleResponse.success(
+			"사용자가 좋아요한 게시글 목록 조회에 성공하였습니다.",
+			response
+		));
+	}
 }

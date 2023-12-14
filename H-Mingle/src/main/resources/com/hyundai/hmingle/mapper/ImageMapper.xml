@@ -33,13 +33,25 @@
 		from post p
 	 		left join image im
 				on p.id = im.post_id
-		where member_id = #{memberId} and orders = 1
+		where member_id = #{memberId} and orders = 1 and p.removed = 0
+		order by p.id desc
+		offset #{startRow} rows fetch next #{size} rows only
+	</select>
+
+	<select id="findImageUrlLikedByMemberId" resultType="myPostResponse">
+		select p.id as id, image_url
+		from post p
+		join heart h
+			on h.post_id = p.id
+		join image im
+			on im.post_id = p.id
+		where h.member_id = #{memberId} and im.orders = 1 and p.removed = 0 and h.removed = 0
 		order by p.id desc
 		offset #{startRow} rows fetch next #{size} rows only
 	</select>
 
 	<update id="removeImages">
-		UPDATE image SET removed=1
+		UPDATE image SET removed=1, MODIFIED_DATE = sysdate
 		WHERE post_id=#{postId}
 	</update>
 

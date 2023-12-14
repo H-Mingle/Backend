@@ -8,9 +8,12 @@ import lombok.RequiredArgsConstructor;
 public class ReplyDetailResponse {
 
 	private final Long id;
+	private final Long memberId;
 	private final String nickname;
 	private final String content;
 	private final int like;
 	private final String recent;
 	private final Long parentId;
+	private final boolean writer;
+	private final byte[] image;
 }

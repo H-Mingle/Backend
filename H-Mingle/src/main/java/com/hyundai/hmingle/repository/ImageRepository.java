@@ -33,6 +33,11 @@ public class ImageRepository {
 		return imageMapper.findImageUrlByMemberId(request);
 	}
 
+	public List<MyPostResponse> findImageUrlLikedByMemberId(Long memberId, int startRow, int size) {
+		MyPostRequest request = new MyPostRequest(memberId, startRow, size);
+		return imageMapper.findImageUrlLikedByMemberId(request);
+	}
+
 	public void removeImages(Long postId){
 		imageMapper.removeImages(postId);
 	};
