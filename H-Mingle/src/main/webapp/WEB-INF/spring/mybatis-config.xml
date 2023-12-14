@@ -30,6 +30,7 @@
         <typeAlias type="com.hyundai.hmingle.mapper.dto.response.PostResponse" alias="postResponse"/>
 
 
+        <typeAlias type="com.hyundai.hmingle.mapper.dto.request.ImageUpdateDto" alias="imageUpdateDto"/>
         <typeAlias type="com.hyundai.hmingle.mapper.dto.request.RepliesRequest" alias="repliesRequest"/>
         <typeAlias type="com.hyundai.hmingle.mapper.dto.response.PostDetailResponse" alias="postDetailResponse"/>
         <typeAlias type="com.hyundai.hmingle.mapper.dto.response.ReplyResponse" alias="replyResponse"/>
