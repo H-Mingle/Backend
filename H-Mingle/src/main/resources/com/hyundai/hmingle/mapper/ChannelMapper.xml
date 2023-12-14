@@ -15,7 +15,7 @@
 	<select id="getList" resultMap="channelList">
 		WITH ChannelPostInfo AS (
    			SELECT
-        		c.id AS id,
+        		c.id AS channelId,
         		c.name,
         		c.location,
         		c.description,
@@ -30,6 +30,7 @@
    				post p ON c.id = p.channel_id
 		)
 		SELECT
+		    channelId,
 			name,
 			location,
 			description,

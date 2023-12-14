@@ -38,7 +38,7 @@ public class MemberServiceImpl implements MemberService {
 	private final TokenRepository tokenRepository;
 
 	@Transactional(readOnly = true)
-	public MemberGetResponse findById(Long memberId) {
+	public MemberGetResponse findById(Long memberId) throws IOException {
 		return memberRepository.findWithPostCountByMemberId(memberId);
 	}
 
@@ -59,11 +59,5 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 
-//	public byte[] updateImg(MultipartFile uploadImg,
-//							ImageUpdateDto imageUpdateDto) throws IOException {
-//
-//
-//
-//
-//	}
+
 }

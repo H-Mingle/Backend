@@ -20,6 +20,8 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+
 
 @RestController
 @RequestMapping("/members")
@@ -30,7 +32,7 @@ public class MemberController {
 	private final JwtTokenExtractor jwtTokenExtractor;
 	private final ImageUtils imageUtils;
 	@GetMapping("/{memberId}")
-	public ResponseEntity<MingleResponse<MemberGetResponse>> findById(@PathVariable Long memberId) {
+	public ResponseEntity<MingleResponse<MemberGetResponse>> findById(@PathVariable Long memberId) throws IOException {
 		MemberGetResponse response = memberService.findById(memberId);
 		return ResponseEntity.ok(MingleResponse.success(
 			"사용자 상세 조회에 성공하셨습니다.",

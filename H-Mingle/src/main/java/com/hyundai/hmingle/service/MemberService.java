@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public interface MemberService {
 
-	MemberGetResponse findById(Long memberId);
+	MemberGetResponse findById(Long memberId) throws IOException;
 
 	MemberUpdateResponse update(MemberUpdateRequest memberUpdateDto);
 

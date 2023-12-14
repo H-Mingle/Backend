@@ -14,9 +14,18 @@ import com.hyundai.hmingle.mapper.PostMapper;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
+import javax.imageio.ImageIO;
+import javax.imageio.stream.ImageInputStream;
+import javax.print.DocFlavor;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Base64;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Repository
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -42,12 +51,30 @@ public class MemberRepository {
 		return savedMember;
 	}
 
-	public MemberGetResponse findWithPostCountByMemberId(Long memberId) {
+	public MemberGetResponse findWithPostCountByMemberId(Long memberId) throws IOException {
 		Member savedMember = findById(memberId);
 		int postCount = postMapper.findPostCountByMemberId(savedMember.getId());
+		boolean owner = false;
+		byte[] image = null;
+
+		Pattern p = Pattern.compile("^(?:https?:\\/\\/)?(?:www\\.)?[a-zA-Z0-9./]+$");
+		Matcher m = p.matcher(savedMember.getImageUrl());
+		if  (m.matches()){
+			DocFlavor.URL url = new DocFlavor.URL(savedMember.getImageUrl());
+			BufferedImage img = ImageIO.read((ImageInputStream) url);
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			ImageIO.write(img, "jpg", bos);
+			Base64.Encoder encoder = Base64.getEncoder();
+
+			image = encoder.encode(bos.toByteArray());
+		}
+		else{
+
+		}
+
 		return new MemberGetResponse(
 			savedMember.getId(), savedMember.getEmail(), savedMember.getNickname(), savedMember.getIntroduction(),
-			postCount
+			postCount, image, owner
 		);
 	}
 
