@@ -48,6 +48,9 @@ public class PostController {
 	@GetMapping("/images/{postId}")
 	public ResponseEntity<MingleResponse<List<byte[]>>> getFourImages(@PathVariable("postId") Long postId){
 		List<String> images = imageService.getFourImages(postId);
+		if(images.isEmpty())
+			throw new RuntimeException("이미지가 존재하지 않습니다");
+
 		List<byte[]> imageByteArrays = images.stream()
 			.map(imageConvertor::convertPath)
 			.collect(Collectors.toUnmodifiableList());

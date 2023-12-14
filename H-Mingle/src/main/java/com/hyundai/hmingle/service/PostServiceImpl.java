@@ -84,7 +84,7 @@ public class PostServiceImpl implements PostService {
 													   details.getCreatedDate(),
 		                                               previousId,
 				                                       subsequentId,
-                                                       liked);
+				                                       liked);
 		return response;
 	}
 

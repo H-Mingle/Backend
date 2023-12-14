@@ -32,8 +32,11 @@ public class MemberController {
 	private final JwtTokenExtractor jwtTokenExtractor;
 	private final ImageUtils imageUtils;
 	@GetMapping("/{memberId}")
-	public ResponseEntity<MingleResponse<MemberGetResponse>> findById(@PathVariable Long memberId) throws IOException {
-		MemberGetResponse response = memberService.findById(memberId);
+	public ResponseEntity<MingleResponse<MemberGetResponse>> findById(@PathVariable Long memberId,
+																	  @RequestHeader HttpHeaders headers) throws IOException {
+		Long id = jwtTokenExtractor.extract(headers);
+		MemberGetResponse response = memberService.findById(id, memberId);
+
 		return ResponseEntity.ok(MingleResponse.success(
 			"사용자 상세 조회에 성공하셨습니다.",
 			response

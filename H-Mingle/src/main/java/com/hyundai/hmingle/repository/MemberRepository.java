@@ -1,9 +1,11 @@
 package com.hyundai.hmingle.repository;
 
 import com.hyundai.hmingle.controller.dto.request.MemberUpdateRequest;
+import com.hyundai.hmingle.controller.dto.response.PostListGetResponse;
 import com.hyundai.hmingle.mapper.dto.request.ImageUpdateDto;
 import com.hyundai.hmingle.mapper.dto.response.MemberUpdateResponse;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Repository;
 
 import com.hyundai.hmingle.controller.dto.response.MemberGetResponse;
@@ -15,17 +17,18 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
 import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageInputStream;
-import javax.print.DocFlavor;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Repository
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -51,17 +54,18 @@ public class MemberRepository {
 		return savedMember;
 	}
 
-	public MemberGetResponse findWithPostCountByMemberId(Long memberId) throws IOException {
+	public MemberGetResponse findWithPostCountByMemberId(Long id, Long memberId) throws IOException {
 		Member savedMember = findById(memberId);
 		int postCount = postMapper.findPostCountByMemberId(savedMember.getId());
-		boolean owner = false;
 		byte[] image = null;
 
-		Pattern p = Pattern.compile("^(?:https?:\\/\\/)?(?:www\\.)?[a-zA-Z0-9./]+$");
-		Matcher m = p.matcher(savedMember.getImageUrl());
-		if  (m.matches()){
-			DocFlavor.URL url = new DocFlavor.URL(savedMember.getImageUrl());
-			BufferedImage img = ImageIO.read((ImageInputStream) url);
+		URL imgUrl = new URL(savedMember.getImageUrl());
+		URLConnection con = imgUrl.openConnection();
+		HttpURLConnection exitCode = (HttpURLConnection) con;
+
+		if  (exitCode.getResponseCode() == 200){
+			URL url = new URL(savedMember.getImageUrl());
+			BufferedImage img = ImageIO.read((url));
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
 			ImageIO.write(img, "jpg", bos);
 			Base64.Encoder encoder = Base64.getEncoder();
@@ -69,8 +73,18 @@ public class MemberRepository {
 			image = encoder.encode(bos.toByteArray());
 		}
 		else{
-
+			byte[] imageByteArray = null;
+			try (InputStream imageStream = new FileInputStream(savedMember.getImageUrl())) {
+				imageByteArray = IOUtils.toByteArray(imageStream);
+			}  catch (IOException e) {
+				e.printStackTrace();
+			}
+			image = imageByteArray;
 		}
+
+		boolean owner = false;
+		if(id==memberId)
+			owner = true;
 
 		return new MemberGetResponse(
 			savedMember.getId(), savedMember.getEmail(), savedMember.getNickname(), savedMember.getIntroduction(),

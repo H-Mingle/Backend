@@ -38,8 +38,8 @@ public class MemberServiceImpl implements MemberService {
 	private final TokenRepository tokenRepository;
 
 	@Transactional(readOnly = true)
-	public MemberGetResponse findById(Long memberId) throws IOException {
-		return memberRepository.findWithPostCountByMemberId(memberId);
+	public MemberGetResponse findById(Long id, Long memberId) throws IOException {
+		return memberRepository.findWithPostCountByMemberId(id, memberId);
 	}
 
 	public MemberUpdateResponse update(MemberUpdateRequest memberUpdateDto){
