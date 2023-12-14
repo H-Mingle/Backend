@@ -6,10 +6,11 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public class MemberGetResponse {
-
 	private final Long memberId;
 	private final String email;
 	private final String nickname;
 	private final String introduction;
 	private final int postCount;
+	private final byte[] image;
+	private final boolean owner;
 }

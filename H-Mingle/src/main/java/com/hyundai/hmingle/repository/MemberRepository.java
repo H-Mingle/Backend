@@ -1,8 +1,11 @@
 package com.hyundai.hmingle.repository;
 
 import com.hyundai.hmingle.controller.dto.request.MemberUpdateRequest;
+import com.hyundai.hmingle.controller.dto.response.PostListGetResponse;
+import com.hyundai.hmingle.mapper.dto.request.ImageUpdateDto;
 import com.hyundai.hmingle.mapper.dto.response.MemberUpdateResponse;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Repository;
 
 import com.hyundai.hmingle.controller.dto.response.MemberGetResponse;
@@ -13,8 +16,18 @@ import com.hyundai.hmingle.mapper.PostMapper;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Base64;
 import java.util.Optional;
 
 @Repository
@@ -41,12 +54,24 @@ public class MemberRepository {
 		return savedMember;
 	}
 
-	public MemberGetResponse findWithPostCountByMemberId(Long memberId) {
+	public MemberGetResponse findWithPostCountByMemberId(Long id, Long memberId) throws IOException {
 		Member savedMember = findById(memberId);
 		int postCount = postMapper.findPostCountByMemberId(savedMember.getId());
+
+		byte[] imageByteArray = null;
+		try (InputStream imageStream = new FileInputStream(savedMember.getImageUrl())) {
+			imageByteArray = IOUtils.toByteArray(imageStream);
+		}  catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		boolean owner = false;
+		if(id==memberId)
+			owner = true;
+
 		return new MemberGetResponse(
 			savedMember.getId(), savedMember.getEmail(), savedMember.getNickname(), savedMember.getIntroduction(),
-			postCount
+			postCount, imageByteArray, owner
 		);
 	}
 
@@ -69,4 +94,9 @@ public class MemberRepository {
 	public void delete(Long memberId) {
 		memberMapper.delete(memberId);
 	}
+
+	public int updateImg(ImageUpdateDto imageUpdateDto){
+		return memberMapper.updateImg(imageUpdateDto);
+	}
+
 }

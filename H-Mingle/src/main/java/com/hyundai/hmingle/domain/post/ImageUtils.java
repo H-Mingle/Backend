@@ -65,7 +65,28 @@ public class ImageUtils {
         return createdImage;
     }
 
-    
+    public ImageCreateRequest updateFile(MultipartFile multipartFile) {
+        if (multipartFile.isEmpty()) {
+            return null;
+        }
+
+        String saveName = generateSaveFilename(multipartFile.getOriginalFilename());
+        String today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyMMdd")).toString();
+        String uploadPath = getUploadPath(today) + File.separator + saveName;
+        File uploadFile = new File(uploadPath);
+
+        try {
+            multipartFile.transferTo(uploadFile);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        ImageCreateRequest createdImage = new ImageCreateRequest(multipartFile.getOriginalFilename(),
+                uploadPath,
+                multipartFile.getSize());
+        return createdImage;
+    }
+
     private String generateSaveFilename(final String filename) {
         String uuid = UUID.randomUUID().toString().replaceAll("-", "");
         String extension = StringUtils.getFilenameExtension(filename);
