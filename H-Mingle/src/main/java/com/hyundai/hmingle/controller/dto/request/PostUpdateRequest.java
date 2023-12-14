@@ -1,11 +1,15 @@
 package com.hyundai.hmingle.controller.dto.request;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import java.time.LocalDateTime;
 
-@Data
-@AllArgsConstructor
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@Getter
+@RequiredArgsConstructor
 public class PostUpdateRequest {
-    private Long postId;
-    private String content;
+
+    private final Long postId;
+    private final String content;
+    private final LocalDateTime modifiedDate;
 }
