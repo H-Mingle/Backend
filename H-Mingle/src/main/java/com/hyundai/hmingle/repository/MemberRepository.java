@@ -57,29 +57,12 @@ public class MemberRepository {
 	public MemberGetResponse findWithPostCountByMemberId(Long id, Long memberId) throws IOException {
 		Member savedMember = findById(memberId);
 		int postCount = postMapper.findPostCountByMemberId(savedMember.getId());
-		byte[] image = null;
 
-		URL imgUrl = new URL(savedMember.getImageUrl());
-		URLConnection con = imgUrl.openConnection();
-		HttpURLConnection exitCode = (HttpURLConnection) con;
-
-		if  (exitCode.getResponseCode() == 200){
-			URL url = new URL(savedMember.getImageUrl());
-			BufferedImage img = ImageIO.read((url));
-			ByteArrayOutputStream bos = new ByteArrayOutputStream();
-			ImageIO.write(img, "jpg", bos);
-			Base64.Encoder encoder = Base64.getEncoder();
-
-			image = encoder.encode(bos.toByteArray());
-		}
-		else{
-			byte[] imageByteArray = null;
-			try (InputStream imageStream = new FileInputStream(savedMember.getImageUrl())) {
-				imageByteArray = IOUtils.toByteArray(imageStream);
-			}  catch (IOException e) {
-				e.printStackTrace();
-			}
-			image = imageByteArray;
+		byte[] imageByteArray = null;
+		try (InputStream imageStream = new FileInputStream(savedMember.getImageUrl())) {
+			imageByteArray = IOUtils.toByteArray(imageStream);
+		}  catch (IOException e) {
+			e.printStackTrace();
 		}
 
 		boolean owner = false;
@@ -88,7 +71,7 @@ public class MemberRepository {
 
 		return new MemberGetResponse(
 			savedMember.getId(), savedMember.getEmail(), savedMember.getNickname(), savedMember.getIntroduction(),
-			postCount, image, owner
+			postCount, imageByteArray, owner
 		);
 	}
 
