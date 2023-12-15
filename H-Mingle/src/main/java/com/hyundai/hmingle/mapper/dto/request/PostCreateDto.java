@@ -13,5 +13,4 @@ public class PostCreateDto {
     private final String content;
     private final Long channelId;
     private final Long memberId;
-    private final LocalDateTime createDate;
 }
