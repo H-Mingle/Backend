@@ -19,6 +19,14 @@
         where id = #{id}
     </select>
 
+    <select id="findSaved" parameterType="long" resultType="replyCreateDto">
+        select r.id as id, content, depth, member_id, nickname, r.created_date as createdDate, m.image_url as imageUrl
+        from reply r
+        join member m
+            on r.member_id = m.id
+        where r.id = #{replyId} and r.removed = 0
+    </select>
+
     <select id="findAllByPostId" parameterType="long" resultType="reply">
         select id
         from reply

@@ -12,6 +12,7 @@ import com.hyundai.hmingle.mapper.dto.request.RepliesRequest;
 import com.hyundai.hmingle.mapper.dto.request.ReplyCreateDto;
 import com.hyundai.hmingle.mapper.dto.request.ReplyDeleteDto;
 import com.hyundai.hmingle.mapper.dto.request.ReplyUpdateDto;
+import com.hyundai.hmingle.mapper.dto.response.ReplyCreateResponseDto;
 import com.hyundai.hmingle.mapper.dto.response.ReplyResponse;
 import com.hyundai.hmingle.support.DateTimeConvertor;
 
@@ -55,6 +56,11 @@ public class ReplyRepository {
 			throw new RuntimeException("삭제된 댓글입니다.");
 		}
 		return savedReply;
+	}
+
+	public ReplyCreateResponseDto findSaved(Long replyId) {
+		return replyMapper.findSaved(replyId)
+			.orElseThrow(() -> new RuntimeException("존재하지 않는 댓글입니다."));
 	}
 
 	public Reply findParentByParentId(Long parentId) {
