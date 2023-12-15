@@ -9,6 +9,10 @@ public class ReplyCreateResponse {
 
 	private final Long postId;
 	private final Long replyId;
+	private final Long memberId;
+	private final String nickname;
 	private final String content;
+	private final String recent;
 	private final Long parentId;
+	private final byte[] image;
 }
