@@ -7,10 +7,9 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class PostCreateDto {
+public class PostUpdateMapperRequest {
 
-    private final Long postId;
-    private final String content;
-    private final Long channelId;
-    private final Long memberId;
+	private final Long postId;
+	private final String content;
+	private final LocalDateTime modifiedDate;
 }

@@ -1,20 +1,22 @@
 package com.hyundai.hmingle.controller.dto.request;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class ImageCreateRequest {
+
 	private Long id;
 	private Long postId;
 	private int sequence;
 	private String originalName;
 	private String saveName;
 	private long size;
-	
+
 	public ImageCreateRequest(String originalName, String saveName, long size) {
 		this.originalName = originalName;
 		this.saveName = saveName;
 		this.size = size;
 	}
-
 }

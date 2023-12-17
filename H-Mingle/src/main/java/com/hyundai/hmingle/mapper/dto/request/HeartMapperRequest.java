@@ -1,12 +1,12 @@
-package com.hyundai.hmingle.controller.dto.response;
+package com.hyundai.hmingle.mapper.dto.request;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class PostCreateResponse {
+public class HeartMapperRequest {
 
 	private final Long postId;
-	private final String content;
+	private final Long memberId;
 }

@@ -7,9 +7,9 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class PostDeleteDto {
+public class PostDeleteMapperRequest {
 
-    private final Long postId;
-    private final Long memberId;
-    private LocalDateTime modifiedDate;
+	private final Long postId;
+	private final Long memberId;
+	private LocalDateTime modifiedDate;
 }

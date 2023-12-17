@@ -1,21 +1,22 @@
 package com.hyundai.hmingle.controller.dto.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
-@Data
-@AllArgsConstructor
+@Getter
+@RequiredArgsConstructor
 public class PostGetResponse {
-	private Long postId;
-	private String content;
-	private int readCount;
-	private String nickname;
-	private int heartCount;
-	private String channelName;
-	private String createdDate;
-	private Long previousId;
-	private Long subsequentId;
-	private boolean liked;
-	private byte[] myImage;
-	private byte[] writerImage;
+
+	private final Long postId;
+	private final String content;
+	private final int readCount;
+	private final String nickname;
+	private final int heartCount;
+	private final String channelName;
+	private final String createdDate;
+	private final Long previousId;
+	private final Long subsequentId;
+	private final boolean liked;
+	private final byte[] myImage;
+	private final byte[] writerImage;
 }

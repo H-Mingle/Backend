@@ -2,33 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hyundai.hmingle.mapper.ImageMapper">
 
-<insert id="saveAll" parameterType="com.hyundai.hmingle.controller.dto.request.ImageCreateRequest">
-	insert into image (
-		id, post_id, orders, image_url
-	)
-    select
-    	SEQ_IMAGE_ID.nextval,
-        postId,
-        orders,
-        saveName
-     from (
-     	<foreach collection="list" item="image" separator="union all">
-     		select
-     			#{image.postId} postId,
-     			#{image.sequence} orders,
-     			#{image.saveName} saveName
-   			from dual
-     	</foreach>
-     ) 
-</insert>
+	<select id="getFourImages">
+		SELECT image_url
+		FROM image
+		WHERE post_id=#{postId} AND removed=0
+	</select>
 
-<select id="getFourImages">
-	SELECT image_url
-	FROM image
-	WHERE post_id=#{postId} AND removed=0
-</select>
-
-	<select id="findImageUrlByMemberId" resultType="myPostResponse">
+	<select id="findImageUrlByMemberId" parameterType="myPostMapperRequest" resultType="myPostMapperResponse">
 		select p.id as id, image_url
 		from post p
 	 		left join image im
@@ -38,7 +18,7 @@
 		offset #{startRow} rows fetch next #{size} rows only
 	</select>
 
-	<select id="findImageUrlLikedByMemberId" resultType="myPostResponse">
+	<select id="findImageUrlLikedByMemberId" parameterType="myPostMapperRequest" resultType="myPostMapperResponse">
 		select p.id as id, image_url
 		from post p
 		join heart h
@@ -50,12 +30,7 @@
 		offset #{startRow} rows fetch next #{size} rows only
 	</select>
 
-	<update id="removeImages">
-		UPDATE image SET removed=1, MODIFIED_DATE = sysdate
-		WHERE post_id=#{postId}
-	</update>
-
-	<select id="findByPostId" resultType="postResponse">
+	<select id="findByPostId" parameterType="imagesMapperRequest" resultType="postMapperResponse">
 		SELECT p.id as postId, i.image_url as image
 		FROM image i
 				 JOIN post p ON i.post_id = p.id
@@ -63,4 +38,30 @@
 		ORDER BY i.id DESC
 		OFFSET #{startRow} ROWS FETCH NEXT #{size} ROWS ONLY
 	</select>
+
+	<insert id="saveAll" parameterType="imageCreateMapperRequest">
+		insert into image (
+		id, post_id, orders, image_url
+		)
+		select
+		SEQ_IMAGE_ID.nextval,
+		postId,
+		orders,
+		saveName
+		from (
+		<foreach collection="list" item="image" separator="union all">
+			select
+			#{image.postId} postId,
+			#{image.sequence} orders,
+			#{image.saveName} saveName
+			from dual
+		</foreach>
+		)
+	</insert>
+
+	<update id="removeImages">
+		UPDATE image SET removed=1, MODIFIED_DATE = sysdate
+		WHERE post_id=#{postId}
+	</update>
+
 </mapper>

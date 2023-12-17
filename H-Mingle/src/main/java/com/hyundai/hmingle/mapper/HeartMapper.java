@@ -1,13 +1,12 @@
 package com.hyundai.hmingle.mapper;
 
-import java.util.HashMap;
-
-import org.springframework.web.bind.annotation.RequestParam;
-
-import com.hyundai.hmingle.controller.dto.request.HeartRequest;
+import com.hyundai.hmingle.mapper.dto.request.HeartMapperRequest;
 
 public interface HeartMapper {
-	public Long addHeart(HeartRequest params);
-	public Long removeHeart(HeartRequest params);
-	public Long findHeart(HeartRequest params);
+
+	Long addHeart(HeartMapperRequest params);
+
+	Long removeHeart(HeartMapperRequest params);
+
+	Long findHeart(HeartMapperRequest params);
 }

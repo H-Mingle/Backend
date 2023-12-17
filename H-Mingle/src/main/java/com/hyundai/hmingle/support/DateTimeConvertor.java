@@ -19,7 +19,10 @@ public class DateTimeConvertor {
 	private static final int DAY = 30;
 	private static final int MONTH = 12;
 
-	public String calculate(LocalDateTime date) {
+	public String calculate(LocalDateTime date, String messageForNull) {
+		if (date == null) {
+			return messageForNull;
+		}
 		LocalDateTime now = LocalDateTime.now();
 		long diffTime = date.until(now, ChronoUnit.SECONDS);
 

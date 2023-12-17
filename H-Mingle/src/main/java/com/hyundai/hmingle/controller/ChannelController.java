@@ -11,16 +11,19 @@ import com.hyundai.hmingle.controller.dto.response.ChannelGetResponse;
 import com.hyundai.hmingle.controller.dto.response.MingleResponse;
 import com.hyundai.hmingle.service.ChannelService;
 
-import lombok.AllArgsConstructor;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/channels")
-@AllArgsConstructor
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class ChannelController {
-	private ChannelService channelService;
-	
+
+	private final ChannelService channelService;
+
 	@GetMapping
-	public ResponseEntity<MingleResponse<List<ChannelGetResponse>>> getList(){
-		return ResponseEntity.ok(MingleResponse.success("영업점 리스트 조회 성공",channelService.getList()));
+	public ResponseEntity<MingleResponse<List<ChannelGetResponse>>> getList() {
+		List<ChannelGetResponse> responses = channelService.getList();
+		return ResponseEntity.ok(MingleResponse.success("영업점 리스트 조회 성공", responses));
 	}
 }

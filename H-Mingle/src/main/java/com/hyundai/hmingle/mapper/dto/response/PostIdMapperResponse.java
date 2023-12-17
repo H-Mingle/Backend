@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class PostIdResponse {
-    private Long previousId;
-    private Long subsequentId;
+public class PostIdMapperResponse {
+	private Long previousId;
+	private Long subsequentId;
 }

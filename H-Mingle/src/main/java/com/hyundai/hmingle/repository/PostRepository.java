@@ -4,16 +4,18 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
-import com.hyundai.hmingle.controller.dto.request.PostUpdateRequest;
-import com.hyundai.hmingle.mapper.dto.request.PostCreateDto;
-import com.hyundai.hmingle.mapper.dto.request.PostDeleteDto;
 import org.springframework.stereotype.Repository;
 
+import com.hyundai.hmingle.controller.dto.request.PostUpdateRequest;
 import com.hyundai.hmingle.domain.post.Post;
 import com.hyundai.hmingle.domain.post.Reply;
 import com.hyundai.hmingle.mapper.PostMapper;
 import com.hyundai.hmingle.mapper.ReplyMapper;
-import com.hyundai.hmingle.mapper.dto.response.PostDetailResponse;
+import com.hyundai.hmingle.mapper.dto.request.PostCreateMapperRequest;
+import com.hyundai.hmingle.mapper.dto.request.PostDeleteMapperRequest;
+import com.hyundai.hmingle.mapper.dto.request.PostDetailMapperRequest;
+import com.hyundai.hmingle.mapper.dto.request.PostUpdateMapperRequest;
+import com.hyundai.hmingle.mapper.dto.response.PostDetailMapperResponse;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -25,19 +27,22 @@ public class PostRepository {
 	private final PostMapper postMapper;
 	private final ReplyMapper replyMapper;
 
-	public Long save(PostCreateDto params) {
-		return postMapper.save(params);
+	public Long save(String content, Long channelId, Long memberId) {
+		PostCreateMapperRequest postCreateMapperRequest = new PostCreateMapperRequest(content, channelId, memberId);
+		postMapper.save(postCreateMapperRequest);
+		return postCreateMapperRequest.getPostId();
 	}
 
-	public PostDetailResponse getPostDetail(Long postId, Long memberId) {
-		return postMapper.getPostDetail(postId, memberId);
+	public PostDetailMapperResponse getPostDetail(Long postId, Long memberId) {
+		PostDetailMapperRequest postDetailMapperRequest = new PostDetailMapperRequest(postId, memberId);
+		return postMapper.getPostDetail(postDetailMapperRequest);
 	}
 
 	public void getPostId(Map<String, BigDecimal> parameterMap) {
 		postMapper.getPostId(parameterMap);
 	}
 
-	public Long removePost(PostDeleteDto params) {
+	public Long removePost(PostDeleteMapperRequest params) {
 		return postMapper.removePost(params);
 	}
 
@@ -57,21 +62,21 @@ public class PostRepository {
 		return post;
 	}
 
-	public void updatePost(PostUpdateRequest params){
-		postMapper.updatePost(params);
-	};
+	public void updatePost(PostUpdateRequest params) {
+		PostUpdateMapperRequest postUpdateMapperRequest = new PostUpdateMapperRequest(
+			params.getPostId(), params.getContent(), params.getModifiedDate());
+		postMapper.updatePost(postUpdateMapperRequest);
+	}
 
-	public List<Long> findPostByChannelId(Long channelId){
+	public List<Long> findPostByChannelId(Long channelId) {
 		return postMapper.findPostByChannelId(channelId);
 	}
 
-	public int upReadCount(Long postId){
+	public int upReadCount(Long postId) {
 		return postMapper.upReadCount(postId);
 	}
 
-	public Long findMemberId(Long postId){
+	public Long findMemberId(Long postId) {
 		return postMapper.findMemberId(postId);
 	}
-
-
 }

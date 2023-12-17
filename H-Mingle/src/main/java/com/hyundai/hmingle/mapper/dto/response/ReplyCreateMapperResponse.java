@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class ReplyCreateResponseDto {
+public class ReplyCreateMapperResponse {
 
 	private Long id;
 	private String content;

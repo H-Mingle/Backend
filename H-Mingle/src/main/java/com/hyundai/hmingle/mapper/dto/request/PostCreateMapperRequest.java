@@ -5,9 +5,10 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class MyPostRequest {
+public class PostCreateMapperRequest {
 
+	private Long postId;
+	private final String content;
+	private final Long channelId;
 	private final Long memberId;
-	private final int startRow;
-	private final int size;
 }

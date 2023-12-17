@@ -1,4 +1,4 @@
-package com.hyundai.hmingle.controller.dto.request;
+package com.hyundai.hmingle.mapper.dto.request;
 
 import java.time.LocalDateTime;
 
@@ -7,9 +7,9 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class PostUpdateRequest {
+public class ReplyUpdateMapperRequest {
 
-	private final Long postId;
+	private final Long id;
 	private final String content;
 	private final LocalDateTime modifiedDate;
 }
