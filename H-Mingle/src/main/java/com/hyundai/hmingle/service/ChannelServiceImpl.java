@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @Transactional
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public class ChannelServiceImpl implements ChannelService {
+public class ChannelServiceImpl {
 
 	private final ChannelRepository channelRepository;
 

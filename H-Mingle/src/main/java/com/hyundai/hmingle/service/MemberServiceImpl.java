@@ -32,7 +32,7 @@ import java.util.regex.Pattern;
 @Service
 @Transactional
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public class MemberServiceImpl implements MemberService {
+public class MemberServiceImpl {
 
 	private final MemberRepository memberRepository;
 	private final TokenRepository tokenRepository;

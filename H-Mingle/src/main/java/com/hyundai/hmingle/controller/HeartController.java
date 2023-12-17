@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hyundai.hmingle.controller.dto.request.HeartRequest;
 import com.hyundai.hmingle.controller.dto.response.MingleResponse;
 import com.hyundai.hmingle.exception.ControllerAdvice;
-import com.hyundai.hmingle.service.HeartService;
+import com.hyundai.hmingle.service.HeartServiceImpl;
 import com.hyundai.hmingle.support.JwtTokenExtractor;
 
 import lombok.AllArgsConstructor;
@@ -21,7 +21,8 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/like")
 @AllArgsConstructor
 public class HeartController {
-	private HeartService heartService;
+
+	private HeartServiceImpl heartService;
 	private JwtTokenExtractor jwtTokenExtractor;
 	
 	@PostMapping

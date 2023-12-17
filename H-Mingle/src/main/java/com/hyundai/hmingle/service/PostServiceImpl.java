@@ -38,7 +38,7 @@ import java.util.Map;
 @Service
 @Transactional
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public class PostServiceImpl implements PostService {
+public class PostServiceImpl {
 
 	private final PostRepository postRepository;
 	private final ImageRepository imageRepository;

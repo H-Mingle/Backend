@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @Transactional
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public class HeartServiceImpl implements HeartService {
+public class HeartServiceImpl {
 
 	private final HeartRepository heartRepository;
 

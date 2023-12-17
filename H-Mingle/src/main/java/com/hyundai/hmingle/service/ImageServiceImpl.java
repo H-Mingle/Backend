@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @Transactional
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public class ImageServiceImpl implements ImageService {
+public class ImageServiceImpl {
 
 	private final ImageRepository imageRepository;
 

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.hyundai.hmingle.controller.dto.response.MemberGetResponse;
 import com.hyundai.hmingle.controller.dto.response.MingleResponse;
-import com.hyundai.hmingle.service.MemberService;
+import com.hyundai.hmingle.service.MemberServiceImpl;
 import com.hyundai.hmingle.support.JwtTokenExtractor;
 
 import lombok.AccessLevel;
@@ -28,7 +28,7 @@ import java.io.IOException;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class MemberController {
 
-	private final MemberService memberService;
+	private final MemberServiceImpl memberService;
 	private final JwtTokenExtractor jwtTokenExtractor;
 	private final ImageUtils imageUtils;
 	@GetMapping("/{memberId}")
