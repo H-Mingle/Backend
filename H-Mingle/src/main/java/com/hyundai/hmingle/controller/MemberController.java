@@ -31,6 +31,7 @@ public class MemberController {
 	private final MemberService memberService;
 	private final JwtTokenExtractor jwtTokenExtractor;
 	private final ImageUtils imageUtils;
+
 	@GetMapping("/{memberId}")
 	public ResponseEntity<MingleResponse<MemberGetResponse>> findById(@PathVariable Long memberId,
 																	  @RequestHeader HttpHeaders headers) throws IOException {

@@ -45,7 +45,4 @@ public class MemberService {
 
 		memberRepository.updateImg(dto);
 	}
-
-
-
 }

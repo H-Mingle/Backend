@@ -20,9 +20,7 @@ public class HeartService {
 		return heartRepository.addHeart(params);
 	}
 
-
 	public Long removeHeart(HeartRequest params) {
 		return heartRepository.removeHeart(params);
 	}
-
 }

@@ -39,5 +39,4 @@ public class ImageService {
 	public void removeImages(Long postId){
 		imageRepository.removeImages(postId);
 	}
-
 }

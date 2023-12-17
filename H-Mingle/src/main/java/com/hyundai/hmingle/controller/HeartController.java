@@ -14,15 +14,16 @@ import com.hyundai.hmingle.controller.dto.response.MingleResponse;
 import com.hyundai.hmingle.service.HeartService;
 import com.hyundai.hmingle.support.JwtTokenExtractor;
 
-import lombok.AllArgsConstructor;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/like")
-@AllArgsConstructor
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class HeartController {
 
-	private HeartService heartService;
-	private JwtTokenExtractor jwtTokenExtractor;
+	private final HeartService heartService;
+	private final JwtTokenExtractor jwtTokenExtractor;
 	
 	@PostMapping
 	public ResponseEntity<MingleResponse<Long>> addHeart(@RequestParam("postId") Long postId, @RequestHeader HttpHeaders headers){
