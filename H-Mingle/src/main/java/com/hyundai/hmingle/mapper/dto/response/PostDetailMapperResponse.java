@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class PostDetailResponse {
+public class PostDetailMapperResponse {
 	private Long postId;
 	private String content;
 	private int readCount;

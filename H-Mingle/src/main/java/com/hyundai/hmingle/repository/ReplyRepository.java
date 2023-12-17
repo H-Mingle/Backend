@@ -12,8 +12,8 @@ import com.hyundai.hmingle.mapper.dto.request.RepliesMapperRequest;
 import com.hyundai.hmingle.mapper.dto.request.ReplyCreateMapperRequest;
 import com.hyundai.hmingle.mapper.dto.request.ReplyDeleteMapperRequest;
 import com.hyundai.hmingle.mapper.dto.request.ReplyUpdateMapperRequest;
-import com.hyundai.hmingle.mapper.dto.response.ReplyCreateResponseDto;
-import com.hyundai.hmingle.mapper.dto.response.ReplyResponse;
+import com.hyundai.hmingle.mapper.dto.response.ReplyCreateMapperResponse;
+import com.hyundai.hmingle.mapper.dto.response.ReplyMapperResponse;
 import com.hyundai.hmingle.support.DateTimeConvertor;
 
 import lombok.AccessLevel;
@@ -58,7 +58,7 @@ public class ReplyRepository {
 		return savedReply;
 	}
 
-	public ReplyCreateResponseDto findSaved(Long replyId) {
+	public ReplyCreateMapperResponse findSaved(Long replyId) {
 		return replyMapper.findSaved(replyId)
 			.orElseThrow(() -> new RuntimeException("존재하지 않는 댓글입니다."));
 	}
@@ -74,7 +74,7 @@ public class ReplyRepository {
 		return parentReply;
 	}
 
-	public List<ReplyResponse> findAll(RepliesMapperRequest request) {
+	public List<ReplyMapperResponse> findAll(RepliesMapperRequest request) {
 		if (request.getParentId() == null) {
 			return replyMapper.findAllIfParentIsNull(request);
 		}

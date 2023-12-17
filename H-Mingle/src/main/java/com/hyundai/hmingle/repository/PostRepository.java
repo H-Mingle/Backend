@@ -13,7 +13,7 @@ import com.hyundai.hmingle.mapper.PostMapper;
 import com.hyundai.hmingle.mapper.ReplyMapper;
 import com.hyundai.hmingle.mapper.dto.request.PostCreateMapperRequest;
 import com.hyundai.hmingle.mapper.dto.request.PostDeleteMapperRequest;
-import com.hyundai.hmingle.mapper.dto.response.PostDetailResponse;
+import com.hyundai.hmingle.mapper.dto.response.PostDetailMapperResponse;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +29,7 @@ public class PostRepository {
 		return postMapper.save(params);
 	}
 
-	public PostDetailResponse getPostDetail(Long postId, Long memberId) {
+	public PostDetailMapperResponse getPostDetail(Long postId, Long memberId) {
 		return postMapper.getPostDetail(postId, memberId);
 	}
 

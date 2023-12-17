@@ -19,7 +19,7 @@
         where id = #{id}
     </select>
 
-    <select id="findSaved" parameterType="long" resultType="replyCreateResponseDto">
+    <select id="findSaved" parameterType="long" resultType="replyCreateMapperResponse">
         select r.id as id, content, depth, member_id, nickname, r.created_date as createdDate, m.image_url as imageUrl
         from reply r
         join member m
@@ -33,7 +33,7 @@
         where post_id = #{id} and removed = 0
     </select>
 
-    <select id="findAll" resultType="replyResponse">
+    <select id="findAll" resultType="replyMapperResponse">
         select
             r.id as id, m.id as member_id, nickname, content, parent_id,
             (select count(id)
@@ -49,7 +49,7 @@
         offset #{startRow} rows fetch next #{size} rows only
     </select>
 
-    <select id="findAllIfParentIsNull" resultType="replyResponse">
+    <select id="findAllIfParentIsNull" resultType="replyMapperResponse">
         select
             r.id as id, m.id as member_id, nickname, content, parent_id,
             (select count(id)

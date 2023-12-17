@@ -42,12 +42,12 @@
         <typeAlias type="com.hyundai.hmingle.mapper.dto.request.ReplyDeleteMapperRequest" alias="replyDeleteMapperRequest"/>
 
         <!-- mapper response -->
-        <typeAlias type="com.hyundai.hmingle.mapper.dto.response.PostResponse" alias="postResponse"/>
-        <typeAlias type="com.hyundai.hmingle.mapper.dto.response.PostResponse" alias="postResponse"/>
-        <typeAlias type="com.hyundai.hmingle.mapper.dto.response.PostDetailResponse" alias="postDetailResponse"/>
-        <typeAlias type="com.hyundai.hmingle.mapper.dto.response.ReplyResponse" alias="replyResponse"/>
-        <typeAlias type="com.hyundai.hmingle.mapper.dto.response.MyPostResponse" alias="myPostResponse"/>
-        <typeAlias type="com.hyundai.hmingle.mapper.dto.response.ReplyCreateResponseDto" alias="replyCreateResponseDto"/>
+        <typeAlias type="com.hyundai.hmingle.mapper.dto.response.PostMapperResponse" alias="postMapperResponse"/>
+        <typeAlias type="com.hyundai.hmingle.mapper.dto.response.PostMapperResponse" alias="postMapperResponse"/>
+        <typeAlias type="com.hyundai.hmingle.mapper.dto.response.PostDetailMapperResponse" alias="postDetailMapperResponse"/>
+        <typeAlias type="com.hyundai.hmingle.mapper.dto.response.ReplyMapperResponse" alias="replyMapperResponse"/>
+        <typeAlias type="com.hyundai.hmingle.mapper.dto.response.MyPostMapperResponse" alias="myPostMapperResponse"/>
+        <typeAlias type="com.hyundai.hmingle.mapper.dto.response.ReplyCreateMapperResponse" alias="replyCreateMapperResponse"/>
 
     </typeAliases>
 </configuration>

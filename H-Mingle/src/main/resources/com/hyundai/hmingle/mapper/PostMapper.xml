@@ -17,7 +17,7 @@
         where id = #{id}
     </select>
 
-	<select id="getPostDetail" resultType="postDetailResponse">
+	<select id="getPostDetail" resultType="postDetailMapperResponse">
 		SELECT
 			p.id as post_id,
 			p.content,

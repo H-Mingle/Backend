@@ -8,8 +8,8 @@ import com.hyundai.hmingle.controller.dto.request.ImageCreateRequest;
 import com.hyundai.hmingle.mapper.ImageMapper;
 import com.hyundai.hmingle.mapper.dto.request.ImagesMapperRequest;
 import com.hyundai.hmingle.mapper.dto.request.MyPostMapperRequest;
-import com.hyundai.hmingle.mapper.dto.response.MyPostResponse;
-import com.hyundai.hmingle.mapper.dto.response.PostResponse;
+import com.hyundai.hmingle.mapper.dto.response.MyPostMapperResponse;
+import com.hyundai.hmingle.mapper.dto.response.PostMapperResponse;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -28,12 +28,12 @@ public class ImageRepository {
 		return imageMapper.getFourImages(postId);
 	}
 
-	public List<MyPostResponse> findImageUrlsByMemberId(Long memberId, int startRow, int size) {
+	public List<MyPostMapperResponse> findImageUrlsByMemberId(Long memberId, int startRow, int size) {
 		MyPostMapperRequest request = new MyPostMapperRequest(memberId, startRow, size);
 		return imageMapper.findImageUrlByMemberId(request);
 	}
 
-	public List<MyPostResponse> findImageUrlLikedByMemberId(Long memberId, int startRow, int size) {
+	public List<MyPostMapperResponse> findImageUrlLikedByMemberId(Long memberId, int startRow, int size) {
 		MyPostMapperRequest request = new MyPostMapperRequest(memberId, startRow, size);
 		return imageMapper.findImageUrlLikedByMemberId(request);
 	}
@@ -42,7 +42,7 @@ public class ImageRepository {
 		imageMapper.removeImages(postId);
 	}
 
-	public List<PostResponse> findByPostId(ImagesMapperRequest request) {
+	public List<PostMapperResponse> findByPostId(ImagesMapperRequest request) {
 		return imageMapper.findByPostId(request);
 	}
 }

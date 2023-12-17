@@ -8,20 +8,20 @@ import com.hyundai.hmingle.mapper.dto.request.RepliesMapperRequest;
 import com.hyundai.hmingle.mapper.dto.request.ReplyCreateMapperRequest;
 import com.hyundai.hmingle.mapper.dto.request.ReplyDeleteMapperRequest;
 import com.hyundai.hmingle.mapper.dto.request.ReplyUpdateMapperRequest;
-import com.hyundai.hmingle.mapper.dto.response.ReplyCreateResponseDto;
-import com.hyundai.hmingle.mapper.dto.response.ReplyResponse;
+import com.hyundai.hmingle.mapper.dto.response.ReplyCreateMapperResponse;
+import com.hyundai.hmingle.mapper.dto.response.ReplyMapperResponse;
 
 public interface ReplyMapper {
 
 	Optional<Reply> findById(Long id);
 
-	Optional<ReplyCreateResponseDto> findSaved(Long id);
+	Optional<ReplyCreateMapperResponse> findSaved(Long id);
 
 	List<Reply> findAllByPostId(Long postId);
 
-	List<ReplyResponse> findAll(RepliesMapperRequest request);
+	List<ReplyMapperResponse> findAll(RepliesMapperRequest request);
 
-	List<ReplyResponse> findAllIfParentIsNull(RepliesMapperRequest request);
+	List<ReplyMapperResponse> findAllIfParentIsNull(RepliesMapperRequest request);
 
 	void save(ReplyCreateMapperRequest reply);
 

@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public class MyPostResponse {
+public class MyPostMapperResponse {
 
 	private final long id;
 	private final String imageUrl;

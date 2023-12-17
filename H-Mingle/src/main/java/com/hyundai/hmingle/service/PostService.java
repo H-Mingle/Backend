@@ -22,8 +22,8 @@ import com.hyundai.hmingle.domain.member.Member;
 import com.hyundai.hmingle.mapper.dto.request.ImagesMapperRequest;
 import com.hyundai.hmingle.mapper.dto.request.PostCreateMapperRequest;
 import com.hyundai.hmingle.mapper.dto.request.PostDeleteMapperRequest;
-import com.hyundai.hmingle.mapper.dto.response.PostDetailResponse;
-import com.hyundai.hmingle.mapper.dto.response.PostResponse;
+import com.hyundai.hmingle.mapper.dto.response.PostDetailMapperResponse;
+import com.hyundai.hmingle.mapper.dto.response.PostMapperResponse;
 import com.hyundai.hmingle.repository.HeartRepository;
 import com.hyundai.hmingle.repository.ImageRepository;
 import com.hyundai.hmingle.repository.MemberRepository;
@@ -54,7 +54,7 @@ public class PostService {
 
 		Long writerId = postRepository.findMemberId(postId);
 
-		PostDetailResponse details = postRepository.getPostDetail(postId, writerId);
+		PostDetailMapperResponse details = postRepository.getPostDetail(postId, writerId);
 		BigDecimal id = BigDecimal.valueOf(postId);
 
 		int heartCount = 0;
@@ -139,8 +139,8 @@ public class PostService {
 		ImagesMapperRequest request = new ImagesMapperRequest(channelId, startRow, size);
 
 		if (!imageRepository.findByPostId(request).isEmpty()) {
-			List<PostResponse> images = imageRepository.findByPostId(request);
-			for (PostResponse image : images) {
+			List<PostMapperResponse> images = imageRepository.findByPostId(request);
+			for (PostMapperResponse image : images) {
 				PostListGetResponse response = new PostListGetResponse();
 				try (InputStream imageStream = new FileInputStream(image.getImage())) {
 					byte[] imageByteArray = IOUtils.toByteArray(imageStream);

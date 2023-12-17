@@ -16,8 +16,8 @@ import com.hyundai.hmingle.domain.member.Member;
 import com.hyundai.hmingle.domain.post.Post;
 import com.hyundai.hmingle.domain.post.Reply;
 import com.hyundai.hmingle.mapper.dto.request.RepliesMapperRequest;
-import com.hyundai.hmingle.mapper.dto.response.ReplyCreateResponseDto;
-import com.hyundai.hmingle.mapper.dto.response.ReplyResponse;
+import com.hyundai.hmingle.mapper.dto.response.ReplyCreateMapperResponse;
+import com.hyundai.hmingle.mapper.dto.response.ReplyMapperResponse;
 import com.hyundai.hmingle.repository.MemberRepository;
 import com.hyundai.hmingle.repository.PostRepository;
 import com.hyundai.hmingle.repository.ReplyRepository;
@@ -46,7 +46,7 @@ public class ReplyService {
 		Reply reply = new Reply(request.getContent(), savedParentReply, savedMember);
 		Long parentId = findParentId(savedParentReply);
 		Long replyId = replyRepository.save(savedPost, reply, savedMember, parentId);
-		ReplyCreateResponseDto savedReply = replyRepository.findSaved(replyId);
+		ReplyCreateMapperResponse savedReply = replyRepository.findSaved(replyId);
 
 		return new ReplyCreateResponse(
 			savedPost.getId(), savedReply.getId(), savedReply.getMemberId(), savedReply.getNickname(),
@@ -85,7 +85,7 @@ public class ReplyService {
 
 		Post savedPost = postRepository.findById(postId);
 		RepliesMapperRequest request = new RepliesMapperRequest(savedPost.getId(), parentId, startRow, size);
-		List<ReplyResponse> replies = replyRepository.findAll(request);
+		List<ReplyMapperResponse> replies = replyRepository.findAll(request);
 
 		return replies.stream()
 			.map(reply -> new ReplyDetailResponse(

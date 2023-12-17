@@ -10,7 +10,7 @@ import com.hyundai.hmingle.controller.dto.request.MemberUpdateRequest;
 import com.hyundai.hmingle.controller.dto.response.MemberGetResponse;
 import com.hyundai.hmingle.domain.member.Member;
 import com.hyundai.hmingle.mapper.dto.request.ImageUpdateMapperRequest;
-import com.hyundai.hmingle.mapper.dto.response.MemberUpdateResponse;
+import com.hyundai.hmingle.mapper.dto.response.MemberUpdateMapperResponse;
 import com.hyundai.hmingle.repository.MemberRepository;
 import com.hyundai.hmingle.repository.TokenRepository;
 
@@ -30,7 +30,7 @@ public class MemberService {
 		return memberRepository.findWithPostCountByMemberId(id, memberId);
 	}
 
-	public MemberUpdateResponse update(MemberUpdateRequest memberUpdateDto) {
+	public MemberUpdateMapperResponse update(MemberUpdateRequest memberUpdateDto) {
 		return memberRepository.update(memberUpdateDto);
 	}
 

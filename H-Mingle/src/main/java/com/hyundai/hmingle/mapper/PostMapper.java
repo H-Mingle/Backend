@@ -12,13 +12,13 @@ import com.hyundai.hmingle.controller.dto.response.PostGetResponse;
 import com.hyundai.hmingle.domain.post.Post;
 import com.hyundai.hmingle.mapper.dto.request.PostCreateMapperRequest;
 import com.hyundai.hmingle.mapper.dto.request.PostDeleteMapperRequest;
-import com.hyundai.hmingle.mapper.dto.response.PostDetailResponse;
+import com.hyundai.hmingle.mapper.dto.response.PostDetailMapperResponse;
 
 public interface PostMapper {
 
 	Long save(PostCreateMapperRequest params);
 
-	PostDetailResponse getPostDetail(@Param("postId") Long postId, @Param("memberId") Long memberId);
+	PostDetailMapperResponse getPostDetail(@Param("postId") Long postId, @Param("memberId") Long memberId);
 
 	void getPostId(Map<String, BigDecimal> map);
 

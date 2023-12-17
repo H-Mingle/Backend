@@ -16,7 +16,7 @@ import com.hyundai.hmingle.domain.member.Member;
 import com.hyundai.hmingle.mapper.MemberMapper;
 import com.hyundai.hmingle.mapper.PostMapper;
 import com.hyundai.hmingle.mapper.dto.request.ImageUpdateMapperRequest;
-import com.hyundai.hmingle.mapper.dto.response.MemberUpdateResponse;
+import com.hyundai.hmingle.mapper.dto.response.MemberUpdateMapperResponse;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -66,7 +66,7 @@ public class MemberRepository {
 		);
 	}
 
-	public MemberUpdateResponse update(MemberUpdateRequest memberUpdateDto) {
+	public MemberUpdateMapperResponse update(MemberUpdateRequest memberUpdateDto) {
 		Member savedMember = findById(memberUpdateDto.getMemberId());
 		memberMapper.update(memberUpdateDto);
 
@@ -74,7 +74,7 @@ public class MemberRepository {
 		Timestamp date = Timestamp.valueOf(updatedMember.getModifiedDate());
 		LocalDateTime modifiedDate = date.toLocalDateTime();
 
-		return new MemberUpdateResponse(updatedMember.getId(),
+		return new MemberUpdateMapperResponse(updatedMember.getId(),
 			updatedMember.getEmail(),
 			updatedMember.getNickname(),
 			updatedMember.getIntroduction(),

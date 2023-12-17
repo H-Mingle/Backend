@@ -20,7 +20,7 @@ import com.hyundai.hmingle.controller.dto.request.MemberUpdateRequest;
 import com.hyundai.hmingle.controller.dto.response.MemberGetResponse;
 import com.hyundai.hmingle.controller.dto.response.MingleResponse;
 import com.hyundai.hmingle.domain.post.ImageUtils;
-import com.hyundai.hmingle.mapper.dto.response.MemberUpdateResponse;
+import com.hyundai.hmingle.mapper.dto.response.MemberUpdateMapperResponse;
 import com.hyundai.hmingle.service.MemberService;
 import com.hyundai.hmingle.support.JwtTokenExtractor;
 
@@ -48,9 +48,9 @@ public class MemberController {
 	}
 
 	@PatchMapping("/{memberId}")
-	public ResponseEntity<MingleResponse<MemberUpdateResponse>> update(@PathVariable Long memberId, @RequestBody MemberUpdateRequest params) {
+	public ResponseEntity<MingleResponse<MemberUpdateMapperResponse>> update(@PathVariable Long memberId, @RequestBody MemberUpdateRequest params) {
 
-		MemberUpdateResponse response = memberService.update(params);
+		MemberUpdateMapperResponse response = memberService.update(params);
 
 		return ResponseEntity.ok(MingleResponse.success(
 			"사용자 수정에 성공하였습니다.",

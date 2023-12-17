@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.hyundai.hmingle.controller.dto.response.MyPostsResponse;
 import com.hyundai.hmingle.controller.dto.response.PostsResponse;
 import com.hyundai.hmingle.domain.member.Member;
-import com.hyundai.hmingle.mapper.dto.response.MyPostResponse;
+import com.hyundai.hmingle.mapper.dto.response.MyPostMapperResponse;
 import com.hyundai.hmingle.repository.ImageRepository;
 import com.hyundai.hmingle.repository.MemberRepository;
 import com.hyundai.hmingle.support.ImageConvertor;
@@ -33,7 +33,7 @@ public class MyPageService {
 		int startRow = calculateStartRow(page, size);
 
 		Member savedMember = memberRepository.findById(memberId);
-		List<MyPostResponse> responses = imageRepository.findImageUrlsByMemberId(savedMember.getId(), startRow, size + 1);
+		List<MyPostMapperResponse> responses = imageRepository.findImageUrlsByMemberId(savedMember.getId(), startRow, size + 1);
 		return convertMyPostsResponse(size, responses);
 	}
 
@@ -44,11 +44,11 @@ public class MyPageService {
 		int startRow = calculateStartRow(page, size);
 
 		Member savedMember = memberRepository.findById(memberId);
-		List<MyPostResponse> responses = imageRepository.findImageUrlLikedByMemberId(savedMember.getId(), startRow, size + 1);
+		List<MyPostMapperResponse> responses = imageRepository.findImageUrlLikedByMemberId(savedMember.getId(), startRow, size + 1);
 		return convertMyPostsResponse(size, responses);
 	}
 
-	private MyPostsResponse convertMyPostsResponse(int size, List<MyPostResponse> responses) {
+	private MyPostsResponse convertMyPostsResponse(int size, List<MyPostMapperResponse> responses) {
 		boolean hasNext = hasNext(size, responses.size());
 		if (hasNext) {
 			responses.remove(responses.size() - 1);

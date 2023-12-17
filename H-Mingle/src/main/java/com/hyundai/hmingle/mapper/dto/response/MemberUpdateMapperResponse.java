@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class MemberUpdateResponse {
+public class MemberUpdateMapperResponse {
 	private Long memberId;
 	private String email;
 	private String nickname;
@@ -13,7 +13,7 @@ public class MemberUpdateResponse {
 
 	private String modifiedDate;
 
-	public MemberUpdateResponse(Long memberId, String email, String nickname, String introduction,
+	public MemberUpdateMapperResponse(Long memberId, String email, String nickname, String introduction,
 		String modifiedDate) {
 		this.memberId = memberId;
 		this.email = email;

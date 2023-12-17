@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class PostResponse {
+public class PostMapperResponse {
 	private Long postId;
 	private String image;
 }
