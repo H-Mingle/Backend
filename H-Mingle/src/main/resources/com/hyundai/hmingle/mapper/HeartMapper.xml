@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hyundai.hmingle.mapper.HeartMapper">
 	
-	<insert id="addHeart" parameterType="com.hyundai.hmingle.controller.dto.request.HeartRequest">
+	<insert id="addHeart" parameterType="heartMapperRequest">
 		INSERT INTO heart (id, post_id, member_id)
 		VALUES (SEQ_HEART_ID.nextval, #{postId}, #{memberId})
 		<selectKey keyColumn="id" resultType="Long" order="AFTER">
@@ -11,7 +11,7 @@
 		</selectKey> 
 	</insert>
 		
-	<update id="removeHeart" parameterType="com.hyundai.hmingle.controller.dto.request.HeartRequest">	
+	<update id="removeHeart" parameterType="heartMapperRequest">
 		UPDATE heart SET removed=1, MODIFIED_DATE = sysdate
 		WHERE post_id=#{postId} AND member_id=#{memberId}
 		<selectKey keyColumn="id" resultType="Long" order="BEFORE">
@@ -21,7 +21,7 @@
 		</selectKey> 
 	</update>
 	
-	<select id="findHeart" parameterType="com.hyundai.hmingle.controller.dto.request.HeartRequest">
+	<select id="findHeart" parameterType="heartMapperRequest">
 		SELECT id
 		FROM heart
 		WHERE post_id=#{postId} AND member_id=#{memberId} AND removed=0

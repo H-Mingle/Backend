@@ -1,12 +1,12 @@
 package com.hyundai.hmingle.mapper;
 
-import com.hyundai.hmingle.controller.dto.request.HeartRequest;
+import com.hyundai.hmingle.mapper.dto.request.HeartMapperRequest;
 
 public interface HeartMapper {
 
-	Long addHeart(HeartRequest params);
+	Long addHeart(HeartMapperRequest params);
 
-	Long removeHeart(HeartRequest params);
+	Long removeHeart(HeartMapperRequest params);
 
-	Long findHeart(HeartRequest params);
+	Long findHeart(HeartMapperRequest params);
 }

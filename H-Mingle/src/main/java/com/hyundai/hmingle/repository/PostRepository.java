@@ -13,6 +13,8 @@ import com.hyundai.hmingle.mapper.PostMapper;
 import com.hyundai.hmingle.mapper.ReplyMapper;
 import com.hyundai.hmingle.mapper.dto.request.PostCreateMapperRequest;
 import com.hyundai.hmingle.mapper.dto.request.PostDeleteMapperRequest;
+import com.hyundai.hmingle.mapper.dto.request.PostDetailMapperRequest;
+import com.hyundai.hmingle.mapper.dto.request.PostUpdateMapperRequest;
 import com.hyundai.hmingle.mapper.dto.response.PostDetailMapperResponse;
 
 import lombok.AccessLevel;
@@ -30,7 +32,8 @@ public class PostRepository {
 	}
 
 	public PostDetailMapperResponse getPostDetail(Long postId, Long memberId) {
-		return postMapper.getPostDetail(postId, memberId);
+		PostDetailMapperRequest postDetailMapperRequest = new PostDetailMapperRequest(postId, memberId);
+		return postMapper.getPostDetail(postDetailMapperRequest);
 	}
 
 	public void getPostId(Map<String, BigDecimal> parameterMap) {
@@ -58,7 +61,9 @@ public class PostRepository {
 	}
 
 	public void updatePost(PostUpdateRequest params) {
-		postMapper.updatePost(params);
+		PostUpdateMapperRequest postUpdateMapperRequest = new PostUpdateMapperRequest(
+			params.getPostId(), params.getContent(), params.getModifiedDate());
+		postMapper.updatePost(postUpdateMapperRequest);
 	}
 
 	public List<Long> findPostByChannelId(Long channelId) {

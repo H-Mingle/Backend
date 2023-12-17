@@ -39,7 +39,7 @@
 		OFFSET #{startRow} ROWS FETCH NEXT #{size} ROWS ONLY
 	</select>
 
-	<insert id="saveAll" parameterType="com.hyundai.hmingle.controller.dto.request.ImageCreateRequest">
+	<insert id="saveAll" parameterType="imageCreateMapperRequest">
 		insert into image (
 		id, post_id, orders, image_url
 		)

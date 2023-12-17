@@ -1,11 +1,13 @@
 package com.hyundai.hmingle.repository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Repository;
 
 import com.hyundai.hmingle.controller.dto.request.ImageCreateRequest;
 import com.hyundai.hmingle.mapper.ImageMapper;
+import com.hyundai.hmingle.mapper.dto.request.ImageCreateMapperRequest;
 import com.hyundai.hmingle.mapper.dto.request.ImagesMapperRequest;
 import com.hyundai.hmingle.mapper.dto.request.MyPostMapperRequest;
 import com.hyundai.hmingle.mapper.dto.response.MyPostMapperResponse;
@@ -21,7 +23,10 @@ public class ImageRepository {
 	private final ImageMapper imageMapper;
 
 	public void saveAll(List<ImageCreateRequest> images) {
-		imageMapper.saveAll(images);
+		List<ImageCreateMapperRequest> requests = images.stream()
+			.map(image -> new ImageCreateMapperRequest(image.getOriginalName(), image.getSaveName(), image.getSize()))
+			.collect(Collectors.toUnmodifiableList());
+		imageMapper.saveAll(requests);
 	}
 
 	public List<String> getFourImages(Long postId) {

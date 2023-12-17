@@ -5,18 +5,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import org.apache.ibatis.annotations.Param;
-
-import com.hyundai.hmingle.controller.dto.request.PostUpdateRequest;
-import com.hyundai.hmingle.controller.dto.response.PostGetResponse;
 import com.hyundai.hmingle.domain.post.Post;
 import com.hyundai.hmingle.mapper.dto.request.PostCreateMapperRequest;
 import com.hyundai.hmingle.mapper.dto.request.PostDeleteMapperRequest;
+import com.hyundai.hmingle.mapper.dto.request.PostDetailMapperRequest;
+import com.hyundai.hmingle.mapper.dto.request.PostUpdateMapperRequest;
 import com.hyundai.hmingle.mapper.dto.response.PostDetailMapperResponse;
 
 public interface PostMapper {
 
-	PostDetailMapperResponse getPostDetail(@Param("postId") Long postId, @Param("memberId") Long memberId);
+	PostDetailMapperResponse getPostDetail(PostDetailMapperRequest postDetailMapperRequest);
 
 	void getPostId(Map<String, BigDecimal> map);
 
@@ -30,7 +28,7 @@ public interface PostMapper {
 
 	Long save(PostCreateMapperRequest params);
 
-	void updatePost(PostUpdateRequest params);
+	void updatePost(PostUpdateMapperRequest postUpdateMapperRequest);
 
 	int upReadCount(Long postId);
 

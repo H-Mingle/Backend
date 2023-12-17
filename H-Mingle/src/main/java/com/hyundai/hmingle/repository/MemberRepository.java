@@ -16,6 +16,7 @@ import com.hyundai.hmingle.domain.member.Member;
 import com.hyundai.hmingle.mapper.MemberMapper;
 import com.hyundai.hmingle.mapper.PostMapper;
 import com.hyundai.hmingle.mapper.dto.request.ImageUpdateMapperRequest;
+import com.hyundai.hmingle.mapper.dto.request.MemberUpdateMapperRequest;
 import com.hyundai.hmingle.mapper.dto.response.MemberUpdateMapperResponse;
 
 import lombok.AccessLevel;
@@ -45,7 +46,7 @@ public class MemberRepository {
 		return savedMember;
 	}
 
-	public MemberGetResponse findWithPostCountByMemberId(Long id, Long memberId) throws IOException {
+	public MemberGetResponse findWithPostCountByMemberId(Long id, Long memberId) {
 		Member savedMember = findById(memberId);
 		int postCount = postMapper.findPostCountByMemberId(savedMember.getId());
 
@@ -68,7 +69,10 @@ public class MemberRepository {
 
 	public MemberUpdateMapperResponse update(MemberUpdateRequest memberUpdateDto) {
 		Member savedMember = findById(memberUpdateDto.getMemberId());
-		memberMapper.update(memberUpdateDto);
+		MemberUpdateMapperRequest memberUpdateMapperRequest = new MemberUpdateMapperRequest(
+			memberUpdateDto.getMemberId(), memberUpdateDto.getNickname(), memberUpdateDto.getIntroduction()
+		);
+		memberMapper.update(memberUpdateMapperRequest);
 
 		Member updatedMember = findById(savedMember.getId());
 		Timestamp date = Timestamp.valueOf(updatedMember.getModifiedDate());

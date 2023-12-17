@@ -19,7 +19,7 @@
         values (seq_member_id.nextval, #{email}, #{nickname}, #{introduction}, #{imageUrl})
     </insert>
 
-    <update id="update" parameterType="memberUpdateDto">
+    <update id="update" parameterType="memberUpdateMapperRequest">
         UPDATE member
         SET nickname=#{nickname},
         introduction=#{introduction},

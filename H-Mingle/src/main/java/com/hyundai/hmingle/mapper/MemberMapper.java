@@ -2,9 +2,9 @@ package com.hyundai.hmingle.mapper;
 
 import java.util.Optional;
 
-import com.hyundai.hmingle.controller.dto.request.MemberUpdateRequest;
 import com.hyundai.hmingle.domain.member.Member;
 import com.hyundai.hmingle.mapper.dto.request.ImageUpdateMapperRequest;
+import com.hyundai.hmingle.mapper.dto.request.MemberUpdateMapperRequest;
 
 public interface MemberMapper {
 
@@ -14,7 +14,7 @@ public interface MemberMapper {
 
 	void save(Member member);
 
-	void update(MemberUpdateRequest memberUpdateDto);
+	void update(MemberUpdateMapperRequest memberUpdateDto);
 
 	int updateImg(ImageUpdateMapperRequest imageUpdateMapperRequest);
 

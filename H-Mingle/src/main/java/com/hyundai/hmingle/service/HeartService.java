@@ -17,10 +17,10 @@ public class HeartService {
 	private final HeartRepository heartRepository;
 
 	public Long addHeart(HeartRequest params) {
-		return heartRepository.addHeart(params);
+		return heartRepository.addHeart(params.getPostId(), params.getMemberId());
 	}
 
 	public Long removeHeart(HeartRequest params) {
-		return heartRepository.removeHeart(params);
+		return heartRepository.removeHeart(params.getPostId(), params.getMemberId());
 	}
 }

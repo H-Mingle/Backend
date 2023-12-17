@@ -2,7 +2,7 @@ package com.hyundai.hmingle.mapper;
 
 import java.util.List;
 
-import com.hyundai.hmingle.controller.dto.request.ImageCreateRequest;
+import com.hyundai.hmingle.mapper.dto.request.ImageCreateMapperRequest;
 import com.hyundai.hmingle.mapper.dto.request.ImagesMapperRequest;
 import com.hyundai.hmingle.mapper.dto.request.MyPostMapperRequest;
 import com.hyundai.hmingle.mapper.dto.response.MyPostMapperResponse;
@@ -18,7 +18,7 @@ public interface ImageMapper {
 
 	List<PostMapperResponse> findByPostId(ImagesMapperRequest request);
 
-	void saveAll(List<ImageCreateRequest> images);
+	void saveAll(List<ImageCreateMapperRequest> images);
 
 	void removeImages(Long postId);
 }
