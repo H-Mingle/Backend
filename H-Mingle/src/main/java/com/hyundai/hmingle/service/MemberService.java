@@ -9,7 +9,7 @@ import com.hyundai.hmingle.controller.dto.request.ImageCreateRequest;
 import com.hyundai.hmingle.controller.dto.request.MemberUpdateRequest;
 import com.hyundai.hmingle.controller.dto.response.MemberGetResponse;
 import com.hyundai.hmingle.domain.member.Member;
-import com.hyundai.hmingle.mapper.dto.request.ImageUpdateDto;
+import com.hyundai.hmingle.mapper.dto.request.ImageUpdateMapperRequest;
 import com.hyundai.hmingle.mapper.dto.response.MemberUpdateResponse;
 import com.hyundai.hmingle.repository.MemberRepository;
 import com.hyundai.hmingle.repository.TokenRepository;
@@ -41,7 +41,7 @@ public class MemberService {
 	}
 
 	public void updateFile(Long memberId, ImageCreateRequest img) {
-		ImageUpdateDto dto = new ImageUpdateDto(memberId, img.getSaveName());
+		ImageUpdateMapperRequest dto = new ImageUpdateMapperRequest(memberId, img.getSaveName());
 
 		memberRepository.updateImg(dto);
 	}

@@ -19,9 +19,9 @@ import com.hyundai.hmingle.controller.dto.response.PostGetResponse;
 import com.hyundai.hmingle.controller.dto.response.PostListGetResponse;
 import com.hyundai.hmingle.controller.dto.response.PostsGetResponse;
 import com.hyundai.hmingle.domain.member.Member;
-import com.hyundai.hmingle.mapper.dto.request.ImagesRequest;
-import com.hyundai.hmingle.mapper.dto.request.PostCreateDto;
-import com.hyundai.hmingle.mapper.dto.request.PostDeleteDto;
+import com.hyundai.hmingle.mapper.dto.request.ImagesMapperRequest;
+import com.hyundai.hmingle.mapper.dto.request.PostCreateMapperRequest;
+import com.hyundai.hmingle.mapper.dto.request.PostDeleteMapperRequest;
 import com.hyundai.hmingle.mapper.dto.response.PostDetailResponse;
 import com.hyundai.hmingle.mapper.dto.response.PostResponse;
 import com.hyundai.hmingle.repository.HeartRepository;
@@ -43,7 +43,7 @@ public class PostService {
 	private final MemberRepository memberRepository;
 
 	public Long savePost(PostCreateRequest params, Long memberId) {
-		PostCreateDto dto = new PostCreateDto(null, params.getContent(), params.getChannelId(), memberId);
+		PostCreateMapperRequest dto = new PostCreateMapperRequest(null, params.getContent(), params.getChannelId(), memberId);
 		postRepository.save(dto);
 		return dto.getPostId();
 	}
@@ -106,7 +106,7 @@ public class PostService {
 	}
 
 	public Long removePost(Long postId, Long memberId) {
-		PostDeleteDto params = new PostDeleteDto(postId, memberId);
+		PostDeleteMapperRequest params = new PostDeleteMapperRequest(postId, memberId);
 		return postRepository.removePost(params);
 	}
 
@@ -127,7 +127,7 @@ public class PostService {
 		int size = validateSizeIsNotNegative(requestsize);
 		int startRow = calculateStartRow(page, size);
 
-		ImagesRequest nextImage = new ImagesRequest(channelId, startRow + size, size);
+		ImagesMapperRequest nextImage = new ImagesMapperRequest(channelId, startRow + size, size);
 		boolean isNext = false;
 		if (!imageRepository.findByPostId(nextImage).isEmpty()) {
 			isNext = true;
@@ -136,7 +136,7 @@ public class PostService {
 		String channelName = getChannelName(channelId);
 
 		List<PostListGetResponse> list = new ArrayList<>();
-		ImagesRequest request = new ImagesRequest(channelId, startRow, size);
+		ImagesMapperRequest request = new ImagesMapperRequest(channelId, startRow, size);
 
 		if (!imageRepository.findByPostId(request).isEmpty()) {
 			List<PostResponse> images = imageRepository.findByPostId(request);

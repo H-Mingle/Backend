@@ -15,7 +15,7 @@ import com.hyundai.hmingle.controller.dto.response.MemberGetResponse;
 import com.hyundai.hmingle.domain.member.Member;
 import com.hyundai.hmingle.mapper.MemberMapper;
 import com.hyundai.hmingle.mapper.PostMapper;
-import com.hyundai.hmingle.mapper.dto.request.ImageUpdateDto;
+import com.hyundai.hmingle.mapper.dto.request.ImageUpdateMapperRequest;
 import com.hyundai.hmingle.mapper.dto.response.MemberUpdateResponse;
 
 import lombok.AccessLevel;
@@ -86,8 +86,8 @@ public class MemberRepository {
 		memberMapper.delete(memberId);
 	}
 
-	public int updateImg(ImageUpdateDto imageUpdateDto) {
-		return memberMapper.updateImg(imageUpdateDto);
+	public int updateImg(ImageUpdateMapperRequest imageUpdateMapperRequest) {
+		return memberMapper.updateImg(imageUpdateMapperRequest);
 	}
 
 }

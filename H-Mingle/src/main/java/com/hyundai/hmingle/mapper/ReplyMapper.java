@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.Optional;
 
 import com.hyundai.hmingle.domain.post.Reply;
-import com.hyundai.hmingle.mapper.dto.request.RepliesRequest;
-import com.hyundai.hmingle.mapper.dto.request.ReplyCreateDto;
-import com.hyundai.hmingle.mapper.dto.request.ReplyDeleteDto;
-import com.hyundai.hmingle.mapper.dto.request.ReplyUpdateDto;
+import com.hyundai.hmingle.mapper.dto.request.RepliesMapperRequest;
+import com.hyundai.hmingle.mapper.dto.request.ReplyCreateMapperRequest;
+import com.hyundai.hmingle.mapper.dto.request.ReplyDeleteMapperRequest;
+import com.hyundai.hmingle.mapper.dto.request.ReplyUpdateMapperRequest;
 import com.hyundai.hmingle.mapper.dto.response.ReplyCreateResponseDto;
 import com.hyundai.hmingle.mapper.dto.response.ReplyResponse;
 
@@ -19,15 +19,15 @@ public interface ReplyMapper {
 
 	List<Reply> findAllByPostId(Long postId);
 
-	List<ReplyResponse> findAll(RepliesRequest request);
+	List<ReplyResponse> findAll(RepliesMapperRequest request);
 
-	List<ReplyResponse> findAllIfParentIsNull(RepliesRequest request);
+	List<ReplyResponse> findAllIfParentIsNull(RepliesMapperRequest request);
 
-	void save(ReplyCreateDto reply);
+	void save(ReplyCreateMapperRequest reply);
 
-	void update(ReplyUpdateDto reply);
+	void update(ReplyUpdateMapperRequest reply);
 
-	void delete(ReplyDeleteDto replyDeleteDto);
+	void delete(ReplyDeleteMapperRequest replyDeleteMapperRequest);
 
-	void deleteWithReplies(ReplyDeleteDto replyDeleteDto);
+	void deleteWithReplies(ReplyDeleteMapperRequest replyDeleteMapperRequest);
 }

@@ -1,12 +1,13 @@
 package com.hyundai.hmingle.mapper.dto.request;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
-@AllArgsConstructor
-public class ImagesRequest {
-	private final Long channelId;
+@RequiredArgsConstructor
+public class MyPostMapperRequest {
+
+	private final Long memberId;
 	private final int startRow;
 	private final int size;
 }

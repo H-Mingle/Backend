@@ -33,7 +33,7 @@
         where id = #{memberId}
     </update>
 
-    <update id="updateImg" parameterType="imageUpdateDto">
+    <update id="updateImg" parameterType="imageUpdateMapperRequest">
         UPDATE member
         SET image_url = #{image}
         WHERE id = #{memberId}

@@ -9,40 +9,45 @@
 
     <!-- 별칭 작성 부분 -->
     <typeAliases>
+
+        <!-- domain -->
         <typeAlias type="com.hyundai.hmingle.domain.member.Member" alias="member"/>
         <typeAlias type="com.hyundai.hmingle.domain.member.Token" alias="token"/>
         <typeAlias type="com.hyundai.hmingle.domain.post.Post" alias="post"/>
         <typeAlias type="com.hyundai.hmingle.domain.post.Reply" alias="reply"/>
 
+        <!-- controller request -->
         <typeAlias type="com.hyundai.hmingle.controller.dto.request.ImageCreateRequest" alias="imageCreateRequest"/>
         <typeAlias type="com.hyundai.hmingle.controller.dto.request.PostCreateRequest" alias="postCreateRequest"/>
         <typeAlias type="com.hyundai.hmingle.controller.dto.request.PostUpdateRequest" alias="postUpdateRequest"/>
         <typeAlias type="com.hyundai.hmingle.controller.dto.request.MemberUpdateRequest" alias="memberUpdateDto"/>
         <typeAlias type="com.hyundai.hmingle.controller.dto.request.PostUpdateRequest" alias="postUpdateRequest"/>
         <typeAlias type="com.hyundai.hmingle.controller.dto.request.MemberUpdateRequest" alias="memberUpdateDto"/>
+        <typeAlias type="com.hyundai.hmingle.controller.dto.request.PostUpdateRequest" alias="postUpdateRequest"/>
+        <typeAlias type="com.hyundai.hmingle.controller.dto.request.MemberUpdateRequest" alias="memberUpdateDto"/>
 
+        <!-- controller response -->
         <typeAlias type="com.hyundai.hmingle.controller.dto.response.ChannelGetResponse" alias="channelGetResponse"/>
         <typeAlias type="com.hyundai.hmingle.controller.dto.response.MemberGetResponse" alias="memberGetResponse"/>
         <typeAlias type="com.hyundai.hmingle.controller.dto.response.PostListGetResponse" alias="postListGetResponse"/>
-
-        <typeAlias type="com.hyundai.hmingle.mapper.dto.request.ReplyUpdateDto" alias="replyUpdateDto"/>
-        <typeAlias type="com.hyundai.hmingle.mapper.dto.request.PostCreateDto" alias="postCreateDto"/>
-        <typeAlias type="com.hyundai.hmingle.mapper.dto.request.PostDeleteDto" alias="postDeleteDto"/>
-        <typeAlias type="com.hyundai.hmingle.controller.dto.request.PostUpdateRequest" alias="postUpdateRequest"/>
-        <typeAlias type="com.hyundai.hmingle.controller.dto.request.MemberUpdateRequest" alias="memberUpdateDto"/>
         <typeAlias type="com.hyundai.hmingle.controller.dto.response.PostListGetResponse" alias="postListGetResponse"/>
+
+        <!-- mapper request -->
+        <typeAlias type="com.hyundai.hmingle.mapper.dto.request.ReplyUpdateMapperRequest" alias="replyUpdateMapperRequest"/>
+        <typeAlias type="com.hyundai.hmingle.mapper.dto.request.PostCreateMapperRequest" alias="postCreateMapperRequest"/>
+        <typeAlias type="com.hyundai.hmingle.mapper.dto.request.PostDeleteMapperRequest" alias="postDeleteMapperRequest"/>
+        <typeAlias type="com.hyundai.hmingle.mapper.dto.request.ImageUpdateMapperRequest" alias="imageUpdateMapperRequest"/>
+        <typeAlias type="com.hyundai.hmingle.mapper.dto.request.ImageUpdateMapperRequest" alias="imageUpdateMapperRequest"/>
+        <typeAlias type="com.hyundai.hmingle.mapper.dto.request.RepliesMapperRequest" alias="repliesMapperRequest"/>
+        <typeAlias type="com.hyundai.hmingle.mapper.dto.request.ReplyDeleteMapperRequest" alias="replyDeleteMapperRequest"/>
+
+        <!-- mapper response -->
         <typeAlias type="com.hyundai.hmingle.mapper.dto.response.PostResponse" alias="postResponse"/>
-
-
-        <typeAlias type="com.hyundai.hmingle.mapper.dto.request.ImageUpdateDto" alias="imageUpdateDto"/>
-        <typeAlias type="com.hyundai.hmingle.mapper.dto.request.ImageUpdateDto" alias="imageUpdateDto"/>
-        <typeAlias type="com.hyundai.hmingle.mapper.dto.request.RepliesRequest" alias="repliesRequest"/>
-        <typeAlias type="com.hyundai.hmingle.mapper.dto.request.ReplyDeleteDto" alias="replyDeleteDto"/>
-
         <typeAlias type="com.hyundai.hmingle.mapper.dto.response.PostResponse" alias="postResponse"/>
         <typeAlias type="com.hyundai.hmingle.mapper.dto.response.PostDetailResponse" alias="postDetailResponse"/>
         <typeAlias type="com.hyundai.hmingle.mapper.dto.response.ReplyResponse" alias="replyResponse"/>
         <typeAlias type="com.hyundai.hmingle.mapper.dto.response.MyPostResponse" alias="myPostResponse"/>
-        <typeAlias type="com.hyundai.hmingle.mapper.dto.response.ReplyCreateResponseDto" alias="replyCreateDto"/>
+        <typeAlias type="com.hyundai.hmingle.mapper.dto.response.ReplyCreateResponseDto" alias="replyCreateResponseDto"/>
+
     </typeAliases>
 </configuration>

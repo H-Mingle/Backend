@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hyundai.hmingle.mapper.PostMapper">
 	
-	<insert id="save" parameterType="postCreateDto" >
+	<insert id="save" parameterType="postCreateMapperRequest" >
 		INSERT INTO post (id, content, member_id, channel_id, read_count, created_date, modified_date)
 		VALUES (SEQ_POST_ID.nextval, #{content}, #{memberId}, #{channelId}, 0, sysdate, sysdate)
 		<selectKey keyProperty="postId" resultType="Long" order="AFTER">
@@ -43,7 +43,7 @@
 		)}
 	</select>
 
-	<update id="removePost" parameterType="postDeleteDto">
+	<update id="removePost" parameterType="postDeleteMapperRequest">
 		UPDATE post SET removed=1, MODIFIED_DATE = #{modifiedDate}
 		WHERE id=#{postId} AND member_id=#{memberId}
 		<selectKey keyColumn="id" resultType="Long" order="BEFORE">

@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import com.hyundai.hmingle.controller.dto.request.MemberUpdateRequest;
 import com.hyundai.hmingle.domain.member.Member;
-import com.hyundai.hmingle.mapper.dto.request.ImageUpdateDto;
+import com.hyundai.hmingle.mapper.dto.request.ImageUpdateMapperRequest;
 
 public interface MemberMapper {
 
@@ -18,6 +18,6 @@ public interface MemberMapper {
 
 	void delete(Long memberId);
 
-	int updateImg(ImageUpdateDto imageUpdateDto);
+	int updateImg(ImageUpdateMapperRequest imageUpdateMapperRequest);
 
 }

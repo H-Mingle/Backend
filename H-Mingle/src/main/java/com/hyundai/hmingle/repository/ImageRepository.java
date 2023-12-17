@@ -6,8 +6,8 @@ import org.springframework.stereotype.Repository;
 
 import com.hyundai.hmingle.controller.dto.request.ImageCreateRequest;
 import com.hyundai.hmingle.mapper.ImageMapper;
-import com.hyundai.hmingle.mapper.dto.request.ImagesRequest;
-import com.hyundai.hmingle.mapper.dto.request.MyPostRequest;
+import com.hyundai.hmingle.mapper.dto.request.ImagesMapperRequest;
+import com.hyundai.hmingle.mapper.dto.request.MyPostMapperRequest;
 import com.hyundai.hmingle.mapper.dto.response.MyPostResponse;
 import com.hyundai.hmingle.mapper.dto.response.PostResponse;
 
@@ -29,12 +29,12 @@ public class ImageRepository {
 	}
 
 	public List<MyPostResponse> findImageUrlsByMemberId(Long memberId, int startRow, int size) {
-		MyPostRequest request = new MyPostRequest(memberId, startRow, size);
+		MyPostMapperRequest request = new MyPostMapperRequest(memberId, startRow, size);
 		return imageMapper.findImageUrlByMemberId(request);
 	}
 
 	public List<MyPostResponse> findImageUrlLikedByMemberId(Long memberId, int startRow, int size) {
-		MyPostRequest request = new MyPostRequest(memberId, startRow, size);
+		MyPostMapperRequest request = new MyPostMapperRequest(memberId, startRow, size);
 		return imageMapper.findImageUrlLikedByMemberId(request);
 	}
 
@@ -42,7 +42,7 @@ public class ImageRepository {
 		imageMapper.removeImages(postId);
 	}
 
-	public List<PostResponse> findByPostId(ImagesRequest request) {
+	public List<PostResponse> findByPostId(ImagesMapperRequest request) {
 		return imageMapper.findByPostId(request);
 	}
 }

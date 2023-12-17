@@ -19,7 +19,7 @@
         where id = #{id}
     </select>
 
-    <select id="findSaved" parameterType="long" resultType="replyCreateDto">
+    <select id="findSaved" parameterType="long" resultType="replyCreateResponseDto">
         select r.id as id, content, depth, member_id, nickname, r.created_date as createdDate, m.image_url as imageUrl
         from reply r
         join member m
@@ -73,19 +73,19 @@
         </selectKey>
     </insert>
 
-    <update id="update" parameterType="replyUpdateDto">
+    <update id="update" parameterType="replyUpdateMapperRequest">
         update reply
         set content = #{content}, modified_date = #{modifiedDate}
         where id = #{id}
     </update>
 
-    <update id="delete" parameterType="replyDeleteDto">
+    <update id="delete" parameterType="replyDeleteMapperRequest">
         update reply
         set modified_date = #{modifiedDate}, removed = 1
         where id = #{id}
     </update>
 
-    <update id="deleteWithReplies" parameterType="replyDeleteDto">
+    <update id="deleteWithReplies" parameterType="replyDeleteMapperRequest">
         update reply
         set modified_date = #{modifiedDate}, removed = 1
         where id = #{id} or parent_id = #{id}

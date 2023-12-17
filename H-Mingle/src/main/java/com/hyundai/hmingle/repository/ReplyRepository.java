@@ -8,10 +8,10 @@ import com.hyundai.hmingle.domain.member.Member;
 import com.hyundai.hmingle.domain.post.Post;
 import com.hyundai.hmingle.domain.post.Reply;
 import com.hyundai.hmingle.mapper.ReplyMapper;
-import com.hyundai.hmingle.mapper.dto.request.RepliesRequest;
-import com.hyundai.hmingle.mapper.dto.request.ReplyCreateDto;
-import com.hyundai.hmingle.mapper.dto.request.ReplyDeleteDto;
-import com.hyundai.hmingle.mapper.dto.request.ReplyUpdateDto;
+import com.hyundai.hmingle.mapper.dto.request.RepliesMapperRequest;
+import com.hyundai.hmingle.mapper.dto.request.ReplyCreateMapperRequest;
+import com.hyundai.hmingle.mapper.dto.request.ReplyDeleteMapperRequest;
+import com.hyundai.hmingle.mapper.dto.request.ReplyUpdateMapperRequest;
 import com.hyundai.hmingle.mapper.dto.response.ReplyCreateResponseDto;
 import com.hyundai.hmingle.mapper.dto.response.ReplyResponse;
 import com.hyundai.hmingle.support.DateTimeConvertor;
@@ -27,26 +27,26 @@ public class ReplyRepository {
 	private final DateTimeConvertor dateTimeConvertor;
 
 	public Long save(Post post, Reply reply, Member member, Long parentId) {
-		ReplyCreateDto replyCreateDto = new ReplyCreateDto(
+		ReplyCreateMapperRequest replyCreateMapperRequest = new ReplyCreateMapperRequest(
 			reply.getContent(), post.getId(), member.getId(), parentId, reply.getDepth(), dateTimeConvertor.current()
 		);
-		replyMapper.save(replyCreateDto);
-		return replyCreateDto.getId();
+		replyMapper.save(replyCreateMapperRequest);
+		return replyCreateMapperRequest.getId();
 	}
 
 	public void update(Reply reply, String content) {
-		ReplyUpdateDto replyUpdateDto = new ReplyUpdateDto(reply.getId(), content, dateTimeConvertor.current());
-		replyMapper.update(replyUpdateDto);
+		ReplyUpdateMapperRequest replyUpdateMapperRequest = new ReplyUpdateMapperRequest(reply.getId(), content, dateTimeConvertor.current());
+		replyMapper.update(replyUpdateMapperRequest);
 	}
 
 	public void delete(Long replyId) {
-		ReplyDeleteDto replyDeleteDto = new ReplyDeleteDto(replyId, dateTimeConvertor.current());
-		replyMapper.delete(replyDeleteDto);
+		ReplyDeleteMapperRequest replyDeleteMapperRequest = new ReplyDeleteMapperRequest(replyId, dateTimeConvertor.current());
+		replyMapper.delete(replyDeleteMapperRequest);
 	}
 
 	public void deleteWithReplies(Long replyId) {
-		ReplyDeleteDto replyDeleteDto = new ReplyDeleteDto(replyId, dateTimeConvertor.current());
-		replyMapper.deleteWithReplies(replyDeleteDto);
+		ReplyDeleteMapperRequest replyDeleteMapperRequest = new ReplyDeleteMapperRequest(replyId, dateTimeConvertor.current());
+		replyMapper.deleteWithReplies(replyDeleteMapperRequest);
 	}
 
 	public Reply findById(Long replyId) {
@@ -74,7 +74,7 @@ public class ReplyRepository {
 		return parentReply;
 	}
 
-	public List<ReplyResponse> findAll(RepliesRequest request) {
+	public List<ReplyResponse> findAll(RepliesMapperRequest request) {
 		if (request.getParentId() == null) {
 			return replyMapper.findAllIfParentIsNull(request);
 		}

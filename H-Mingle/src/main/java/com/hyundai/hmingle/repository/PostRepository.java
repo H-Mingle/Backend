@@ -11,8 +11,8 @@ import com.hyundai.hmingle.domain.post.Post;
 import com.hyundai.hmingle.domain.post.Reply;
 import com.hyundai.hmingle.mapper.PostMapper;
 import com.hyundai.hmingle.mapper.ReplyMapper;
-import com.hyundai.hmingle.mapper.dto.request.PostCreateDto;
-import com.hyundai.hmingle.mapper.dto.request.PostDeleteDto;
+import com.hyundai.hmingle.mapper.dto.request.PostCreateMapperRequest;
+import com.hyundai.hmingle.mapper.dto.request.PostDeleteMapperRequest;
 import com.hyundai.hmingle.mapper.dto.response.PostDetailResponse;
 
 import lombok.AccessLevel;
@@ -25,7 +25,7 @@ public class PostRepository {
 	private final PostMapper postMapper;
 	private final ReplyMapper replyMapper;
 
-	public Long save(PostCreateDto params) {
+	public Long save(PostCreateMapperRequest params) {
 		return postMapper.save(params);
 	}
 
@@ -37,7 +37,7 @@ public class PostRepository {
 		postMapper.getPostId(parameterMap);
 	}
 
-	public Long removePost(PostDeleteDto params) {
+	public Long removePost(PostDeleteMapperRequest params) {
 		return postMapper.removePost(params);
 	}
 

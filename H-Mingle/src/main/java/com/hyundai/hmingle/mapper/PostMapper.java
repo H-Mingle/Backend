@@ -10,19 +10,19 @@ import org.apache.ibatis.annotations.Param;
 import com.hyundai.hmingle.controller.dto.request.PostUpdateRequest;
 import com.hyundai.hmingle.controller.dto.response.PostGetResponse;
 import com.hyundai.hmingle.domain.post.Post;
-import com.hyundai.hmingle.mapper.dto.request.PostCreateDto;
-import com.hyundai.hmingle.mapper.dto.request.PostDeleteDto;
+import com.hyundai.hmingle.mapper.dto.request.PostCreateMapperRequest;
+import com.hyundai.hmingle.mapper.dto.request.PostDeleteMapperRequest;
 import com.hyundai.hmingle.mapper.dto.response.PostDetailResponse;
 
 public interface PostMapper {
 
-	Long save(PostCreateDto params);
+	Long save(PostCreateMapperRequest params);
 
 	PostDetailResponse getPostDetail(@Param("postId") Long postId, @Param("memberId") Long memberId);
 
 	void getPostId(Map<String, BigDecimal> map);
 
-	Long removePost(PostDeleteDto params);
+	Long removePost(PostDeleteMapperRequest params);
 
 	Optional<Post> findById(Long id);
 

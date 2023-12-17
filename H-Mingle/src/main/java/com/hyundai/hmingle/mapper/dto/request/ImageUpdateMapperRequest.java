@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class ImageUpdateDto {
+public class ImageUpdateMapperRequest {
 	private Long memberId;
 	private String image;
 }

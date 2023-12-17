@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class PostCreateDto {
+public class PostCreateMapperRequest {
 
 	private final Long postId;
 	private final String content;

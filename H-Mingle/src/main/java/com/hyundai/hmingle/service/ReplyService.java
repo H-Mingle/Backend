@@ -15,7 +15,7 @@ import com.hyundai.hmingle.controller.dto.response.ReplyUpdateResponse;
 import com.hyundai.hmingle.domain.member.Member;
 import com.hyundai.hmingle.domain.post.Post;
 import com.hyundai.hmingle.domain.post.Reply;
-import com.hyundai.hmingle.mapper.dto.request.RepliesRequest;
+import com.hyundai.hmingle.mapper.dto.request.RepliesMapperRequest;
 import com.hyundai.hmingle.mapper.dto.response.ReplyCreateResponseDto;
 import com.hyundai.hmingle.mapper.dto.response.ReplyResponse;
 import com.hyundai.hmingle.repository.MemberRepository;
@@ -84,7 +84,7 @@ public class ReplyService {
 		int startRow = calculateStartRow(page, size);
 
 		Post savedPost = postRepository.findById(postId);
-		RepliesRequest request = new RepliesRequest(savedPost.getId(), parentId, startRow, size);
+		RepliesMapperRequest request = new RepliesMapperRequest(savedPost.getId(), parentId, startRow, size);
 		List<ReplyResponse> replies = replyRepository.findAll(request);
 
 		return replies.stream()

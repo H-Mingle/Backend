@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class RepliesRequest {
+public class RepliesMapperRequest {
 
 	private final Long postId;
 	private final Long parentId;
