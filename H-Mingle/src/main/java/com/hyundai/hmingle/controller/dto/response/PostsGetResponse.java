@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PostsGetResponse {
 
-    private final String channelName;
-    private final boolean isNext;
-    private final List<PostListGetResponse> posts;
+	private final String channelName;
+	private final boolean isNext;
+	private final List<PostListGetResponse> posts;
 }

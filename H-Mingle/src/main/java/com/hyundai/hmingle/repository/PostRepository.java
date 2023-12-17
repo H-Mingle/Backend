@@ -57,21 +57,19 @@ public class PostRepository {
 		return post;
 	}
 
-	public void updatePost(PostUpdateRequest params){
+	public void updatePost(PostUpdateRequest params) {
 		postMapper.updatePost(params);
-	};
+	}
 
-	public List<Long> findPostByChannelId(Long channelId){
+	public List<Long> findPostByChannelId(Long channelId) {
 		return postMapper.findPostByChannelId(channelId);
 	}
 
-	public int upReadCount(Long postId){
+	public int upReadCount(Long postId) {
 		return postMapper.upReadCount(postId);
 	}
 
-	public Long findMemberId(Long postId){
+	public Long findMemberId(Long postId) {
 		return postMapper.findMemberId(postId);
 	}
-
-
 }

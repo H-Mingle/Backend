@@ -52,12 +52,12 @@ public class MemberRepository {
 		byte[] imageByteArray = null;
 		try (InputStream imageStream = new FileInputStream(savedMember.getImageUrl())) {
 			imageByteArray = IOUtils.toByteArray(imageStream);
-		}  catch (IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 		boolean owner = false;
-		if(id==memberId)
+		if (id == memberId)
 			owner = true;
 
 		return new MemberGetResponse(
@@ -86,7 +86,7 @@ public class MemberRepository {
 		memberMapper.delete(memberId);
 	}
 
-	public int updateImg(ImageUpdateDto imageUpdateDto){
+	public int updateImg(ImageUpdateDto imageUpdateDto) {
 		return memberMapper.updateImg(imageUpdateDto);
 	}
 

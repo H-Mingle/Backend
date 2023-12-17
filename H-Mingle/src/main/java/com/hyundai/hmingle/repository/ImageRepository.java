@@ -38,11 +38,11 @@ public class ImageRepository {
 		return imageMapper.findImageUrlLikedByMemberId(request);
 	}
 
-	public void removeImages(Long postId){
+	public void removeImages(Long postId) {
 		imageMapper.removeImages(postId);
-	};
+	}
 
-	public List<PostResponse> findByPostId(ImagesRequest request){
+	public List<PostResponse> findByPostId(ImagesRequest request) {
 		return imageMapper.findByPostId(request);
 	}
 }

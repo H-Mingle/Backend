@@ -36,7 +36,7 @@ public class ImageService {
 		return imageRepository.getFourImages(postId);
 	}
 
-	public void removeImages(Long postId){
+	public void removeImages(Long postId) {
 		imageRepository.removeImages(postId);
 	}
 }

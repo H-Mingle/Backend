@@ -30,7 +30,7 @@ public class MemberService {
 		return memberRepository.findWithPostCountByMemberId(id, memberId);
 	}
 
-	public MemberUpdateResponse update(MemberUpdateRequest memberUpdateDto){
+	public MemberUpdateResponse update(MemberUpdateRequest memberUpdateDto) {
 		return memberRepository.update(memberUpdateDto);
 	}
 
@@ -40,7 +40,7 @@ public class MemberService {
 		memberRepository.delete(savedMember.getId());
 	}
 
-	public void updateFile(Long memberId, ImageCreateRequest img){
+	public void updateFile(Long memberId, ImageCreateRequest img) {
 		ImageUpdateDto dto = new ImageUpdateDto(memberId, img.getSaveName());
 
 		memberRepository.updateImg(dto);

@@ -13,7 +13,7 @@ public class ImageCreateRequest {
 	private String originalName;
 	private String saveName;
 	private long size;
-	
+
 	public ImageCreateRequest(String originalName, String saveName, long size) {
 		this.originalName = originalName;
 		this.saveName = saveName;

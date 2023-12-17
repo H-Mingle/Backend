@@ -58,7 +58,7 @@ public class PostService {
 		BigDecimal id = BigDecimal.valueOf(postId);
 
 		int heartCount = 0;
-		if(details.getHeartCount() != null)
+		if (details.getHeartCount() != null)
 			heartCount = details.getHeartCount();
 
 		Map<String, BigDecimal> parameterMap = new HashMap<>();
@@ -74,46 +74,45 @@ public class PostService {
 		String channelName = getChannelName(channelId);
 
 		boolean liked = false;
-		if(heartRepository.findHeart(postId, memberId)!=null)
+		if (heartRepository.findHeart(postId, memberId) != null)
 			liked = true;
 
 		byte[] writerImg = convertByteArr(writerId);
 		byte[] memberImg = convertByteArr(memberId);
 		PostGetResponse response = new PostGetResponse(postId,
-													   details.getContent(),
-													   details.getReadCount(),
-				                                       details.getNickname(),
-				                                       heartCount,
-													   channelName,
-													   details.getCreatedDate(),
-		                                               previousId,
-				                                       subsequentId,
-				                                       liked,
-				                                       memberImg,
-				                                       writerImg);
+			details.getContent(),
+			details.getReadCount(),
+			details.getNickname(),
+			heartCount,
+			channelName,
+			details.getCreatedDate(),
+			previousId,
+			subsequentId,
+			liked,
+			memberImg,
+			writerImg);
 		return response;
 	}
 
-	public byte[] convertByteArr(long id){
+	public byte[] convertByteArr(long id) {
 		Member member = memberRepository.findById(id);
 		byte[] memberImg = null;
 		try (InputStream imageStream = new FileInputStream(member.getImageUrl())) {
 			memberImg = IOUtils.toByteArray(imageStream);
-		}  catch (IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return memberImg;
 	}
 
-	public Long removePost(Long postId, Long memberId){
+	public Long removePost(Long postId, Long memberId) {
 		PostDeleteDto params = new PostDeleteDto(postId, memberId);
 		return postRepository.removePost(params);
 	}
 
-	public void updatePost(PostUpdateRequest params){
+	public void updatePost(PostUpdateRequest params) {
 		postRepository.updatePost(params);
 	}
-
 
 	private Long convertToLong(BigDecimal value) {
 		if (value == null) {
@@ -122,16 +121,15 @@ public class PostService {
 		return value.longValue();
 	}
 
-
 	@Transactional(readOnly = true)
-	public PostsGetResponse getPostsByChannel(Long channelId, Integer requestPage, Integer requestsize){
+	public PostsGetResponse getPostsByChannel(Long channelId, Integer requestPage, Integer requestsize) {
 		int page = validatePageIsNotNegative(requestPage);
 		int size = validateSizeIsNotNegative(requestsize);
 		int startRow = calculateStartRow(page, size);
 
-		ImagesRequest nextImage = new ImagesRequest(channelId, startRow+size, size);
+		ImagesRequest nextImage = new ImagesRequest(channelId, startRow + size, size);
 		boolean isNext = false;
-		if(!imageRepository.findByPostId(nextImage).isEmpty()){
+		if (!imageRepository.findByPostId(nextImage).isEmpty()) {
 			isNext = true;
 		}
 
@@ -140,19 +138,19 @@ public class PostService {
 		List<PostListGetResponse> list = new ArrayList<>();
 		ImagesRequest request = new ImagesRequest(channelId, startRow, size);
 
-		if(!imageRepository.findByPostId(request).isEmpty()) {
+		if (!imageRepository.findByPostId(request).isEmpty()) {
 			List<PostResponse> images = imageRepository.findByPostId(request);
-			for(PostResponse image:images) {
+			for (PostResponse image : images) {
 				PostListGetResponse response = new PostListGetResponse();
 				try (InputStream imageStream = new FileInputStream(image.getImage())) {
 					byte[] imageByteArray = IOUtils.toByteArray(imageStream);
 					response.setPostId(image.getPostId());
 					response.setImage(imageByteArray);
-                }  catch (IOException e) {
+				} catch (IOException e) {
 					e.printStackTrace();
 				}
 
-                list.add(response);
+				list.add(response);
 			}
 		}
 
@@ -183,17 +181,17 @@ public class PostService {
 		return size;
 	}
 
-	public String getChannelName(Long channelId){
+	public String getChannelName(Long channelId) {
 		String channelName = "";
-		if(channelId == 1) {
+		if (channelId == 1) {
 			channelName = "더현대 서울";
-		} else if(channelId == 2){
+		} else if (channelId == 2) {
 			channelName = "더현대 대구";
-		} else if(channelId == 3){
+		} else if (channelId == 3) {
 			channelName = "현대백화점 압구정본점";
-		} else if(channelId == 4){
+		} else if (channelId == 4) {
 			channelName = "현대백화점 천호점";
-		} else{
+		} else {
 			channelName = "현대백화점 신촌점";
 		}
 		return channelName;

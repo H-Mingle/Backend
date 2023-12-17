@@ -46,9 +46,9 @@ public class PostController {
 	private final DateTimeConvertor dateTimeConvertor;
 
 	@PostMapping
-	public ResponseEntity<MingleResponse> savePost(@RequestPart(required = false) List<MultipartFile> uploadImgs,
-												   PostCreateRequest params,
-												   @RequestHeader HttpHeaders headers) {
+	public ResponseEntity<MingleResponse<PostCreateResponse>> savePost(@RequestPart(required = false) List<MultipartFile> uploadImgs,
+		PostCreateRequest params,
+		@RequestHeader HttpHeaders headers) {
 		Long memberId = jwtTokenExtractor.extract(headers);
 		Long postId = postService.savePost(params, memberId);
 		List<ImageCreateRequest> images = imageUtils.uploadFiles(uploadImgs);
@@ -58,9 +58,9 @@ public class PostController {
 	}
 
 	@GetMapping("/images/{postId}")
-	public ResponseEntity<MingleResponse<List<byte[]>>> getFourImages(@PathVariable("postId") Long postId){
+	public ResponseEntity<MingleResponse<List<byte[]>>> getFourImages(@PathVariable("postId") Long postId) {
 		List<String> images = imageService.getFourImages(postId);
-		if(images.isEmpty())
+		if (images.isEmpty())
 			throw new RuntimeException("이미지가 존재하지 않습니다");
 
 		List<byte[]> imageByteArrays = images.stream()
@@ -71,43 +71,39 @@ public class PostController {
 	}
 
 	@GetMapping("/{postId}")
-	public ResponseEntity<MingleResponse<PostGetResponse>> getPost(@PathVariable("postId") Long postId,
-																   @RequestHeader HttpHeaders headers){
+	public ResponseEntity<MingleResponse<PostGetResponse>> getPost(@PathVariable("postId") Long postId, @RequestHeader HttpHeaders headers) {
 		Long id = jwtTokenExtractor.extract(headers);
 		PostGetResponse response = postService.getPost(postId, id);
 		return ResponseEntity.ok(MingleResponse.success("게시글 조회에 성공하셨습니다.", response));
 	}
 
 	@DeleteMapping
-	public ResponseEntity<MingleResponse<Long>> removePost(@RequestParam("postId") Long postId,  @RequestHeader HttpHeaders headers){
+	public ResponseEntity<MingleResponse<Long>> removePost(@RequestParam("postId") Long postId, @RequestHeader HttpHeaders headers) {
 		Long memberId = jwtTokenExtractor.extract(headers);
 		return ResponseEntity.ok(MingleResponse.success("게시글 삭제에 성공하셨습니다.", postService.removePost(postId, memberId)));
 	}
 
 	@PatchMapping("/{postId}")
 	public ResponseEntity<MingleResponse<PostCreateResponse>> updatePost(@PathVariable("postId") Long postId,
-																		 @RequestPart List<MultipartFile> uploadImgs,
-																		 PostUpdateRequest params){
+		@RequestPart List<MultipartFile> uploadImgs,
+		PostUpdateRequest params) {
 
-		PostUpdateRequest request = new PostUpdateRequest(params.getPostId(), params.getContent(), dateTimeConvertor.current());
+		PostUpdateRequest request = new PostUpdateRequest(params.getPostId(), params.getContent(),
+			dateTimeConvertor.current());
 		postService.updatePost(request);
 
 		List<ImageCreateRequest> images = imageUtils.uploadFiles(uploadImgs);
 
-        imageService.removeImages(postId);
+		imageService.removeImages(postId);
 		PostCreateResponse response = imageService.saveFiles(postId, params.getContent(), images);
 		return ResponseEntity.ok(MingleResponse.success("게시글 수정에 성공하였습니다.", response));
 	}
 
-
-
 	@GetMapping
 	public ResponseEntity<MingleResponse<PostsGetResponse>> getPostsByChannel(@RequestParam("page") int page,
-																			  @RequestParam("size") int size,
-																			  @RequestHeader("channel") Long channelId) {
+		@RequestParam("size") int size,
+		@RequestHeader("channel") Long channelId) {
 		PostsGetResponse response = postService.getPostsByChannel(channelId, page, size);
 		return ResponseEntity.ok(MingleResponse.success("게시글 리스트 조회에 성공하셨습니다.", response));
 	}
-
-
 }

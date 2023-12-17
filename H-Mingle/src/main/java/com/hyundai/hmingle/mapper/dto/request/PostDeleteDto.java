@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PostDeleteDto {
 
-    private final Long postId;
-    private final Long memberId;
-    private LocalDateTime modifiedDate;
+	private final Long postId;
+	private final Long memberId;
+	private LocalDateTime modifiedDate;
 }

@@ -31,8 +31,8 @@ public class OauthController {
 	public ResponseEntity<MingleResponse<OauthLoginUrlResponse>> generateLoginUrl(@RequestParam String redirectUrl) {
 		OauthLoginUrlResponse response = oauthService.generateLoginUrl(redirectUrl);
 		return ResponseEntity.ok(MingleResponse.success(
-				"OAuth2.0 로그인 URL 요청에 성공하였습니다.",
-				response
+			"OAuth2.0 로그인 URL 요청에 성공하였습니다.",
+			response
 		));
 	}
 
@@ -40,8 +40,8 @@ public class OauthController {
 	public ResponseEntity<MingleResponse<OauthLoginResponse>> login(@RequestParam String redirectUrl, @RequestParam String authorizationCode) {
 		OauthLoginResponse response = oauthService.login(redirectUrl, authorizationCode);
 		return ResponseEntity.ok(MingleResponse.success(
-				"OAuth2.0 로그인에 성공하였습니다.",
-				response
+			"OAuth2.0 로그인에 성공하였습니다.",
+			response
 		));
 	}
 
@@ -50,8 +50,8 @@ public class OauthController {
 		Long memberId = jwtTokenExtractor.extract(headers);
 		RefreshResponse response = oauthService.refresh(memberId);
 		return ResponseEntity.ok(MingleResponse.success(
-				"Access Token 재발급에 성공하였습니다.",
-				response
+			"Access Token 재발급에 성공하였습니다.",
+			response
 		));
 	}
 
@@ -60,8 +60,8 @@ public class OauthController {
 		Long memberId = jwtTokenExtractor.extract(headers);
 		oauthService.logout(memberId);
 		return ResponseEntity.ok(MingleResponse.success(
-				"OAuth2.0 로그아웃에 성공하였습니다.",
-				null
+			"OAuth2.0 로그아웃에 성공하였습니다.",
+			null
 		));
 	}
 }

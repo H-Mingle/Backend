@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class ImagesRequest {
-    private final Long channelId;
-    private final int startRow;
-    private final int size;
+	private final Long channelId;
+	private final int startRow;
+	private final int size;
 }

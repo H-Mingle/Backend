@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PostUpdateRequest {
 
-    private final Long postId;
-    private final String content;
-    private final LocalDateTime modifiedDate;
+	private final Long postId;
+	private final String content;
+	private final LocalDateTime modifiedDate;
 }

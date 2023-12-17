@@ -9,7 +9,7 @@ import com.hyundai.hmingle.mapper.dto.response.MyPostResponse;
 import com.hyundai.hmingle.mapper.dto.response.PostResponse;
 
 public interface ImageMapper {
-	
+
 	List<String> getFourImages(Long postId);
 
 	List<String> getImages(Long postId);

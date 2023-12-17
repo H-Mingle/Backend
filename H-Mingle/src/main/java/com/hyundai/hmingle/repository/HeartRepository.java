@@ -22,7 +22,7 @@ public class HeartRepository {
 		return heartMapper.removeHeart(params);
 	}
 
-	public Long findHeart(Long postId, Long memberId){
+	public Long findHeart(Long postId, Long memberId) {
 		HeartRequest params = new HeartRequest(postId, memberId);
 		return heartMapper.findHeart(params);
 	}

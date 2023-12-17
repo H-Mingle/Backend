@@ -20,9 +20,9 @@ import lombok.RequiredArgsConstructor;
 public class ChannelController {
 
 	private final ChannelService channelService;
-	
+
 	@GetMapping
-	public ResponseEntity<MingleResponse<List<ChannelGetResponse>>> getList(){
-		return ResponseEntity.ok(MingleResponse.success("영업점 리스트 조회 성공",channelService.getList()));
+	public ResponseEntity<MingleResponse<List<ChannelGetResponse>>> getList() {
+		return ResponseEntity.ok(MingleResponse.success("영업점 리스트 조회 성공", channelService.getList()));
 	}
 }

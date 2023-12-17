@@ -24,16 +24,16 @@ public class HeartController {
 
 	private final HeartService heartService;
 	private final JwtTokenExtractor jwtTokenExtractor;
-	
+
 	@PostMapping
-	public ResponseEntity<MingleResponse<Long>> addHeart(@RequestParam("postId") Long postId, @RequestHeader HttpHeaders headers){
+	public ResponseEntity<MingleResponse<Long>> addHeart(@RequestParam("postId") Long postId, @RequestHeader HttpHeaders headers) {
 		Long memberId = jwtTokenExtractor.extract(headers);
 		HeartRequest params = new HeartRequest(postId, memberId);
 		return ResponseEntity.ok(MingleResponse.success("좋아요 추가에 성공하셨습니다.", heartService.addHeart(params)));
 	}
-	
+
 	@PutMapping
-	public ResponseEntity<MingleResponse<Long>> removeHeart(@RequestParam("postId") Long postId,  @RequestHeader HttpHeaders headers){
+	public ResponseEntity<MingleResponse<Long>> removeHeart(@RequestParam("postId") Long postId, @RequestHeader HttpHeaders headers) {
 		Long memberId = jwtTokenExtractor.extract(headers);
 		HeartRequest params = new HeartRequest(postId, memberId);
 		return ResponseEntity.ok(MingleResponse.success("좋아요 취소에 성공하셨습니다.", heartService.removeHeart(params)));

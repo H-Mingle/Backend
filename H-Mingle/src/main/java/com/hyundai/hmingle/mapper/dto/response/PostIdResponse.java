@@ -6,6 +6,6 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class PostIdResponse {
-    private Long previousId;
-    private Long subsequentId;
+	private Long previousId;
+	private Long subsequentId;
 }

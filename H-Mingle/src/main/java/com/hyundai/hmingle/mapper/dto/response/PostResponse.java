@@ -6,6 +6,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class PostResponse {
-    private Long postId;
-    private String image;
+	private Long postId;
+	private String image;
 }

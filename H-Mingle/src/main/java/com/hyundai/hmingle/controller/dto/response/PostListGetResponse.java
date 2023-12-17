@@ -9,6 +9,6 @@ import lombok.Setter;
 @RequiredArgsConstructor
 public class PostListGetResponse {
 
-    private Long postId;
-    private byte[] image;
+	private Long postId;
+	private byte[] image;
 }

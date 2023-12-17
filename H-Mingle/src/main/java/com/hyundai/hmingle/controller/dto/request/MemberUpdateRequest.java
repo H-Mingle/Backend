@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class MemberUpdateRequest {
 
-    private Long memberId;
-    private String nickname;
-    private String introduction;
+	private Long memberId;
+	private String nickname;
+	private String introduction;
 }

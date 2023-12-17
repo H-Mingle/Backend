@@ -21,92 +21,88 @@ import com.hyundai.hmingle.controller.dto.request.ImageCreateRequest;
 public class ImageUtils {
 
 	@Value("${uploadPath}")
-    private String uploadPath;
+	private String uploadPath;
 
-    public List<ImageCreateRequest> uploadFiles(List<MultipartFile> multipartFiles) {
-    	
-        List<ImageCreateRequest> files = new ArrayList<>();
-        int orders = 1;
-        for (MultipartFile multipartFile : multipartFiles) {
-            if (multipartFile.isEmpty()) {
-                continue;
-            }
-            files.add(uploadFile(orders++, multipartFile));
+	public List<ImageCreateRequest> uploadFiles(List<MultipartFile> multipartFiles) {
 
-        }
-        System.out.println(files.size());
-        return files;
-    }
+		List<ImageCreateRequest> files = new ArrayList<>();
+		int orders = 1;
+		for (MultipartFile multipartFile : multipartFiles) {
+			if (multipartFile.isEmpty()) {
+				continue;
+			}
+			files.add(uploadFile(orders++, multipartFile));
 
-   
-    public ImageCreateRequest uploadFile(int orders, MultipartFile multipartFile) {
-        if (multipartFile.isEmpty()) {
-            return null;
-        }
+		}
+		System.out.println(files.size());
+		return files;
+	}
 
-        String saveName = generateSaveFilename(multipartFile.getOriginalFilename());
-        String today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyMMdd")).toString();
-        String uploadPath = getUploadPath(today) + File.separator + saveName;
-        File uploadFile = new File(uploadPath);
+	public ImageCreateRequest uploadFile(int orders, MultipartFile multipartFile) {
+		if (multipartFile.isEmpty()) {
+			return null;
+		}
 
-        try {
-            multipartFile.transferTo(uploadFile);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        
-        ImageCreateRequest createdImage = new ImageCreateRequest(multipartFile.getOriginalFilename(),
-        														 uploadPath, 
-        														 multipartFile.getSize());
-        createdImage.setSequence(orders);
-        return createdImage;
-    }
+		String saveName = generateSaveFilename(multipartFile.getOriginalFilename());
+		String today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyMMdd")).toString();
+		String uploadPath = getUploadPath(today) + File.separator + saveName;
+		File uploadFile = new File(uploadPath);
 
-    public ImageCreateRequest updateFile(MultipartFile multipartFile) {
-        if (multipartFile.isEmpty()) {
-            return null;
-        }
+		try {
+			multipartFile.transferTo(uploadFile);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 
-        String saveName = generateSaveFilename(multipartFile.getOriginalFilename());
-        String today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyMMdd")).toString();
-        String uploadPath = getUploadPath(today) + File.separator + saveName;
-        File uploadFile = new File(uploadPath);
+		ImageCreateRequest createdImage = new ImageCreateRequest(multipartFile.getOriginalFilename(),
+			uploadPath,
+			multipartFile.getSize());
+		createdImage.setSequence(orders);
+		return createdImage;
+	}
 
-        try {
-            multipartFile.transferTo(uploadFile);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+	public ImageCreateRequest updateFile(MultipartFile multipartFile) {
+		if (multipartFile.isEmpty()) {
+			return null;
+		}
 
-        ImageCreateRequest createdImage = new ImageCreateRequest(multipartFile.getOriginalFilename(),
-                uploadPath,
-                multipartFile.getSize());
-        return createdImage;
-    }
+		String saveName = generateSaveFilename(multipartFile.getOriginalFilename());
+		String today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyMMdd")).toString();
+		String uploadPath = getUploadPath(today) + File.separator + saveName;
+		File uploadFile = new File(uploadPath);
 
-    private String generateSaveFilename(final String filename) {
-        String uuid = UUID.randomUUID().toString().replaceAll("-", "");
-        String extension = StringUtils.getFilenameExtension(filename);
-        return uuid + "." + extension;
-    }
+		try {
+			multipartFile.transferTo(uploadFile);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 
-   
-    private String getUploadPath() {
-        return makeDirectories(uploadPath);
-    }
+		ImageCreateRequest createdImage = new ImageCreateRequest(multipartFile.getOriginalFilename(),
+			uploadPath,
+			multipartFile.getSize());
+		return createdImage;
+	}
 
-   
-    private String getUploadPath(final String addPath) {
-        return makeDirectories(uploadPath + File.separator + addPath);
-    }
+	private String generateSaveFilename(final String filename) {
+		String uuid = UUID.randomUUID().toString().replaceAll("-", "");
+		String extension = StringUtils.getFilenameExtension(filename);
+		return uuid + "." + extension;
+	}
 
-   
-    private String makeDirectories(final String path) {
-        File dir = new File(path);
-        if (dir.exists() == false) {
-            dir.mkdirs();
-        }
-        return dir.getPath();
-    }
+	private String getUploadPath() {
+		return makeDirectories(uploadPath);
+	}
+
+	private String getUploadPath(final String addPath) {
+		return makeDirectories(uploadPath + File.separator + addPath);
+	}
+
+	private String makeDirectories(final String path) {
+		File dir = new File(path);
+		if (dir.exists() == false) {
+			dir.mkdirs();
+		}
+		return dir.getPath();
+	}
 
 }

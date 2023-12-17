@@ -6,6 +6,6 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class ImageUpdateDto {
-    private Long memberId;
-    private String image;
+	private Long memberId;
+	private String image;
 }
