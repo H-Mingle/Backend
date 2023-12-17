@@ -12,8 +12,6 @@ public interface ImageMapper {
 
 	List<String> getFourImages(Long postId);
 
-	List<String> getImages(Long postId);
-
 	List<MyPostMapperResponse> findImageUrlByMemberId(MyPostMapperRequest request);
 
 	List<MyPostMapperResponse> findImageUrlLikedByMemberId(MyPostMapperRequest request);
@@ -22,6 +20,5 @@ public interface ImageMapper {
 
 	void removeImages(Long postId);
 
-	public List<PostMapperResponse> findByPostId(ImagesMapperRequest request);
-
+	List<PostMapperResponse> findByPostId(ImagesMapperRequest request);
 }

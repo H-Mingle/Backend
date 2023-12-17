@@ -2,12 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hyundai.hmingle.mapper.TokenMapper">
 
-    <insert id="save" parameterType="token" >
+    <insert id="save" parameterType="token">
         insert into token (id, member_id, access_token, refresh_token)
         values (seq_token_id.nextval, #{member.id}, #{accessToken}, #{refreshToken})
     </insert>
 
-    <update id="update" parameterType="token" >
+    <update id="update" parameterType="token">
         update token
         set access_token = #{accessToken},
             refresh_token = #{refreshToken},

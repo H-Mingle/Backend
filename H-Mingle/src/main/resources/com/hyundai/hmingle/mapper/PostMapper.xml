@@ -64,18 +64,18 @@
 		where member_id = #{member_id}
 	</select>
 
-	<select id="findPostByChannelId" parameterType="long" >
+	<select id="findPostByChannelId" parameterType="long" resultType="long">
 		SELECT id
 		FROM post
 		WHERE channel_id = #{channel_id} AND removed=0
 	</select>
 
-	<update id="upReadCount">
+	<update id="upReadCount" parameterType="long">
 		UPDATE post SET read_count = read_count+1
 		WHERE id=#{postId}
 	</update>
 
-	<select id="findMemberId" parameterType="long" >
+	<select id="findMemberId" parameterType="long" resultType="long">
 		select member_id
 		from post
 		where id = #{id}

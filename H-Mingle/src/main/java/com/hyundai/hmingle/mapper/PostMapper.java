@@ -28,8 +28,6 @@ public interface PostMapper {
 
 	int findPostCountByMemberId(Long memberId);
 
-	PostGetResponse getPost(Long postId);
-
 	void updatePost(PostUpdateRequest params);
 
 	List<Long> findPostByChannelId(Long channelId);
@@ -37,5 +35,4 @@ public interface PostMapper {
 	int upReadCount(Long postId);
 
 	Long findMemberId(Long postId);
-
 }

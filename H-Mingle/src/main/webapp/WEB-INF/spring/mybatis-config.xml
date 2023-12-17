@@ -40,6 +40,9 @@
         <typeAlias type="com.hyundai.hmingle.mapper.dto.request.ImageUpdateMapperRequest" alias="imageUpdateMapperRequest"/>
         <typeAlias type="com.hyundai.hmingle.mapper.dto.request.RepliesMapperRequest" alias="repliesMapperRequest"/>
         <typeAlias type="com.hyundai.hmingle.mapper.dto.request.ReplyDeleteMapperRequest" alias="replyDeleteMapperRequest"/>
+        <typeAlias type="com.hyundai.hmingle.mapper.dto.request.MyPostMapperRequest" alias="myPostMapperRequest"/>
+        <typeAlias type="com.hyundai.hmingle.mapper.dto.request.ImagesMapperRequest" alias="imagesMapperRequest"/>
+        <typeAlias type="com.hyundai.hmingle.mapper.dto.request.ReplyCreateMapperRequest" alias="replyCreateMapperRequest"/>
 
         <!-- mapper response -->
         <typeAlias type="com.hyundai.hmingle.mapper.dto.response.PostMapperResponse" alias="postMapperResponse"/>

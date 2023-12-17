@@ -33,7 +33,7 @@
         where post_id = #{id} and removed = 0
     </select>
 
-    <select id="findAll" resultType="replyMapperResponse">
+    <select id="findAll" parameterType="repliesMapperRequest" resultType="replyMapperResponse">
         select
             r.id as id, m.id as member_id, nickname, content, parent_id,
             (select count(id)
@@ -49,7 +49,7 @@
         offset #{startRow} rows fetch next #{size} rows only
     </select>
 
-    <select id="findAllIfParentIsNull" resultType="replyMapperResponse">
+    <select id="findAllIfParentIsNull" parameterType="repliesMapperRequest" resultType="replyMapperResponse">
         select
             r.id as id, m.id as member_id, nickname, content, parent_id,
             (select count(id)
@@ -65,7 +65,7 @@
         offset #{startRow} rows fetch next #{size} rows only
     </select>
 
-    <insert id="save" parameterType="map">
+    <insert id="save" parameterType="replyCreateMapperRequest">
         insert into reply (id, content, post_id, member_id, parent_id, depth, created_date, modified_date)
         values (seq_reply_id.nextval, #{content}, #{postId}, #{memberId}, #{parentId}, #{depth}, #{createdDate}, #{createdDate})
         <selectKey keyProperty="id" resultType="long" order="AFTER">

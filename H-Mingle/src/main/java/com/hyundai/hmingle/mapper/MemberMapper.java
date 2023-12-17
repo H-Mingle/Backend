@@ -19,5 +19,4 @@ public interface MemberMapper {
 	void delete(Long memberId);
 
 	int updateImg(ImageUpdateMapperRequest imageUpdateMapperRequest);
-
 }
