@@ -3,22 +3,33 @@ package com.hyundai.hmingle.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.hyundai.hmingle.controller.dto.request.ImageCreateRequest;
+import com.hyundai.hmingle.controller.dto.request.PostCreateRequest;
 import com.hyundai.hmingle.controller.dto.request.PostUpdateRequest;
-import com.hyundai.hmingle.controller.dto.response.*;
+import com.hyundai.hmingle.controller.dto.response.MingleResponse;
+import com.hyundai.hmingle.controller.dto.response.PostCreateResponse;
+import com.hyundai.hmingle.controller.dto.response.PostGetResponse;
+import com.hyundai.hmingle.controller.dto.response.PostsGetResponse;
+import com.hyundai.hmingle.domain.post.ImageUtils;
 import com.hyundai.hmingle.service.ImageService;
 import com.hyundai.hmingle.service.PostService;
 import com.hyundai.hmingle.support.DateTimeConvertor;
 import com.hyundai.hmingle.support.ImageConvertor;
 import com.hyundai.hmingle.support.JwtTokenExtractor;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import org.springframework.web.multipart.MultipartFile;
-
-import com.hyundai.hmingle.controller.dto.request.ImageCreateRequest;
-import com.hyundai.hmingle.controller.dto.request.PostCreateRequest;
-import com.hyundai.hmingle.domain.post.ImageUtils;
 
 import lombok.RequiredArgsConstructor;
 

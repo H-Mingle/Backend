@@ -4,8 +4,8 @@ import java.util.Objects;
 
 import org.springframework.stereotype.Component;
 
-import com.hyundai.hmingle.domain.member.Member;
 import com.hyundai.hmingle.domain.common.Base;
+import com.hyundai.hmingle.domain.member.Member;
 
 import lombok.AccessLevel;
 import lombok.Getter;

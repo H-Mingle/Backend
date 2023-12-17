@@ -1,21 +1,21 @@
 package com.hyundai.hmingle.service;
 
-import com.hyundai.hmingle.controller.dto.request.ImageCreateRequest;
-import com.hyundai.hmingle.controller.dto.request.MemberUpdateRequest;
-import com.hyundai.hmingle.domain.member.Member;
-import com.hyundai.hmingle.mapper.dto.request.ImageUpdateDto;
-import com.hyundai.hmingle.mapper.dto.response.MemberUpdateResponse;
+import java.io.IOException;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.hyundai.hmingle.controller.dto.request.ImageCreateRequest;
+import com.hyundai.hmingle.controller.dto.request.MemberUpdateRequest;
 import com.hyundai.hmingle.controller.dto.response.MemberGetResponse;
+import com.hyundai.hmingle.domain.member.Member;
+import com.hyundai.hmingle.mapper.dto.request.ImageUpdateDto;
+import com.hyundai.hmingle.mapper.dto.response.MemberUpdateResponse;
 import com.hyundai.hmingle.repository.MemberRepository;
 import com.hyundai.hmingle.repository.TokenRepository;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-
-import java.io.*;
 
 @Service
 @Transactional

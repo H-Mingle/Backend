@@ -4,9 +4,9 @@ import java.util.List;
 
 import com.hyundai.hmingle.controller.dto.request.ImageCreateRequest;
 import com.hyundai.hmingle.mapper.dto.request.ImagesRequest;
-import com.hyundai.hmingle.mapper.dto.response.PostResponse;
 import com.hyundai.hmingle.mapper.dto.request.MyPostRequest;
 import com.hyundai.hmingle.mapper.dto.response.MyPostResponse;
+import com.hyundai.hmingle.mapper.dto.response.PostResponse;
 
 public interface ImageMapper {
 	

@@ -1,19 +1,18 @@
 package com.hyundai.hmingle.mapper;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.hyundai.hmingle.controller.dto.request.PostUpdateRequest;
+import com.hyundai.hmingle.controller.dto.response.PostGetResponse;
+import com.hyundai.hmingle.domain.post.Post;
 import com.hyundai.hmingle.mapper.dto.request.PostCreateDto;
 import com.hyundai.hmingle.mapper.dto.request.PostDeleteDto;
 import com.hyundai.hmingle.mapper.dto.response.PostDetailResponse;
-
-import java.math.BigDecimal;
-import java.util.Map;
-
-import com.hyundai.hmingle.controller.dto.response.PostGetResponse;
-import com.hyundai.hmingle.domain.post.Post;
-import org.apache.ibatis.annotations.Param;
 
 public interface PostMapper {
 

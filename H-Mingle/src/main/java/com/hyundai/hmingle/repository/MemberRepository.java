@@ -1,34 +1,25 @@
 package com.hyundai.hmingle.repository;
 
-import com.hyundai.hmingle.controller.dto.request.MemberUpdateRequest;
-import com.hyundai.hmingle.controller.dto.response.PostListGetResponse;
-import com.hyundai.hmingle.mapper.dto.request.ImageUpdateDto;
-import com.hyundai.hmingle.mapper.dto.response.MemberUpdateResponse;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.Optional;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Repository;
 
+import com.hyundai.hmingle.controller.dto.request.MemberUpdateRequest;
 import com.hyundai.hmingle.controller.dto.response.MemberGetResponse;
 import com.hyundai.hmingle.domain.member.Member;
 import com.hyundai.hmingle.mapper.MemberMapper;
 import com.hyundai.hmingle.mapper.PostMapper;
+import com.hyundai.hmingle.mapper.dto.request.ImageUpdateDto;
+import com.hyundai.hmingle.mapper.dto.response.MemberUpdateResponse;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.Base64;
-import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)

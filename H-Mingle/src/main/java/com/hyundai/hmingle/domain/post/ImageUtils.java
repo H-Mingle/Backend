@@ -2,7 +2,6 @@ package com.hyundai.hmingle.domain.post;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -16,8 +15,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.hyundai.hmingle.controller.dto.request.ImageCreateRequest;
-
-import lombok.extern.java.Log;
 
 @Component
 @PropertySource("classpath:app.properties")

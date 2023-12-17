@@ -2,14 +2,14 @@ package com.hyundai.hmingle.repository;
 
 import java.util.List;
 
-import com.hyundai.hmingle.mapper.dto.request.ImagesRequest;
-import com.hyundai.hmingle.mapper.dto.response.PostResponse;
 import org.springframework.stereotype.Repository;
 
 import com.hyundai.hmingle.controller.dto.request.ImageCreateRequest;
 import com.hyundai.hmingle.mapper.ImageMapper;
+import com.hyundai.hmingle.mapper.dto.request.ImagesRequest;
 import com.hyundai.hmingle.mapper.dto.request.MyPostRequest;
 import com.hyundai.hmingle.mapper.dto.response.MyPostResponse;
+import com.hyundai.hmingle.mapper.dto.response.PostResponse;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;

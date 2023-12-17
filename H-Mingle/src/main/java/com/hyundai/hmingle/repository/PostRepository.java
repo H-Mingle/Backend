@@ -4,15 +4,15 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
-import com.hyundai.hmingle.controller.dto.request.PostUpdateRequest;
-import com.hyundai.hmingle.mapper.dto.request.PostCreateDto;
-import com.hyundai.hmingle.mapper.dto.request.PostDeleteDto;
 import org.springframework.stereotype.Repository;
 
+import com.hyundai.hmingle.controller.dto.request.PostUpdateRequest;
 import com.hyundai.hmingle.domain.post.Post;
 import com.hyundai.hmingle.domain.post.Reply;
 import com.hyundai.hmingle.mapper.PostMapper;
 import com.hyundai.hmingle.mapper.ReplyMapper;
+import com.hyundai.hmingle.mapper.dto.request.PostCreateDto;
+import com.hyundai.hmingle.mapper.dto.request.PostDeleteDto;
 import com.hyundai.hmingle.mapper.dto.response.PostDetailResponse;
 
 import lombok.AccessLevel;
