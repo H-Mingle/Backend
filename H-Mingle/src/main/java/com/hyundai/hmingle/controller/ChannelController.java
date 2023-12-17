@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hyundai.hmingle.controller.dto.response.ChannelGetResponse;
 import com.hyundai.hmingle.controller.dto.response.MingleResponse;
-import com.hyundai.hmingle.service.ChannelServiceImpl;
+import com.hyundai.hmingle.service.ChannelService;
 
 import lombok.AllArgsConstructor;
 
@@ -18,7 +18,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class ChannelController {
 
-	private ChannelServiceImpl channelService;
+	private ChannelService channelService;
 	
 	@GetMapping
 	public ResponseEntity<MingleResponse<List<ChannelGetResponse>>> getList(){

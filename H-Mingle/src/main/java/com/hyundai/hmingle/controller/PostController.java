@@ -5,8 +5,8 @@ import java.util.stream.Collectors;
 
 import com.hyundai.hmingle.controller.dto.request.PostUpdateRequest;
 import com.hyundai.hmingle.controller.dto.response.*;
-import com.hyundai.hmingle.service.ImageServiceImpl;
-import com.hyundai.hmingle.service.PostServiceImpl;
+import com.hyundai.hmingle.service.ImageService;
+import com.hyundai.hmingle.service.PostService;
 import com.hyundai.hmingle.support.DateTimeConvertor;
 import com.hyundai.hmingle.support.ImageConvertor;
 import com.hyundai.hmingle.support.JwtTokenExtractor;
@@ -27,8 +27,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PostController {
 
-	private final PostServiceImpl postService;
-	private final ImageServiceImpl imageService;
+	private final PostService postService;
+	private final ImageService imageService;
 	private final ImageUtils imageUtils;
 	private final ImageConvertor imageConvertor;
 	private final JwtTokenExtractor jwtTokenExtractor;

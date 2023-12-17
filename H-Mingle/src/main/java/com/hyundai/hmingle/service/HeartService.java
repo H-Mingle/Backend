@@ -1,9 +1,5 @@
 package com.hyundai.hmingle.service;
 
-import java.util.HashMap;
-
-import org.apache.ibatis.annotations.Param;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @Transactional
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public class HeartServiceImpl {
+public class HeartService {
 
 	private final HeartRepository heartRepository;
 
