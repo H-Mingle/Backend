@@ -8,19 +8,22 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.hyundai.hmingle.controller.dto.request.ImageCreateRequest;
 import com.hyundai.hmingle.controller.dto.request.PostCreateRequest;
 import com.hyundai.hmingle.controller.dto.request.PostUpdateRequest;
+import com.hyundai.hmingle.controller.dto.response.PostCreateResponse;
 import com.hyundai.hmingle.controller.dto.response.PostGetResponse;
 import com.hyundai.hmingle.controller.dto.response.PostListGetResponse;
 import com.hyundai.hmingle.controller.dto.response.PostsGetResponse;
 import com.hyundai.hmingle.domain.member.Member;
 import com.hyundai.hmingle.mapper.dto.request.ImagesMapperRequest;
-import com.hyundai.hmingle.mapper.dto.request.PostCreateMapperRequest;
 import com.hyundai.hmingle.mapper.dto.request.PostDeleteMapperRequest;
 import com.hyundai.hmingle.mapper.dto.response.PostDetailMapperResponse;
 import com.hyundai.hmingle.mapper.dto.response.PostMapperResponse;
@@ -28,6 +31,8 @@ import com.hyundai.hmingle.repository.HeartRepository;
 import com.hyundai.hmingle.repository.ImageRepository;
 import com.hyundai.hmingle.repository.MemberRepository;
 import com.hyundai.hmingle.repository.PostRepository;
+import com.hyundai.hmingle.support.ImageConvertor;
+import com.hyundai.hmingle.support.ImageUtils;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -41,11 +46,24 @@ public class PostService {
 	private final ImageRepository imageRepository;
 	private final HeartRepository heartRepository;
 	private final MemberRepository memberRepository;
+	private final ImageUtils imageUtils;
+	private final ImageService imageService;
+	private final ImageConvertor imageConvertor;
 
-	public Long savePost(PostCreateRequest params, Long memberId) {
-		PostCreateMapperRequest dto = new PostCreateMapperRequest(null, params.getContent(), params.getChannelId(), memberId);
-		postRepository.save(dto);
-		return dto.getPostId();
+	public PostCreateResponse savePost(PostCreateRequest params, Long memberId, List<MultipartFile> uploadImgs) {
+		Long postId = postRepository.save(params.getContent(), params.getChannelId(), memberId);
+		List<ImageCreateRequest> images = imageUtils.uploadFiles(uploadImgs);
+		return imageService.saveFiles(postId, params.getContent(), images);
+	}
+
+	public List<byte[]> getFourImages(Long postId) {
+		List<String> images = imageService.getFourImages(postId);
+		if (images.isEmpty()) {
+			throw new RuntimeException("이미지가 존재하지 않습니다");
+		}
+		return images.stream()
+			.map(imageConvertor::convertPath)
+			.collect(Collectors.toUnmodifiableList());
 	}
 
 	@Transactional(readOnly = true)
@@ -110,8 +128,11 @@ public class PostService {
 		return postRepository.removePost(params);
 	}
 
-	public void updatePost(PostUpdateRequest params) {
+	public PostCreateResponse updatePost(PostUpdateRequest params, Long postId, List<MultipartFile> uploadImgs) {
 		postRepository.updatePost(params);
+		List<ImageCreateRequest> images = imageUtils.uploadFiles(uploadImgs);
+		imageService.removeImages(postId);
+		return imageService.saveFiles(postId, params.getContent(), images);
 	}
 
 	private Long convertToLong(BigDecimal value) {

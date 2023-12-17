@@ -27,8 +27,10 @@ public class PostRepository {
 	private final PostMapper postMapper;
 	private final ReplyMapper replyMapper;
 
-	public Long save(PostCreateMapperRequest params) {
-		return postMapper.save(params);
+	public Long save(String content, Long channelId, Long memberId) {
+		PostCreateMapperRequest postCreateMapperRequest = new PostCreateMapperRequest(content, channelId, memberId);
+		postMapper.save(postCreateMapperRequest);
+		return postCreateMapperRequest.getPostId();
 	}
 
 	public PostDetailMapperResponse getPostDetail(Long postId, Long memberId) {

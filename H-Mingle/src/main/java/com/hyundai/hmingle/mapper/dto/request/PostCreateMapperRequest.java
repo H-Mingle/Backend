@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PostCreateMapperRequest {
 
-	private final Long postId;
+	private Long postId;
 	private final String content;
 	private final Long channelId;
 	private final Long memberId;
