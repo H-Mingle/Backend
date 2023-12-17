@@ -1,11 +1,12 @@
 package com.hyundai.hmingle.controller.dto.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
-@Data
-@AllArgsConstructor
+@Getter
+@RequiredArgsConstructor
 public class PostCreateResponse {
-	private Long postId;
-	private String content;
+
+	private final Long postId;
+	private final String content;
 }

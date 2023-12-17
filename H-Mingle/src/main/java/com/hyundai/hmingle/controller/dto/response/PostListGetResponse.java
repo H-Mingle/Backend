@@ -1,11 +1,14 @@
 package com.hyundai.hmingle.controller.dto.response;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
-@Data
-@NoArgsConstructor
+@Getter
+@Setter
+@RequiredArgsConstructor
 public class PostListGetResponse {
+
     private Long postId;
     private byte[] image;
 }
