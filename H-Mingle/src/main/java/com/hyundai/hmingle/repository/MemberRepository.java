@@ -55,6 +55,7 @@ public class MemberRepository {
 			imageByteArray = IOUtils.toByteArray(imageStream);
 		} catch (IOException e) {
 			e.printStackTrace();
+			throw new RuntimeException("이미지를 읽어오는데 실패하였습니다.");
 		}
 
 		boolean owner = false;

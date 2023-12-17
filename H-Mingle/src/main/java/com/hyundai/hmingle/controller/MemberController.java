@@ -1,7 +1,5 @@
 package com.hyundai.hmingle.controller;
 
-import java.io.IOException;
-
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -37,10 +35,11 @@ public class MemberController {
 	private final ImageUtils imageUtils;
 
 	@GetMapping("/{memberId}")
-	public ResponseEntity<MingleResponse<MemberGetResponse>> findById(@PathVariable Long memberId, @RequestHeader HttpHeaders headers) throws IOException {
+	public ResponseEntity<MingleResponse<MemberGetResponse>> findById(
+		@PathVariable Long memberId,
+		@RequestHeader HttpHeaders headers) {
 		Long id = jwtTokenExtractor.extract(headers);
 		MemberGetResponse response = memberService.findById(id, memberId);
-
 		return ResponseEntity.ok(MingleResponse.success(
 			"사용자 상세 조회에 성공하셨습니다.",
 			response
@@ -48,10 +47,10 @@ public class MemberController {
 	}
 
 	@PatchMapping("/{memberId}")
-	public ResponseEntity<MingleResponse<MemberUpdateMapperResponse>> update(@PathVariable Long memberId, @RequestBody MemberUpdateRequest params) {
-
+	public ResponseEntity<MingleResponse<MemberUpdateMapperResponse>> update(
+		@PathVariable Long memberId,
+		@RequestBody MemberUpdateRequest params) {
 		MemberUpdateMapperResponse response = memberService.update(params);
-
 		return ResponseEntity.ok(MingleResponse.success(
 			"사용자 수정에 성공하였습니다.",
 			response
@@ -59,7 +58,9 @@ public class MemberController {
 	}
 
 	@PatchMapping("/images")
-	public ResponseEntity<MingleResponse<Void>> updateImg(@RequestHeader HttpHeaders headers, @RequestPart MultipartFile image) {
+	public ResponseEntity<MingleResponse<Void>> updateImg(
+		@RequestHeader HttpHeaders headers,
+		@RequestPart MultipartFile image) {
 		Long memberId = jwtTokenExtractor.extract(headers);
 		ImageCreateRequest uploadImg = imageUtils.updateFile(image);
 

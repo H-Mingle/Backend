@@ -1,7 +1,5 @@
 package com.hyundai.hmingle.service;
 
-import java.io.IOException;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,7 +24,7 @@ public class MemberService {
 	private final TokenRepository tokenRepository;
 
 	@Transactional(readOnly = true)
-	public MemberGetResponse findById(Long id, Long memberId) throws IOException {
+	public MemberGetResponse findById(Long id, Long memberId) {
 		return memberRepository.findWithPostCountByMemberId(id, memberId);
 	}
 
