@@ -50,7 +50,7 @@ public class ReplyService {
 
 		return new ReplyCreateResponse(
 			savedPost.getId(), savedReply.getId(), savedReply.getMemberId(), savedReply.getNickname(),
-			savedReply.getContent(), dateTimeConvertor.calculate(savedReply.getCreatedDate()), parentId,
+			savedReply.getContent(), dateTimeConvertor.calculate(savedReply.getCreatedDate(), "작성일자가 없습니다."), parentId,
 			imageConvertor.convertPath(savedReply.getImageUrl())
 		);
 	}
@@ -90,7 +90,7 @@ public class ReplyService {
 		return replies.stream()
 			.map(reply -> new ReplyDetailResponse(
 				reply.getId(), reply.getMemberId(), reply.getNickname(), reply.getContent(), reply.getHeartCount(),
-				dateTimeConvertor.calculate(reply.getCreateDate()), reply.getParentId(),
+				dateTimeConvertor.calculate(reply.getCreateDate(), "작성일자가 없습니다."), reply.getParentId(),
 				isWriter(memberId, reply.getMemberId()),
 				imageConvertor.convertPath(reply.getImageUrl())))
 			.collect(Collectors.toUnmodifiableList());

@@ -2,9 +2,9 @@ package com.hyundai.hmingle.mapper;
 
 import java.util.List;
 
-import com.hyundai.hmingle.controller.dto.response.ChannelGetResponse;
+import com.hyundai.hmingle.mapper.dto.response.ChannelMapperResponse;
 
 public interface ChannelMapper {
 
-	List<ChannelGetResponse> getList();
+	List<ChannelMapperResponse> getList();
 }

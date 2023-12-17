@@ -56,6 +56,7 @@
         <typeAlias type="com.hyundai.hmingle.mapper.dto.response.ReplyMapperResponse" alias="replyMapperResponse"/>
         <typeAlias type="com.hyundai.hmingle.mapper.dto.response.MyPostMapperResponse" alias="myPostMapperResponse"/>
         <typeAlias type="com.hyundai.hmingle.mapper.dto.response.ReplyCreateMapperResponse" alias="replyCreateMapperResponse"/>
+        <typeAlias type="com.hyundai.hmingle.mapper.dto.response.ChannelMapperResponse" alias="channelMapperResponse"/>
 
     </typeAliases>
 </configuration>

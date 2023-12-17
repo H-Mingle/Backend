@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import com.hyundai.hmingle.controller.dto.response.ChannelGetResponse;
 import com.hyundai.hmingle.mapper.ChannelMapper;
+import com.hyundai.hmingle.mapper.dto.response.ChannelMapperResponse;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +17,7 @@ public class ChannelRepository {
 
 	private final ChannelMapper channelMapper;
 
-	public List<ChannelGetResponse> getList() {
+	public List<ChannelMapperResponse> getList() {
 		return channelMapper.getList();
 	}
 }
