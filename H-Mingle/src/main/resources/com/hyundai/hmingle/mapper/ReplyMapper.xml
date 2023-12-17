@@ -90,4 +90,5 @@
         set modified_date = #{modifiedDate}, removed = 1
         where id = #{id} or parent_id = #{id}
     </update>
+
 </mapper>

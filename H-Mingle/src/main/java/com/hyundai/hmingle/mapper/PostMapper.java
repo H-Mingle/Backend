@@ -16,23 +16,23 @@ import com.hyundai.hmingle.mapper.dto.response.PostDetailMapperResponse;
 
 public interface PostMapper {
 
-	Long save(PostCreateMapperRequest params);
-
 	PostDetailMapperResponse getPostDetail(@Param("postId") Long postId, @Param("memberId") Long memberId);
 
 	void getPostId(Map<String, BigDecimal> map);
-
-	Long removePost(PostDeleteMapperRequest params);
 
 	Optional<Post> findById(Long id);
 
 	int findPostCountByMemberId(Long memberId);
 
-	void updatePost(PostUpdateRequest params);
-
 	List<Long> findPostByChannelId(Long channelId);
+
+	Long findMemberId(Long postId);
+
+	Long save(PostCreateMapperRequest params);
+
+	void updatePost(PostUpdateRequest params);
 
 	int upReadCount(Long postId);
 
-	Long findMemberId(Long postId);
+	Long removePost(PostDeleteMapperRequest params);
 }

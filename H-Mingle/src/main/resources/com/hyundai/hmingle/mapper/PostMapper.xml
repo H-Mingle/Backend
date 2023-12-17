@@ -1,21 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hyundai.hmingle.mapper.PostMapper">
-	
-	<insert id="save" parameterType="postCreateMapperRequest" >
-		INSERT INTO post (id, content, member_id, channel_id, read_count, created_date, modified_date)
-		VALUES (SEQ_POST_ID.nextval, #{content}, #{memberId}, #{channelId}, 0, sysdate, sysdate)
-		<selectKey keyProperty="postId" resultType="Long" order="AFTER">
-			SELECT SEQ_POST_ID.currval
-			FROM dual
-		</selectKey>
-	</insert>
-
-    <select id="findById" parameterType="long" resultType="post">
-        select id, content, member_id
-        from post
-        where id = #{id}
-    </select>
 
 	<select id="getPostDetail" resultType="postDetailMapperResponse">
 		SELECT
@@ -40,23 +25,14 @@
 				#{postId, mode=IN, jdbcType=NUMERIC},
 				#{previousId, mode=OUT, jdbcType=NUMERIC},
 				#{subsequentId, mode=OUT, jdbcType=NUMERIC}
-		)}
+			   )}
 	</select>
 
-	<update id="removePost" parameterType="postDeleteMapperRequest">
-		UPDATE post SET removed=1, MODIFIED_DATE = #{modifiedDate}
-		WHERE id=#{postId} AND member_id=#{memberId}
-		<selectKey keyColumn="id" resultType="Long" order="BEFORE">
-			SELECT id
-			FROM post
-			WHERE post_id=#{postId} AND member_id=#{memberId}
-		</selectKey>
-	</update>
-
-	<update id="updatePost" parameterType="postUpdateRequest">
-		UPDATE post SET content=#{content}, MODIFIED_DATE = #{modifiedDate}
-		WHERE id=#{postId}
-	</update>
+	<select id="findById" parameterType="long" resultType="post">
+		select id, content, member_id
+		from post
+		where id = #{id}
+	</select>
 
 	<select id="findPostCountByMemberId" parameterType="long" resultType="int">
 		select count(id)
@@ -70,14 +46,39 @@
 		WHERE channel_id = #{channel_id} AND removed=0
 	</select>
 
-	<update id="upReadCount" parameterType="long">
-		UPDATE post SET read_count = read_count+1
-		WHERE id=#{postId}
-	</update>
-
 	<select id="findMemberId" parameterType="long" resultType="long">
 		select member_id
 		from post
 		where id = #{id}
 	</select>
+	
+	<insert id="save" parameterType="postCreateMapperRequest" >
+		INSERT INTO post (id, content, member_id, channel_id, read_count, created_date, modified_date)
+		VALUES (SEQ_POST_ID.nextval, #{content}, #{memberId}, #{channelId}, 0, sysdate, sysdate)
+		<selectKey keyProperty="postId" resultType="Long" order="AFTER">
+			SELECT SEQ_POST_ID.currval
+			FROM dual
+		</selectKey>
+	</insert>
+
+	<update id="updatePost" parameterType="postUpdateRequest">
+		UPDATE post SET content=#{content}, MODIFIED_DATE = #{modifiedDate}
+		WHERE id=#{postId}
+	</update>
+
+	<update id="upReadCount" parameterType="long">
+		UPDATE post SET read_count = read_count+1
+		WHERE id=#{postId}
+	</update>
+
+	<update id="removePost" parameterType="postDeleteMapperRequest">
+		UPDATE post SET removed=1, MODIFIED_DATE = #{modifiedDate}
+		WHERE id=#{postId} AND member_id=#{memberId}
+		<selectKey keyColumn="id" resultType="Long" order="BEFORE">
+			SELECT id
+			FROM post
+			WHERE post_id=#{postId} AND member_id=#{memberId}
+		</selectKey>
+	</update>
+
 </mapper>
