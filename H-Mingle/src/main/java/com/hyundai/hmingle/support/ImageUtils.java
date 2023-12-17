@@ -1,4 +1,4 @@
-package com.hyundai.hmingle.domain.post;
+package com.hyundai.hmingle.support;
 
 import java.io.File;
 import java.io.IOException;
@@ -89,10 +89,6 @@ public class ImageUtils {
 		return uuid + "." + extension;
 	}
 
-	private String getUploadPath() {
-		return makeDirectories(uploadPath);
-	}
-
 	private String getUploadPath(final String addPath) {
 		return makeDirectories(uploadPath + File.separator + addPath);
 	}
@@ -104,5 +100,4 @@ public class ImageUtils {
 		}
 		return dir.getPath();
 	}
-
 }

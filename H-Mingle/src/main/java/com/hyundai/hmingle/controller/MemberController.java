@@ -13,11 +13,9 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.hyundai.hmingle.controller.dto.request.ImageCreateRequest;
 import com.hyundai.hmingle.controller.dto.request.MemberUpdateRequest;
 import com.hyundai.hmingle.controller.dto.response.MemberGetResponse;
 import com.hyundai.hmingle.controller.dto.response.MingleResponse;
-import com.hyundai.hmingle.domain.post.ImageUtils;
 import com.hyundai.hmingle.mapper.dto.response.MemberUpdateMapperResponse;
 import com.hyundai.hmingle.service.MemberService;
 import com.hyundai.hmingle.support.JwtTokenExtractor;
@@ -32,7 +30,6 @@ public class MemberController {
 
 	private final MemberService memberService;
 	private final JwtTokenExtractor jwtTokenExtractor;
-	private final ImageUtils imageUtils;
 
 	@GetMapping("/{memberId}")
 	public ResponseEntity<MingleResponse<MemberGetResponse>> findById(
@@ -62,10 +59,7 @@ public class MemberController {
 		@RequestHeader HttpHeaders headers,
 		@RequestPart MultipartFile image) {
 		Long memberId = jwtTokenExtractor.extract(headers);
-		ImageCreateRequest uploadImg = imageUtils.updateFile(image);
-
-		memberService.updateFile(memberId, uploadImg);
-
+		memberService.updateFile(memberId, image);
 		return ResponseEntity.ok(MingleResponse.success(
 			"이미지 수정에 성공하였습니다.",
 			null
