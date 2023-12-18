@@ -97,7 +97,7 @@ public class PostService {
 
 		byte[] writerImg = convertByteArr(writerId);
 		byte[] memberImg = convertByteArr(memberId);
-		PostGetResponse response = new PostGetResponse(postId,
+		return new PostGetResponse(postId,
 			details.getContent(),
 			details.getReadCount(),
 			details.getNickname(),
@@ -109,7 +109,6 @@ public class PostService {
 			liked,
 			memberImg,
 			writerImg);
-		return response;
 	}
 
 	public byte[] convertByteArr(long id) {

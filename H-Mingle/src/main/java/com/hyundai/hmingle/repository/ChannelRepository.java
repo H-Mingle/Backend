@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.hyundai.hmingle.controller.dto.response.ChannelGetResponse;
 import com.hyundai.hmingle.mapper.ChannelMapper;
 import com.hyundai.hmingle.mapper.dto.response.ChannelMapperResponse;
 

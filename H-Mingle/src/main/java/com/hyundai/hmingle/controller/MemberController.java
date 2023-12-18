@@ -15,8 +15,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.hyundai.hmingle.controller.dto.request.MemberUpdateRequest;
 import com.hyundai.hmingle.controller.dto.response.MemberGetResponse;
+import com.hyundai.hmingle.controller.dto.response.MemberUpdateResponse;
 import com.hyundai.hmingle.controller.dto.response.MingleResponse;
-import com.hyundai.hmingle.mapper.dto.response.MemberUpdateMapperResponse;
 import com.hyundai.hmingle.service.MemberService;
 import com.hyundai.hmingle.support.JwtTokenExtractor;
 
@@ -44,10 +44,10 @@ public class MemberController {
 	}
 
 	@PatchMapping("/{memberId}")
-	public ResponseEntity<MingleResponse<MemberUpdateMapperResponse>> update(
+	public ResponseEntity<MingleResponse<MemberUpdateResponse>> update(
 		@PathVariable Long memberId,
 		@RequestBody MemberUpdateRequest params) {
-		MemberUpdateMapperResponse response = memberService.update(params);
+		MemberUpdateResponse response = memberService.update(params);
 		return ResponseEntity.ok(MingleResponse.success(
 			"사용자 수정에 성공하였습니다.",
 			response

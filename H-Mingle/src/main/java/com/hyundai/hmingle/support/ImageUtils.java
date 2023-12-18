@@ -1,13 +1,16 @@
 package com.hyundai.hmingle.support;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
@@ -81,6 +84,14 @@ public class ImageUtils {
 			uploadPath,
 			multipartFile.getSize());
 		return createdImage;
+	}
+
+	public byte[] convertUrlToBytes(String url) {
+		try (InputStream imageStream = new FileInputStream(url)) {
+			return IOUtils.toByteArray(imageStream);
+		} catch (IOException e) {
+			throw new RuntimeException("이미지를 읽어오는데 실패하였습니다.");
+		}
 	}
 
 	private String generateSaveFilename(final String filename) {

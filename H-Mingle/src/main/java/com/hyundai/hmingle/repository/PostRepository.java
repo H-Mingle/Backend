@@ -42,6 +42,10 @@ public class PostRepository {
 		postMapper.getPostId(parameterMap);
 	}
 
+	public int findCountByMemberId(Long memberId) {
+		return postMapper.findPostCountByMemberId(memberId);
+	}
+
 	public Long removePost(PostDeleteMapperRequest params) {
 		return postMapper.removePost(params);
 	}
