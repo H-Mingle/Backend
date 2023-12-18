@@ -1,8 +1,6 @@
 package com.hyundai.hmingle.repository;
 
-import java.math.BigDecimal;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
@@ -14,8 +12,10 @@ import com.hyundai.hmingle.mapper.ReplyMapper;
 import com.hyundai.hmingle.mapper.dto.request.PostCreateMapperRequest;
 import com.hyundai.hmingle.mapper.dto.request.PostDeleteMapperRequest;
 import com.hyundai.hmingle.mapper.dto.request.PostDetailMapperRequest;
+import com.hyundai.hmingle.mapper.dto.request.PostSidesMapperRequest;
 import com.hyundai.hmingle.mapper.dto.request.PostUpdateMapperRequest;
 import com.hyundai.hmingle.mapper.dto.response.PostDetailMapperResponse;
+import com.hyundai.hmingle.mapper.dto.response.PostSidesMapperResponse;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -38,8 +38,10 @@ public class PostRepository {
 		return postMapper.getPostDetail(postDetailMapperRequest);
 	}
 
-	public void getPostId(Map<String, BigDecimal> parameterMap) {
-		postMapper.getPostId(parameterMap);
+	public PostSidesMapperResponse getPostId(Long postId) {
+		PostSidesMapperRequest request = new PostSidesMapperRequest(postId);
+		postMapper.getPostId(request);
+		return new PostSidesMapperResponse(request.getPreviousId(), request.getSubsequentId());
 	}
 
 	public int findCountByMemberId(Long memberId) {
@@ -72,12 +74,8 @@ public class PostRepository {
 		postMapper.updatePost(postUpdateMapperRequest);
 	}
 
-	public List<Long> findPostByChannelId(Long channelId) {
-		return postMapper.findPostByChannelId(channelId);
-	}
-
-	public int upReadCount(Long postId) {
-		return postMapper.upReadCount(postId);
+	public void upReadCount(Long postId) {
+		postMapper.upReadCount(postId);
 	}
 
 	public Long findMemberId(Long postId) {

@@ -3,11 +3,8 @@ package com.hyundai.hmingle.service;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.apache.commons.io.IOUtils;
@@ -27,6 +24,7 @@ import com.hyundai.hmingle.mapper.dto.request.ImagesMapperRequest;
 import com.hyundai.hmingle.mapper.dto.request.PostDeleteMapperRequest;
 import com.hyundai.hmingle.mapper.dto.response.PostDetailMapperResponse;
 import com.hyundai.hmingle.mapper.dto.response.PostMapperResponse;
+import com.hyundai.hmingle.mapper.dto.response.PostSidesMapperResponse;
 import com.hyundai.hmingle.repository.HeartRepository;
 import com.hyundai.hmingle.repository.ImageRepository;
 import com.hyundai.hmingle.repository.MemberRepository;
@@ -68,58 +66,30 @@ public class PostService {
 
 	@Transactional(readOnly = true)
 	public PostGetResponse getPost(Long postId, Long memberId) {
+		Member savedMember = memberRepository.findById(memberId);
+		Long writerId = postRepository.findMemberId(postId);
+		Member savedWriter = memberRepository.findById(writerId);
 		postRepository.upReadCount(postId);
 
-		Long writerId = postRepository.findMemberId(postId);
-
 		PostDetailMapperResponse details = postRepository.getPostDetail(postId, writerId);
-		BigDecimal id = BigDecimal.valueOf(postId);
+		PostSidesMapperResponse postSidesMapperResponse = postRepository.getPostId(details.getPostId());
 
-		int heartCount = 0;
-		if (details.getHeartCount() != null)
-			heartCount = details.getHeartCount();
+		boolean liked = heartRepository.findHeart(postId, memberId) != null;
 
-		Map<String, BigDecimal> parameterMap = new HashMap<>();
-		parameterMap.put("postId", id);
-		parameterMap.put("previousId", null);
-		parameterMap.put("subsequentId", null);
-		postRepository.getPostId(parameterMap);
-
-		Long previousId = convertToLong(parameterMap.get("previousId"));
-		Long subsequentId = convertToLong(parameterMap.get("subsequentId"));
-
-		Long channelId = details.getChannelId();
-		String channelName = getChannelName(channelId);
-
-		boolean liked = false;
-		if (heartRepository.findHeart(postId, memberId) != null)
-			liked = true;
-
-		byte[] writerImg = convertByteArr(writerId);
-		byte[] memberImg = convertByteArr(memberId);
-		return new PostGetResponse(postId,
+		return new PostGetResponse(
+			postId,
 			details.getContent(),
 			details.getReadCount(),
 			details.getNickname(),
-			heartCount,
-			channelName,
+			details.getHeartCount(),
+			getChannelName(details.getChannelId()),
 			details.getCreatedDate(),
-			previousId,
-			subsequentId,
+			postSidesMapperResponse.getPreviousId(),
+			postSidesMapperResponse.getSubsequentId(),
 			liked,
-			memberImg,
-			writerImg);
-	}
-
-	public byte[] convertByteArr(long id) {
-		Member member = memberRepository.findById(id);
-		byte[] memberImg = null;
-		try (InputStream imageStream = new FileInputStream(member.getImageUrl())) {
-			memberImg = IOUtils.toByteArray(imageStream);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return memberImg;
+			imageUtils.convertUrlToBytes(savedMember.getImageUrl()),
+			imageUtils.convertUrlToBytes(savedWriter.getImageUrl())
+		);
 	}
 
 	public Long removePost(Long postId, Long memberId) {
@@ -134,13 +104,6 @@ public class PostService {
 		return imageService.saveFiles(postId, params.getContent(), images);
 	}
 
-	private Long convertToLong(BigDecimal value) {
-		if (value == null) {
-			return null;
-		}
-		return value.longValue();
-	}
-
 	@Transactional(readOnly = true)
 	public PostsGetResponse getPostsByChannel(Long channelId, Integer requestPage, Integer requestsize) {
 		int page = validatePageIsNotNegative(requestPage);
@@ -148,10 +111,7 @@ public class PostService {
 		int startRow = calculateStartRow(page, size);
 
 		ImagesMapperRequest nextImage = new ImagesMapperRequest(channelId, startRow + size, size);
-		boolean isNext = false;
-		if (!imageRepository.findByPostId(nextImage).isEmpty()) {
-			isNext = true;
-		}
+		boolean isNext = !imageRepository.findByPostId(nextImage).isEmpty();
 
 		String channelName = getChannelName(channelId);
 
