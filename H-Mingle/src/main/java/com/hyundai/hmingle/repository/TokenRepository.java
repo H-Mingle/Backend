@@ -4,6 +4,7 @@ import org.springframework.stereotype.Repository;
 
 import com.hyundai.hmingle.domain.member.Member;
 import com.hyundai.hmingle.domain.member.Token;
+import com.hyundai.hmingle.exception.MingleException;
 import com.hyundai.hmingle.mapper.TokenMapper;
 
 import lombok.AccessLevel;
@@ -38,9 +39,9 @@ public class TokenRepository {
 
 	public Token findByMemberId(Long memberId) {
 		Token savedToken = tokenMapper.findByMemberId(memberId)
-			.orElseThrow(() -> new RuntimeException("로그아웃된 계정입니다."));
+			.orElseThrow(() -> new MingleException("로그아웃된 계정입니다."));
 		if (savedToken.isRemoved()) {
-			throw new RuntimeException("삭제된 토큰입니다.");
+			throw new MingleException("삭제된 토큰입니다.");
 		}
 		return savedToken;
 	}

@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.hyundai.hmingle.controller.dto.response.MyPostsResponse;
 import com.hyundai.hmingle.controller.dto.response.PostsResponse;
 import com.hyundai.hmingle.domain.member.Member;
+import com.hyundai.hmingle.exception.MingleException;
 import com.hyundai.hmingle.mapper.dto.response.MyPostMapperResponse;
 import com.hyundai.hmingle.repository.ImageRepository;
 import com.hyundai.hmingle.repository.MemberRepository;
@@ -69,20 +70,20 @@ public class MyPageService {
 
 	private int validatePageIsNotNegative(Integer page) {
 		if (page == null) {
-			throw new RuntimeException("page 를 입력해주세요.");
+			throw new MingleException("page 를 입력해주세요.");
 		}
 		if (page <= 0) {
-			throw new RuntimeException("page 는 1보다 커야합니다.");
+			throw new MingleException("page 는 1보다 커야합니다.");
 		}
 		return page;
 	}
 
 	private int validateSizeIsNotNegative(Integer size) {
 		if (size == null) {
-			throw new RuntimeException("size 를 입력해주세요.");
+			throw new MingleException("size 를 입력해주세요.");
 		}
 		if (size <= 0) {
-			throw new RuntimeException("size 는 1보다 커야합니다.");
+			throw new MingleException("size 는 1보다 커야합니다.");
 		}
 		return size;
 	}

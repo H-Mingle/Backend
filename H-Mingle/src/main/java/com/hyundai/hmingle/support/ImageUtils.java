@@ -18,6 +18,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.hyundai.hmingle.controller.dto.request.ImageCreateRequest;
+import com.hyundai.hmingle.exception.MingleException;
 
 @Component
 @PropertySource("classpath:app.properties")
@@ -54,7 +55,7 @@ public class ImageUtils {
 		try {
 			multipartFile.transferTo(uploadFile);
 		} catch (IOException e) {
-			throw new RuntimeException(e);
+			throw new MingleException(e);
 		}
 
 		ImageCreateRequest createdImage = new ImageCreateRequest(multipartFile.getOriginalFilename(),
@@ -77,7 +78,7 @@ public class ImageUtils {
 		try {
 			multipartFile.transferTo(uploadFile);
 		} catch (IOException e) {
-			throw new RuntimeException(e);
+			throw new MingleException(e);
 		}
 
 		ImageCreateRequest createdImage = new ImageCreateRequest(multipartFile.getOriginalFilename(),
@@ -90,7 +91,7 @@ public class ImageUtils {
 		try (InputStream imageStream = new FileInputStream(url)) {
 			return IOUtils.toByteArray(imageStream);
 		} catch (IOException e) {
-			throw new RuntimeException("이미지를 읽어오는데 실패하였습니다.");
+			throw new MingleException("이미지를 읽어오는데 실패하였습니다.");
 		}
 	}
 

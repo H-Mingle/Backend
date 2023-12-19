@@ -15,6 +15,7 @@ import com.hyundai.hmingle.controller.dto.response.ReplyUpdateResponse;
 import com.hyundai.hmingle.domain.member.Member;
 import com.hyundai.hmingle.domain.post.Post;
 import com.hyundai.hmingle.domain.post.Reply;
+import com.hyundai.hmingle.exception.MingleException;
 import com.hyundai.hmingle.mapper.dto.request.RepliesMapperRequest;
 import com.hyundai.hmingle.mapper.dto.response.ReplyCreateMapperResponse;
 import com.hyundai.hmingle.mapper.dto.response.ReplyMapperResponse;
@@ -114,33 +115,33 @@ public class ReplyService {
 
 	private int validatePageIsNotNegative(Integer page) {
 		if (page == null) {
-			throw new RuntimeException("page 를 입력해주세요.");
+			throw new MingleException("page 를 입력해주세요.");
 		}
 		if (page <= 0) {
-			throw new RuntimeException("page 는 1보다 커야합니다.");
+			throw new MingleException("page 는 1보다 커야합니다.");
 		}
 		return page;
 	}
 
 	private int validateSizeIsNotNegative(Integer size) {
 		if (size == null) {
-			throw new RuntimeException("size 를 입력해주세요.");
+			throw new MingleException("size 를 입력해주세요.");
 		}
 		if (size <= 0) {
-			throw new RuntimeException("size 는 1보다 커야합니다.");
+			throw new MingleException("size 는 1보다 커야합니다.");
 		}
 		return size;
 	}
 
 	private void validateReplyBelongToPost(Post savedPost, Reply savedReply) {
 		if (!savedPost.contain(savedReply)) {
-			throw new RuntimeException("해당 게시글에 존재하지 않는 댓글입니다.");
+			throw new MingleException("해당 게시글에 존재하지 않는 댓글입니다.");
 		}
 	}
 
 	private void validateMemberIsWriter(Reply savedReply, Member savedMember) {
 		if (!savedReply.isWriter(savedMember)) {
-			throw new RuntimeException("작성자가 아닙니다.");
+			throw new MingleException("작성자가 아닙니다.");
 		}
 	}
 

@@ -20,6 +20,7 @@ import com.hyundai.hmingle.controller.dto.response.PostGetResponse;
 import com.hyundai.hmingle.controller.dto.response.PostListGetResponse;
 import com.hyundai.hmingle.controller.dto.response.PostsGetResponse;
 import com.hyundai.hmingle.domain.member.Member;
+import com.hyundai.hmingle.exception.MingleException;
 import com.hyundai.hmingle.mapper.dto.request.ImagesMapperRequest;
 import com.hyundai.hmingle.mapper.dto.request.PostDeleteMapperRequest;
 import com.hyundai.hmingle.mapper.dto.response.PostDetailMapperResponse;
@@ -57,7 +58,7 @@ public class PostService {
 	public List<byte[]> getFourImages(Long postId) {
 		List<String> images = imageService.getFourImages(postId);
 		if (images.isEmpty()) {
-			throw new RuntimeException("이미지가 존재하지 않습니다");
+			throw new MingleException("이미지가 존재하지 않습니다");
 		}
 		return images.stream()
 			.map(imageConvertor::convertPath)
@@ -143,20 +144,20 @@ public class PostService {
 
 	private int validatePageIsNotNegative(Integer page) {
 		if (page == null) {
-			throw new RuntimeException("page를 입력해주세요.");
+			throw new MingleException("page를 입력해주세요.");
 		}
 		if (page <= 0) {
-			throw new RuntimeException("page는 1보다 커야합니다.");
+			throw new MingleException("page는 1보다 커야합니다.");
 		}
 		return page;
 	}
 
 	private int validateSizeIsNotNegative(Integer size) {
 		if (size == null) {
-			throw new RuntimeException("size를 입력해주세요.");
+			throw new MingleException("size를 입력해주세요.");
 		}
 		if (size <= 0) {
-			throw new RuntimeException("size는 1보다 커야합니다.");
+			throw new MingleException("size는 1보다 커야합니다.");
 		}
 		return size;
 	}
