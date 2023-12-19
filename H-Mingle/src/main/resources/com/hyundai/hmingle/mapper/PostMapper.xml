@@ -10,9 +10,9 @@
 			m.nickname,
 			p.channel_id,
 			p.created_date,
-			(SELECT count(id)
+			nvl((SELECT count(id)
 			 FROM heart
-			 WHERE removed=0) as likes_count,
+			 WHERE removed=0), 0) as heart_count,
 			(SELECT id
 			 FROM heart
 			 WHERE post_id=#{postId} AND member_id=#{memberId} AND removed=0) as liked
