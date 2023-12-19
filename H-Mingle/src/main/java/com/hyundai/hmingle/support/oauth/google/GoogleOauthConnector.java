@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
 
+import com.hyundai.hmingle.exception.MingleException;
 import com.hyundai.hmingle.support.ApiConnector;
 import com.hyundai.hmingle.support.dto.response.GoogleTokenResponse;
 import com.hyundai.hmingle.support.dto.response.GoogleUserResponse;
@@ -35,7 +36,7 @@ public class GoogleOauthConnector implements OauthConnector {
 		validateResponseStatusIsOk(response.getStatusCode());
 
 		return Optional.ofNullable(response.getBody())
-			.orElseThrow(() -> new RuntimeException("Oauth 로그인에 실패하였습니다."))
+			.orElseThrow(() -> new MingleException("Oauth 로그인에 실패하였습니다."))
 			.getAccessToken();
 	}
 
@@ -46,12 +47,12 @@ public class GoogleOauthConnector implements OauthConnector {
 		validateResponseStatusIsOk(response.getStatusCode());
 
 		return Optional.ofNullable(response.getBody())
-			.orElseThrow(() -> new RuntimeException("oauth 사용자 정보를 조회하는데 실패하였습니다."));
+			.orElseThrow(() -> new MingleException("oauth 사용자 정보를 조회하는데 실패하였습니다."));
 	}
 
 	private void validateResponseStatusIsOk(HttpStatus status) {
 		if (!status.is2xxSuccessful()) {
-			throw new RuntimeException("Oauth 로그인에 실패하였습니다.");
+			throw new MingleException("Oauth 로그인에 실패하였습니다.");
 		}
 	}
 }

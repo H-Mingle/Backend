@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 
+import com.hyundai.hmingle.exception.MingleException;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
@@ -28,12 +30,12 @@ public class JwtTokenExtractor {
 			if (authorization.toLowerCase().startsWith("Bearer".toLowerCase())) {
 				token = authorization.substring("Bearer".length()).trim();
 				if (isExpired(token)) {
-					throw new RuntimeException("로그아웃된 계정입니다.");
+					throw new MingleException("로그아웃된 계정입니다.");
 				}
 				return getPayload(token);
 			}
 		}
-		throw new RuntimeException("잘못된 토큰 형식입니다.");
+		throw new MingleException("잘못된 토큰 형식입니다.");
 	}
 
 	private boolean isExpired(String token) {

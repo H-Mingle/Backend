@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Repository;
 
 import com.hyundai.hmingle.domain.member.Member;
+import com.hyundai.hmingle.exception.MingleException;
 import com.hyundai.hmingle.mapper.MemberMapper;
 import com.hyundai.hmingle.mapper.dto.request.ImageUpdateMapperRequest;
 import com.hyundai.hmingle.mapper.dto.request.MemberUpdateMapperRequest;
@@ -28,9 +29,9 @@ public class MemberRepository {
 
 	public Member findById(Long memberId) {
 		Member savedMember = memberMapper.findById(memberId)
-			.orElseThrow(() -> new RuntimeException("존재하지 않는 계정 입니다."));
+			.orElseThrow(() -> new MingleException("존재하지 않는 계정 입니다."));
 		if (savedMember.isRemoved()) {
-			throw new RuntimeException("탈퇴한 사용자 입니다.");
+			throw new MingleException("탈퇴한 사용자 입니다.");
 		}
 		return savedMember;
 	}

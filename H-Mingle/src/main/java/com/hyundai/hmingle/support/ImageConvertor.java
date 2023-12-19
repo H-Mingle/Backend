@@ -8,6 +8,8 @@ import java.io.InputStream;
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Component;
 
+import com.hyundai.hmingle.exception.MingleException;
+
 @Component
 public class ImageConvertor {
 
@@ -17,7 +19,7 @@ public class ImageConvertor {
 		} catch (FileNotFoundException e) {
 			return null;
 		} catch (IOException e) {
-			throw new RuntimeException("이미지를 불러오는데 실패히였습니다.");
+			throw new MingleException("이미지를 불러오는데 실패히였습니다.");
 		}
 	}
 }
